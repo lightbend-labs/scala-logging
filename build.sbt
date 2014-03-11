@@ -1,23 +1,50 @@
-organization := "com.typesafe"
+import scalariform.formatter.preferences._
 
-name := "scala-logging"
-
-version := "0.1.0"
-
-scalaVersion := Version.scala
-
-libraryDependencies ++= Dependencies.scalaLogging
-
-unmanagedSourceDirectories in Compile := List((scalaSource in Compile).value)
-
-unmanagedSourceDirectories in Test := List((scalaSource in Test).value)
-
-scalacOptions ++= List(
-  "-unchecked",
-  "-deprecation",
-  "-language:_",
-  "-target:jvm-1.7",
-  "-encoding", "UTF-8"
+lazy val scalaLogging = Project(
+  "scala-logging",
+  file("."),
+  settings = commonSettings ++ List(
+    unmanagedSourceDirectories in Compile := Nil,
+    unmanagedSourceDirectories in Test := Nil,
+    unmanagedResourceDirectories in Compile := Nil,
+    unmanagedResourceDirectories in Test := Nil
+  ),
+  aggregate = List(scalaLoggingApi, scalaLoggingSlf4j)
 )
 
-initialCommands := "import com.typesafe.scalalogging._"
+lazy val scalaLoggingApi = Project(
+  "scala-logging-api",
+  file("scala-logging-api"),
+  settings = commonSettings
+)
+
+lazy val scalaLoggingSlf4j = Project(
+  "scala-logging-slf4j",
+  file("scala-logging-slf4j"),
+  settings = commonSettings ++ List(
+    libraryDependencies ++= Dependencies.scalaLoggingSlf4j,
+    initialCommands := """import com.typesafe.scalalogging._
+                         |import com.typesafe.scalalogging.slf4j._""".stripMargin
+  ),
+  dependencies = List(scalaLoggingApi)
+)
+
+lazy val commonSettings =
+  Project.defaultSettings ++
+  scalariformSettings ++
+  List(
+    organization := "com.typesafe",
+    version := Version.scalaLogging,
+    scalaVersion := Version.scala,
+    scalacOptions ++= List(
+      "-unchecked",
+      "-deprecation",
+      "-language:_",
+      "-target:jvm-1.7",
+      "-encoding", "UTF-8"
+    ),
+    ScalariformKeys.preferences := ScalariformKeys.preferences.value
+      .setPreference(AlignSingleLineCaseStatements, true)
+      .setPreference(DoubleIndentClassDeclaration, true)
+      .setPreference(PreserveDanglingCloseParenthesis, true)
+  )
