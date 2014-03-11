@@ -1,0 +1,33 @@
+# sbt
+.history
+boot/
+lib_managed/
+project/project
+target/
+
+# Eclipse
+.cache
+.classpath
+.project
+.scala_dependencies
+.settings
+.target/
+.worksheet/
+*.sc
+
+# IntelliJ
+.idea/
+out/
+*.iml
+*.ipr
+*.iws
+
+# ENSIME
+.ensime
+.ensime_lucene/
+
+# Mac
+.DS_Store
+
+# Log files
+*.log
