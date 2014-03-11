@@ -29,7 +29,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling error with a message" should {
     "call the underlying logger's error method if the error level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isErrorEnabled).thenReturn(true)
       val message = "error"
       logger.error(message)
@@ -37,7 +37,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's error method if the error level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isErrorEnabled).thenReturn(false)
       logger.error("error")
       verify(underlying, never).error(anyString)
@@ -47,7 +47,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling error with a message and cause" should {
     "call the underlying logger's error method if the error level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isErrorEnabled).thenReturn(true)
       val message = "error"
       val cause = new RuntimeException("cause")
@@ -56,7 +56,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's error method if the error level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isErrorEnabled).thenReturn(false)
       logger.error("error", new RuntimeException("cause"))
       verify(underlying, never).error(anyString, anyObject)
@@ -66,7 +66,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling error with a message and parameters" should {
     "call the underlying logger's error method if the error level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isErrorEnabled).thenReturn(true)
       val message = "error"
       val arg1 = "arg1"
@@ -84,7 +84,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's error method if the error level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isErrorEnabled).thenReturn(false)
       val message = "error"
       val arg1 = "arg1"
@@ -107,7 +107,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling warn with a message" should {
     "call the underlying logger's warn method if the warn level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isWarnEnabled).thenReturn(true)
       val message = "warn"
       logger.warn(message)
@@ -115,7 +115,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's warn method if the warn level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isWarnEnabled).thenReturn(false)
       logger.warn("warn")
       verify(underlying, never).warn(anyString)
@@ -125,7 +125,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling warn with a message and cause" should {
     "call the underlying logger's warn method if the warn level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isWarnEnabled).thenReturn(true)
       val message = "warn"
       val cause = new RuntimeException("cause")
@@ -134,7 +134,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's warn method if the warn level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isWarnEnabled).thenReturn(false)
       logger.warn("warn", new RuntimeException("cause"))
       verify(underlying, never).warn(anyString, anyObject)
@@ -144,7 +144,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling warn with a message and parameters" should {
     "call the underlying logger's warn method if the warn level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isWarnEnabled).thenReturn(true)
       val message = "warn"
       val arg1 = "arg1"
@@ -162,7 +162,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's warn method if the warn level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isWarnEnabled).thenReturn(false)
       val message = "warn"
       val arg1 = "arg1"
@@ -185,7 +185,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling info with a message" should {
     "call the underlying logger's info method if the info level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isInfoEnabled).thenReturn(true)
       val message = "info"
       logger.info(message)
@@ -193,7 +193,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's info method if the info level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isInfoEnabled).thenReturn(false)
       logger.info("info")
       verify(underlying, never).info(anyString)
@@ -203,7 +203,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling info with a message and cause" should {
     "call the underlying logger's info method if the info level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isInfoEnabled).thenReturn(true)
       val message = "info"
       val cause = new RuntimeException("cause")
@@ -212,7 +212,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's info method if the info level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isInfoEnabled).thenReturn(false)
       logger.info("info", new RuntimeException("cause"))
       verify(underlying, never).info(anyString, anyObject)
@@ -222,7 +222,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling info with a message and parameters" should {
     "call the underlying logger's info method if the info level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isInfoEnabled).thenReturn(true)
       val message = "info"
       val arg1 = "arg1"
@@ -240,7 +240,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's info method if the info level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isInfoEnabled).thenReturn(false)
       val message = "info"
       val arg1 = "arg1"
@@ -263,7 +263,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling debug with a message" should {
     "call the underlying logger's debug method if the debug level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isDebugEnabled).thenReturn(true)
       val message = "debug"
       logger.debug(message)
@@ -271,7 +271,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's debug method if the debug level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isDebugEnabled).thenReturn(false)
       logger.debug("debug")
       verify(underlying, never).debug(anyString)
@@ -281,7 +281,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling debug with a message and cause" should {
     "call the underlying logger's debug method if the debug level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isDebugEnabled).thenReturn(true)
       val message = "debug"
       val cause = new RuntimeException("cause")
@@ -290,7 +290,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's debug method if the debug level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isDebugEnabled).thenReturn(false)
       logger.debug("debug", new RuntimeException("cause"))
       verify(underlying, never).debug(anyString, anyObject)
@@ -300,7 +300,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
   "Calling debug with a message and parameters" should {
     "call the underlying logger's debug method if the debug level is enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isDebugEnabled).thenReturn(true)
       val message = "debug"
       val arg1 = "arg1"
@@ -318,7 +318,7 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
     }
     "not call the underlying logger's debug method if the debug level is not enabled" in {
       val underlying = mock[org.slf4j.Logger]
-      val logger = new Logger(underlying)
+      val logger = Logger(underlying)
       when(underlying.isDebugEnabled).thenReturn(false)
       val message = "debug"
       val arg1 = "arg1"

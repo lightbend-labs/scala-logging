@@ -16,6 +16,9 @@
 
 package com.typesafe.scalalogging
 
+/**
+ * API for a performant logger based on macros.
+ */
 trait Logger {
 
   // Error

@@ -19,7 +19,22 @@ package slf4j
 
 import org.slf4j.{ Logger => Underlying }
 
-final class Logger(val underlying: Underlying) extends BaseLogger {
+/**
+ * Companion for [[Logger]].
+ */
+object Logger {
+
+  /**
+   * Create a [[Logger]] wrapping the given underlying `org.slf4j.Logger`.
+   */
+  def apply(underlying: Underlying): Logger =
+    new Logger(underlying)
+}
+
+/**
+ * Implementation for a performant logger based on macros and an underlying `org.slf4j.Logger`.
+ */
+final class Logger private (val underlying: Underlying) extends BaseLogger {
 
   // Error
 
