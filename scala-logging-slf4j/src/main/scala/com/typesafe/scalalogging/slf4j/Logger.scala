@@ -21,9 +21,35 @@ import org.slf4j.{ Logger => Underlying }
 
 final class Logger(val underlying: Underlying) extends BaseLogger {
 
+  // Error
+
   override def error(message: String): Unit = macro LoggerMacro.errorMessage
 
   override def error(message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
 
   override def error(message: String, args: AnyRef*): Unit = macro LoggerMacro.errorMessageArgs
+
+  // Warn
+
+  override def warn(message: String): Unit = macro LoggerMacro.warnMessage
+
+  override def warn(message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCause
+
+  override def warn(message: String, args: AnyRef*): Unit = macro LoggerMacro.warnMessageArgs
+
+  // Info
+
+  override def info(message: String): Unit = macro LoggerMacro.infoMessage
+
+  override def info(message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCause
+
+  override def info(message: String, args: AnyRef*): Unit = macro LoggerMacro.infoMessageArgs
+
+  // Debug
+
+  override def debug(message: String): Unit = macro LoggerMacro.debugMessage
+
+  override def debug(message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCause
+
+  override def debug(message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgs
 }

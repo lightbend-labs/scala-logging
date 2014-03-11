@@ -19,6 +19,8 @@ package com.typesafe.scalalogging.slf4j;
 import static org.mockito.Mockito.*;
 
 public class LoggerSpecSupport {
+    
+    // Error
 
     public static void verifyError(org.slf4j.Logger underlying, String message, Object arg) {
         verify(underlying).error(message, arg);
@@ -34,5 +36,59 @@ public class LoggerSpecSupport {
 
     public static void verifyNeverError(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
         verify(underlying, never()).error(message, arg1, arg2);
+    }
+
+    // Warn
+
+    public static void verifyWarn(org.slf4j.Logger underlying, String message, Object arg) {
+        verify(underlying).warn(message, arg);
+    }
+
+    public static void verifyWarn(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
+        verify(underlying).warn(message, arg1, arg2);
+    }
+
+    public static void verifyNeverWarn(org.slf4j.Logger underlying, String message, Object arg) {
+        verify(underlying, never()).warn(message, arg);
+    }
+
+    public static void verifyNeverWarn(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
+        verify(underlying, never()).warn(message, arg1, arg2);
+    }
+
+    // Info
+
+    public static void verifyInfo(org.slf4j.Logger underlying, String message, Object arg) {
+        verify(underlying).info(message, arg);
+    }
+
+    public static void verifyInfo(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
+        verify(underlying).info(message, arg1, arg2);
+    }
+
+    public static void verifyNeverInfo(org.slf4j.Logger underlying, String message, Object arg) {
+        verify(underlying, never()).info(message, arg);
+    }
+
+    public static void verifyNeverInfo(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
+        verify(underlying, never()).info(message, arg1, arg2);
+    }
+
+    // Debug
+
+    public static void verifyDebug(org.slf4j.Logger underlying, String message, Object arg) {
+        verify(underlying).debug(message, arg);
+    }
+
+    public static void verifyDebug(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
+        verify(underlying).debug(message, arg1, arg2);
+    }
+
+    public static void verifyNeverDebug(org.slf4j.Logger underlying, String message, Object arg) {
+        verify(underlying, never()).debug(message, arg);
+    }
+
+    public static void verifyNeverDebug(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
+        verify(underlying, never()).debug(message, arg1, arg2);
     }
 }

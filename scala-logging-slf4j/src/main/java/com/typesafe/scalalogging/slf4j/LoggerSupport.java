@@ -20,11 +20,43 @@ import org.slf4j.Logger;
 
 public class LoggerSupport {
 
+    // Error
+
     public static void error(Logger logger, String message, Object arg) {
         logger.error(message, arg);
     }
 
     public static void error(Logger logger, String message, Object arg1, Object arg2) {
         logger.error(message, arg1, arg2);
+    }
+
+    // Warn
+
+    public static void warn(Logger logger, String message, Object arg) {
+        logger.warn(message, arg);
+    }
+
+    public static void warn(Logger logger, String message, Object arg1, Object arg2) {
+        logger.warn(message, arg1, arg2);
+    }
+
+    // Warn
+
+    public static void info(Logger logger, String message, Object arg) {
+        logger.info(message, arg);
+    }
+
+    public static void info(Logger logger, String message, Object arg1, Object arg2) {
+        logger.info(message, arg1, arg2);
+    }
+
+    // Debug
+
+    public static void debug(Logger logger, String message, Object arg) {
+        logger.debug(message, arg);
+    }
+
+    public static void debug(Logger logger, String message, Object arg1, Object arg2) {
+        logger.debug(message, arg1, arg2);
     }
 }
