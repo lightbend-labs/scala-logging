@@ -1,7 +1,6 @@
 import sbt._
 
 object Version {
-  val scalaLogging = "2.0.0"
   val scala        = "2.11.0-RC1"
   val slf4j        = "1.7.6"
   val logback      = "1.1.1"
