@@ -23,90 +23,34 @@ trait Logger {
 
   // Error
 
-  /**
-   * Log at *error* level.
-   * @param message the error message
-   */
   def error(message: String): Unit
 
-  /**
-   * Log at *error* level.
-   * @param message the error message
-   * @param cause the cause for the error
-   */
   def error(message: String, cause: Throwable): Unit
 
-  /**
-   * Log at *error* level.
-   * @param message the error message
-   * @param args the arguments used to format the error message
-   */
   def error(message: String, args: AnyRef*): Unit
 
   // Warn
 
-  /**
-   * Log at *warning* level.
-   * @param message the warning message
-   */
   def warn(message: String): Unit
 
-  /**
-   * Log at *warning* level.
-   * @param message the warning message
-   * @param cause the cause for the warning
-   */
   def warn(message: String, cause: Throwable): Unit
 
-  /**
-   * Log at *warning* level.
-   * @param message the warning message
-   * @param args the arguments used to format the warning message
-   */
   def warn(message: String, args: AnyRef*): Unit
 
   // Info
 
-  /**
-   * Log at *info* level.
-   * @param message the info message
-   */
   def info(message: String): Unit
 
-  /**
-   * Log at *info* level.
-   * @param message the info message
-   * @param cause the cause for the info
-   */
   def info(message: String, cause: Throwable): Unit
 
-  /**
-   * Log at *info* level.
-   * @param message the info message
-   * @param args the arguments used to format the info message
-   */
   def info(message: String, args: AnyRef*): Unit
 
   // Debug
 
-  /**
-   * Log at *debug* level.
-   * @param message the debug message
-   */
   def debug(message: String): Unit
 
-  /**
-   * Log at *debug* level.
-   * @param message the debug message
-   * @param cause the cause for the debug
-   */
   def debug(message: String, cause: Throwable): Unit
 
-  /**
-   * Log at *debug* level.
-   * @param message the debug message
-   * @param args the arguments used to format the debug message
-   */
   def debug(message: String, args: AnyRef*): Unit
 }
 
