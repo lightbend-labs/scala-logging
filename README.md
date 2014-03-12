@@ -23,7 +23,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 
 Scala Logging is published to Sonatype OSS and Maven Central:
 
-- Group id / organization: *com.typesafe*
+- Group id / organization: *com.typesafe.scala-logging*
 - Modules (artifact id / name):
   - *scala-logging-api* if you just need the API
   - *scala-logging-slf4j* for the SLF4J-backed implementation
@@ -31,7 +31,7 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 The following example shows how to add a dependency to the latest version of Scala Logging to your sbt build definition:
 
 ```
-libraryDependencies += "com.typesafe" %% "scala-logging-slf4j" % "2.0.0"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.0.0"
 ```
 
 ## Using Scala Logging ##
