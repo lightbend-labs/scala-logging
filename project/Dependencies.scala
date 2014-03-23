@@ -1,10 +1,10 @@
 import sbt._
 
 object Version {
-  val scala        = "2.11.0-RC1"
+  val scala        = "2.11.0-RC3"
   val slf4j        = "1.7.6"
   val logback      = "1.1.1"
-  val scalaTest    = "2.1.0"
+  val scalaTest    = "2.1.2"
   val mockito      = "1.9.5"
 }
 
