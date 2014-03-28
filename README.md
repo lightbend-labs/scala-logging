@@ -16,6 +16,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 
 ## Prerequisites ##
 
+* Java 7 or higher
 * Scala 2.11
 * Logging backend compatible with SLF4J, e.g. [Logback](http://logback.qos.ch)
 
