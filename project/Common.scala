@@ -23,6 +23,10 @@ object Common {
         "-target:jvm-1.6",
         "-encoding", "UTF-8"
       ),
+      javacOptions ++= List(
+        "-source", "1.6",
+        "-target", "1.6"
+      ),
       ScalariformKeys.preferences := ScalariformKeys.preferences.value
         .setPreference(AlignSingleLineCaseStatements, true)
         .setPreference(DoubleIndentClassDeclaration, true)
