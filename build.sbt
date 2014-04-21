@@ -18,6 +18,8 @@ shellPrompt in ThisBuild := (state => s"${Project.extract(state).currentRef.proj
 // Settings for root project
 // #########################
 
+Common.settings
+
 publishArtifact := false
 
 unmanagedSourceDirectories in Compile := Nil
