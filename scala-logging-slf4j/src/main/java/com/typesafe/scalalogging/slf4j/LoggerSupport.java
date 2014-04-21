@@ -59,4 +59,14 @@ class LoggerSupport {
     public static void debug(Logger logger, String message, Object arg1, Object arg2) {
         logger.debug(message, arg1, arg2);
     }
+
+    // Trace
+
+    public static void trace(Logger logger, String message, Object arg) {
+        logger.trace(message, arg);
+    }
+
+    public static void trace(Logger logger, String message, Object arg1, Object arg2) {
+        logger.trace(message, arg1, arg2);
+    }
 }

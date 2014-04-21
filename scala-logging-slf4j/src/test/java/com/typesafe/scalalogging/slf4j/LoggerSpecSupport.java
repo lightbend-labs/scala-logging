@@ -91,4 +91,22 @@ public class LoggerSpecSupport {
     public static void verifyNeverDebug(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
         verify(underlying, never()).debug(message, arg1, arg2);
     }
+
+    // Trace
+
+    public static void verifyTrace(org.slf4j.Logger underlying, String message, Object arg) {
+        verify(underlying).trace(message, arg);
+    }
+
+    public static void verifyTrace(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
+        verify(underlying).trace(message, arg1, arg2);
+    }
+
+    public static void verifyNeverTrace(org.slf4j.Logger underlying, String message, Object arg) {
+        verify(underlying, never()).trace(message, arg);
+    }
+
+    public static void verifyNeverTrace(org.slf4j.Logger underlying, String message, Object arg1, Object arg2) {
+        verify(underlying, never()).trace(message, arg1, arg2);
+    }
 }
