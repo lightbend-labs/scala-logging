@@ -52,6 +52,14 @@ trait Logger {
   def debug(message: String, cause: Throwable): Unit
 
   def debug(message: String, args: AnyRef*): Unit
+
+  // Trace
+
+  def trace(message: String): Unit
+
+  def trace(message: String, cause: Throwable): Unit
+
+  def trace(message: String, args: AnyRef*): Unit
 }
 
 /**
@@ -101,5 +109,16 @@ private[scalalogging] class BaseLogger extends Logger {
     ???
 
   override def debug(message: String, args: AnyRef*): Unit =
+    ???
+
+  // Trace
+
+  override def trace(message: String): Unit =
+    ???
+
+  override def trace(message: String, cause: Throwable): Unit =
+    ???
+
+  override def trace(message: String, args: AnyRef*): Unit =
     ???
 }

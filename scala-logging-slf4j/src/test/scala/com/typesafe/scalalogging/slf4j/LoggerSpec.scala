@@ -335,4 +335,82 @@ class LoggerSpec extends WordSpec with ShouldMatchers with MockitoSugar {
       verify(underlying, never).debug(anyString, anyObject, anyObject, anyObject)
     }
   }
+
+  // Trace
+
+  "Calling trace with a message" should {
+    "call the underlying logger's trace method if the trace level is enabled" in {
+      val underlying = mock[org.slf4j.Logger]
+      val logger = Logger(underlying)
+      when(underlying.isTraceEnabled).thenReturn(true)
+      val message = "trace"
+      logger.trace(message)
+      verify(underlying).trace(message)
+    }
+    "not call the underlying logger's trace method if the trace level is not enabled" in {
+      val underlying = mock[org.slf4j.Logger]
+      val logger = Logger(underlying)
+      when(underlying.isTraceEnabled).thenReturn(false)
+      logger.trace("trace")
+      verify(underlying, never).trace(anyString)
+    }
+  }
+
+  "Calling trace with a message and cause" should {
+    "call the underlying logger's trace method if the trace level is enabled" in {
+      val underlying = mock[org.slf4j.Logger]
+      val logger = Logger(underlying)
+      when(underlying.isTraceEnabled).thenReturn(true)
+      val message = "trace"
+      val cause = new RuntimeException("cause")
+      logger.trace(message, cause)
+      verify(underlying).trace(message, cause)
+    }
+    "not call the underlying logger's trace method if the trace level is not enabled" in {
+      val underlying = mock[org.slf4j.Logger]
+      val logger = Logger(underlying)
+      when(underlying.isTraceEnabled).thenReturn(false)
+      logger.trace("trace", new RuntimeException("cause"))
+      verify(underlying, never).trace(anyString, anyObject)
+    }
+  }
+
+  "Calling trace with a message and parameters" should {
+    "call the underlying logger's trace method if the trace level is enabled" in {
+      val underlying = mock[org.slf4j.Logger]
+      val logger = Logger(underlying)
+      when(underlying.isTraceEnabled).thenReturn(true)
+      val message = "trace"
+      val arg1 = "arg1"
+      val arg2 = "arg2"
+      val arg2b = new Integer(1)
+      val arg3 = "arg3"
+      logger.trace(message, arg1)
+      LoggerSpecSupport.verifyTrace(underlying, message, arg1)
+      logger.trace(message, arg1, arg2)
+      LoggerSpecSupport.verifyTrace(underlying, message, arg1, arg2)
+      logger.trace(message, arg1, arg2b)
+      LoggerSpecSupport.verifyTrace(underlying, message, arg1, arg2b)
+      logger.trace(message, arg1, arg2b, arg3)
+      verify(underlying).trace(message, arg1, arg2b, arg3)
+    }
+    "not call the underlying logger's trace method if the trace level is not enabled" in {
+      val underlying = mock[org.slf4j.Logger]
+      val logger = Logger(underlying)
+      when(underlying.isTraceEnabled).thenReturn(false)
+      val message = "trace"
+      val arg1 = "arg1"
+      val arg2 = "arg2"
+      val arg2b = new Integer(1)
+      val arg3 = "arg3"
+      logger.trace(message, arg1)
+      LoggerSpecSupport.verifyNeverTrace(underlying, message, arg1)
+      logger.trace(message, arg1, arg2)
+      LoggerSpecSupport.verifyNeverTrace(underlying, message, arg1, arg2)
+      logger.trace(message, arg1, arg2b)
+      LoggerSpecSupport.verifyNeverTrace(underlying, message, arg1, arg2b)
+      logger.trace(message, arg1, arg2b, arg3)
+      verify(underlying, never).trace(anyString, anyObject, anyObject, anyObject)
+    }
+  }
 }

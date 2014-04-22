@@ -67,4 +67,12 @@ final class Logger private (val underlying: Underlying) extends BaseLogger {
   override def debug(message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCause
 
   override def debug(message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgs
+
+  // Trace
+
+  override def trace(message: String): Unit = macro LoggerMacro.traceMessage
+
+  override def trace(message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCause
+
+  override def trace(message: String, args: AnyRef*): Unit = macro LoggerMacro.traceMessageArgs
 }

@@ -119,4 +119,28 @@ private object LoggerMacro {
       case _ => q"if ($underlying.isDebugEnabled) $underlying.debug($message, ..$args)"
     }
   }
+
+  // Trace
+
+  def traceMessage(c: LoggerContext)(message: c.Expr[String]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isTraceEnabled) $underlying.trace($message)"
+  }
+
+  def traceMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isTraceEnabled) $underlying.trace($message, $cause)"
+  }
+
+  def traceMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    (args.length: @switch) match {
+      case 1 => q"if ($underlying.isTraceEnabled) LoggerSupport.trace($underlying, $message, ${args(0)})"
+      case 2 => q"if ($underlying.isTraceEnabled) LoggerSupport.trace($underlying, $message, ${args(0)}, ${args(1)})"
+      case _ => q"if ($underlying.isTraceEnabled) $underlying.trace($message, ..$args)"
+    }
+  }
 }
