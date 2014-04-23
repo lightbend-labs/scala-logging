@@ -28,12 +28,12 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 - Modules (artifact id / name):
   - *scala-logging-api* if you just need the API
   - *scala-logging-slf4j* for the SLF4J-backed implementation
-- Latest release version is 2.1.0
+- Latest release version is 2.1.1
   
 The following example shows how to add a dependency to the latest version of Scala Logging to your sbt build definition:
 
 ```
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.0"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.1"
 ```
 
 ## Using Scala Logging ##
