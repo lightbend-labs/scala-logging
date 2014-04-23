@@ -18,7 +18,7 @@ package com.typesafe.scalalogging.slf4j;
 
 import org.slf4j.Logger;
 
-class LoggerSupport {
+public class LoggerSupport {
 
     // Error
 
