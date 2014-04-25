@@ -14,8 +14,8 @@ object Common {
     scalariformSettings ++
     List(
       organization := "com.typesafe.scala-logging",
-      scalaVersion := Version.scala,
-      crossScalaVersions := List(scalaVersion.value),
+      scalaVersion := Version.scala.head,
+      crossScalaVersions := Version.scala,
       scalacOptions ++= List(
         "-unchecked",
         "-deprecation",
