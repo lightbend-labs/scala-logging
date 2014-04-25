@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.typesafe.scalalogging.slf4j
+package com.typesafe.scalalogging
+package slf4j
 
 import scala.annotation.switch
 import scala.reflect.macros.blackbox.Context
