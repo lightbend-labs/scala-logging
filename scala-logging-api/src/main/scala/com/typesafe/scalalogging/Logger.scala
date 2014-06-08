@@ -16,109 +16,53 @@
 
 package com.typesafe.scalalogging
 
+import com.typesafe.scalalogging.macros.LoggerMacro
+import scala.language.experimental._
+
 /**
  * API for a performant logger based on macros.
  */
 trait Logger {
+  def adapter: LoggerAdapter
 
   // Error
 
-  def error(message: String): Unit
+  final def error(message: String): Unit = macro LoggerMacro.errorMessage
 
-  def error(message: String, cause: Throwable): Unit
+  final def error(message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
 
-  def error(message: String, args: AnyRef*): Unit
-
-  // Warn
-
-  def warn(message: String): Unit
-
-  def warn(message: String, cause: Throwable): Unit
-
-  def warn(message: String, args: AnyRef*): Unit
-
-  // Info
-
-  def info(message: String): Unit
-
-  def info(message: String, cause: Throwable): Unit
-
-  def info(message: String, args: AnyRef*): Unit
-
-  // Debug
-
-  def debug(message: String): Unit
-
-  def debug(message: String, cause: Throwable): Unit
-
-  def debug(message: String, args: AnyRef*): Unit
-
-  // Trace
-
-  def trace(message: String): Unit
-
-  def trace(message: String, cause: Throwable): Unit
-
-  def trace(message: String, args: AnyRef*): Unit
-}
-
-/**
- * Utility to keep [[Logger]] methods abstract, because term macros cannot override abstract methods.
- */
-private[scalalogging] class BaseLogger extends Logger {
-
-  // Error
-
-  override def error(message: String): Unit =
-    ???
-
-  override def error(message: String, cause: Throwable): Unit =
-    ???
-
-  override def error(message: String, args: AnyRef*): Unit =
-    ???
+  final def error(message: String, args: AnyRef*): Unit = macro LoggerMacro.errorMessageArgs
 
   // Warn
 
-  override def warn(message: String): Unit =
-    ???
+  final def warn(message: String): Unit = macro LoggerMacro.warnMessage
 
-  override def warn(message: String, cause: Throwable): Unit =
-    ???
+  final def warn(message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCause
 
-  override def warn(message: String, args: AnyRef*): Unit =
-    ???
+  final def warn(message: String, args: AnyRef*): Unit = macro LoggerMacro.warnMessageArgs
 
   // Info
 
-  override def info(message: String): Unit =
-    ???
+  final def info(message: String): Unit = macro LoggerMacro.infoMessage
 
-  override def info(message: String, cause: Throwable): Unit =
-    ???
+  final def info(message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCause
 
-  override def info(message: String, args: AnyRef*): Unit =
-    ???
+  final def info(message: String, args: AnyRef*): Unit = macro LoggerMacro.infoMessageArgs
 
   // Debug
 
-  override def debug(message: String): Unit =
-    ???
+  final def debug(message: String): Unit = macro LoggerMacro.debugMessage
 
-  override def debug(message: String, cause: Throwable): Unit =
-    ???
+  final def debug(message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCause
 
-  override def debug(message: String, args: AnyRef*): Unit =
-    ???
+  final def debug(message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgs
 
   // Trace
 
-  override def trace(message: String): Unit =
-    ???
+  final def trace(message: String): Unit = macro LoggerMacro.traceMessage
 
-  override def trace(message: String, cause: Throwable): Unit =
-    ???
+  final def trace(message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCause
 
-  override def trace(message: String, args: AnyRef*): Unit =
-    ???
+  final def trace(message: String, args: AnyRef*): Unit = macro LoggerMacro.traceMessageArgs
 }
+
