@@ -25,9 +25,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 Scala Logging is published to Sonatype OSS and Maven Central:
 
 - Group id / organization: *com.typesafe.scala-logging*
-- Modules (artifact id / name):
-  - *scala-logging-api* if you just need the API
-  - *scala-logging-slf4j* for the SLF4J-backed implementation
+- Module (artifact id / name): *scala-logging-slf4j* for the SLF4J-backed implementation
 - Latest release version is 2.1.2
   
 The following example shows how to add a dependency to the latest version of Scala Logging to your sbt build definition:
@@ -37,26 +35,17 @@ libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "
 ```
 
 ## Using Scala Logging ##
+The `com.typesafe.scalalogging.slf4j` package contains the following members:
 
-### API ###
-
-Scala Logging comes with a thin API layer, packaged in the *scala-logging-api* module, which is independent of a particular logging library. The `com.typesafe.scalalogging` package contains the following members:
-
-The `Logger` trait declares abstract logging methods like `error`, `info`, etc.
-
-The `Logging` trait declares the abstract `logger` member of type `Logger`, i.e. requires the class, into which this trait is mixed, to define a `Logger`.
-
-### SLF4J-backed implementation ###
-
-The implementation for SLF4J is packaged in the *scala-logging-slf4j* module. The `com.typesafe.scalalogging.slf4j` package contains the following members:
-
-The `Logger` class implements the `Logger` trait from the API package. It wraps an underlying SLF4J logger. Hence, in order to create a `Logger`, you have to pass a SLF4J logger to the `apply` factory method defined in the `Logger` companion object:
+The `Logger` class wraps an underlying SLF4J logger and provides methods like `error`, `info`, etc. In order to create a `Logger`, you have to pass a SLF4J logger to the `apply` factory method defined in the `Logger` companion object:
 
 ```
 val logger = Logger(LoggerFactory getLogger "name")
 ```
 
-The `LazyLogging` and `StrictLogging` traits implement the `Logging` trait from the API package. They define the `logger` member as a lazy or strict value respectively. In both cases the underlying SLF4J logger is named like the class into which these traits are mixed:
+The `Logging` trait declares the `logger` member of type `Logger`, i.e. requires the class, into which this trait is mixed, to define a `Logger`.
+
+The `LazyLogging` and `StrictLogging` traits implement the `Logging`. They define the `logger` member as a lazy or strict value respectively. In both cases the underlying SLF4J logger is named like the class into which these traits are mixed:
 
 ```
 class MyClass extends LazyLogging {

@@ -20,6 +20,52 @@ package slf4j
 import org.slf4j.{ Logger => Underlying }
 
 /**
+ * API for a performant logger based on macros.
+ */
+class Logger private[slf4j] (val underlying: Underlying) {
+
+  // Error
+
+  final def error(message: String): Unit = macro LoggerMacro.errorMessage
+
+  final def error(message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
+
+  final def error(message: String, args: AnyRef*): Unit = macro LoggerMacro.errorMessageArgs
+
+  // Warn
+
+  final def warn(message: String): Unit = macro LoggerMacro.warnMessage
+
+  final def warn(message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCause
+
+  final def warn(message: String, args: AnyRef*): Unit = macro LoggerMacro.warnMessageArgs
+
+  // Info
+
+  final def info(message: String): Unit = macro LoggerMacro.infoMessage
+
+  final def info(message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCause
+
+  final def info(message: String, args: AnyRef*): Unit = macro LoggerMacro.infoMessageArgs
+
+  // Debug
+
+  final def debug(message: String): Unit = macro LoggerMacro.debugMessage
+
+  final def debug(message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCause
+
+  final def debug(message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgs
+
+  // Trace
+
+  final def trace(message: String): Unit = macro LoggerMacro.traceMessage
+
+  final def trace(message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCause
+
+  final def trace(message: String, args: AnyRef*): Unit = macro LoggerMacro.traceMessageArgs
+}
+
+/**
  * Companion for [[Logger]].
  */
 object Logger {
@@ -27,7 +73,5 @@ object Logger {
   /**
    * Create a [[Logger]] wrapping the given underlying `org.slf4j.Logger`.
    */
-  def apply(underlying: Underlying): Logger = new Logger {
-    def adapter: LoggerAdapter = new Slf4jLoggerAdapter(underlying)
-  }
+  def apply(underlying: Underlying): Logger = new Logger(underlying)
 }
