@@ -2,11 +2,7 @@
 // Subprojects
 // ###########
 
-lazy val scalaLoggingApi =
-  Project("scala-logging-api", file("scala-logging-api"))
-
-lazy val scalaLoggingSlf4j =
-  Project("scala-logging-slf4j", file("scala-logging-slf4j")) dependsOn scalaLoggingApi
+lazy val scalaLoggingSlf4j = Project("scala-logging-slf4j", file("scala-logging-slf4j"))
 
 // ##############
 // Build settings

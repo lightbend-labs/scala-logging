@@ -17,13 +17,15 @@
 package com.typesafe.scalalogging
 package slf4j
 
+import org.slf4j.{ Logger => Underlying }
 import scala.annotation.switch
 import scala.reflect.macros.blackbox.Context
 
 private object LoggerMacro {
 
-  type LoggerContext = Context { type PrefixType = Logger }
-
+  type LoggerContext = Context {
+    type PrefixType = Logging
+  }
   // Error
 
   def errorMessage(c: LoggerContext)(message: c.Expr[String]) = {
@@ -42,8 +44,8 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     (args.length: @switch) match {
-      case 1 => q"if ($underlying.isErrorEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.error($underlying, $message, ${args(0)})"
-      case 2 => q"if ($underlying.isErrorEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.error($underlying, $message, ${args(0)}, ${args(1)})"
+      case 1 => q"if ($underlying.isErrorEnabled) $underlying.error($message, ${args(0)})"
+      case 2 => q"if ($underlying.isErrorEnabled) $underlying.error($message, ${args(0)}, ${args(1)}: Any)"
       case _ => q"if ($underlying.isErrorEnabled) $underlying.error($message, ..$args)"
     }
   }
@@ -66,8 +68,8 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     (args.length: @switch) match {
-      case 1 => q"if ($underlying.isWarnEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.warn($underlying, $message, ${args(0)})"
-      case 2 => q"if ($underlying.isWarnEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.warn($underlying, $message, ${args(0)}, ${args(1)})"
+      case 1 => q"if ($underlying.isWarnEnabled) $underlying.warn($message, ${args(0)})"
+      case 2 => q"if ($underlying.isWarnEnabled) $underlying.warn($message, ${args(0)}, ${args(1)}: Any)"
       case _ => q"if ($underlying.isWarnEnabled) $underlying.warn($message, ..$args)"
     }
   }
@@ -90,8 +92,8 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     (args.length: @switch) match {
-      case 1 => q"if ($underlying.isInfoEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.info($underlying, $message, ${args(0)})"
-      case 2 => q"if ($underlying.isInfoEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.info($underlying, $message, ${args(0)}, ${args(1)})"
+      case 1 => q"if ($underlying.isInfoEnabled) $underlying.info($message, ${args(0)})"
+      case 2 => q"if ($underlying.isInfoEnabled) $underlying.info($message, ${args(0)}, ${args(1)}: Any)"
       case _ => q"if ($underlying.isInfoEnabled) $underlying.info($message, ..$args)"
     }
   }
@@ -114,8 +116,8 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     (args.length: @switch) match {
-      case 1 => q"if ($underlying.isDebugEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.debug($underlying, $message, ${args(0)})"
-      case 2 => q"if ($underlying.isDebugEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.debug($underlying, $message, ${args(0)}, ${args(1)})"
+      case 1 => q"if ($underlying.isDebugEnabled) $underlying.debug($message, ${args(0)})"
+      case 2 => q"if ($underlying.isDebugEnabled) $underlying.debug($message, ${args(0)}, ${args(1)}: Any)"
       case _ => q"if ($underlying.isDebugEnabled) $underlying.debug($message, ..$args)"
     }
   }
@@ -138,8 +140,8 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     (args.length: @switch) match {
-      case 1 => q"if ($underlying.isTraceEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.trace($underlying, $message, ${args(0)})"
-      case 2 => q"if ($underlying.isTraceEnabled) com.typesafe.scalalogging.slf4j.LoggerSupport.trace($underlying, $message, ${args(0)}, ${args(1)})"
+      case 1 => q"if ($underlying.isTraceEnabled) $underlying.trace($message, ${args(0)})"
+      case 2 => q"if ($underlying.isTraceEnabled) $underlying.trace($message, ${args(0)}, ${args(1)}: Any)"
       case _ => q"if ($underlying.isTraceEnabled) $underlying.trace($message, ..$args)"
     }
   }

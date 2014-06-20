@@ -20,6 +20,14 @@ package slf4j
 import org.slf4j.LoggerFactory
 
 /**
+ * Requires the member `logger` of type [[Logger]] to be defined in the class into which this trait is mixed.
+ */
+trait Logging {
+
+  protected def logger: Logger
+}
+
+/**
  * Defines `logger` as a lazy value initialized with an underlying `org.slf4j.Logger`
  * named like the class into which this trait is mixed.
  */

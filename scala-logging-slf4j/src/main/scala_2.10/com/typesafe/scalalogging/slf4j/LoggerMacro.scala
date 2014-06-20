@@ -17,14 +17,15 @@
 package com.typesafe.scalalogging
 package slf4j
 
-import org.slf4j.Marker
+import org.slf4j.{ Logger => Underlying }
 import scala.annotation.switch
 import scala.reflect.macros.Context
 
 private object LoggerMacro {
 
-  type LoggerContext = Context { type PrefixType = Logger }
-
+  type LoggerContext = Context {
+    type PrefixType = Logger
+  }
   // Error
 
   def errorMessage(c: LoggerContext)(message: c.Expr[String]) =
@@ -38,12 +39,12 @@ private object LoggerMacro {
       case 1 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isErrorEnabled)
-            LoggerSupport.error(c.prefix.splice.underlying, message.splice, args(0).splice)
+            c.prefix.splice.underlying.error(message.splice, args(0).splice)
         )
       case 2 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isErrorEnabled)
-            LoggerSupport.error(c.prefix.splice.underlying, message.splice, args(0).splice, args(1).splice)
+            c.prefix.splice.underlying.error(message.splice, args(0).splice, args(1).splice: Any)
         )
       case _ =>
         logParams(c)(message, args)("error")
@@ -68,12 +69,12 @@ private object LoggerMacro {
       case 1 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isWarnEnabled)
-            LoggerSupport.warn(c.prefix.splice.underlying, message.splice, args(0).splice)
+            c.prefix.splice.underlying.warn(message.splice, args(0).splice)
         )
       case 2 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isWarnEnabled)
-            LoggerSupport.warn(c.prefix.splice.underlying, message.splice, args(0).splice, args(1).splice)
+            c.prefix.splice.underlying.warn(message.splice, args(0).splice, args(1).splice: Any)
         )
       case _ =>
         logParams(c)(message, args)("warn")
@@ -98,12 +99,12 @@ private object LoggerMacro {
       case 1 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isInfoEnabled)
-            LoggerSupport.info(c.prefix.splice.underlying, message.splice, args(0).splice)
+            c.prefix.splice.underlying.info(message.splice, args(0).splice)
         )
       case 2 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isInfoEnabled)
-            LoggerSupport.info(c.prefix.splice.underlying, message.splice, args(0).splice, args(1).splice)
+            c.prefix.splice.underlying.info(message.splice, args(0).splice, args(1).splice: Any)
         )
       case _ =>
         logParams(c)(message, args)("info")
@@ -128,12 +129,12 @@ private object LoggerMacro {
       case 1 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isDebugEnabled)
-            LoggerSupport.debug(c.prefix.splice.underlying, message.splice, args(0).splice)
+            c.prefix.splice.underlying.debug(message.splice, args(0).splice)
         )
       case 2 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isDebugEnabled)
-            LoggerSupport.debug(c.prefix.splice.underlying, message.splice, args(0).splice, args(1).splice)
+            c.prefix.splice.underlying.debug(message.splice, args(0).splice, args(1).splice: Any)
         )
       case _ =>
         logParams(c)(message, args)("debug")
@@ -158,12 +159,12 @@ private object LoggerMacro {
       case 1 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isTraceEnabled)
-            LoggerSupport.trace(c.prefix.splice.underlying, message.splice, args(0).splice)
+            c.prefix.splice.underlying.trace(message.splice, args(0).splice)
         )
       case 2 =>
         c.universe.reify(
           if (c.prefix.splice.underlying.isTraceEnabled)
-            LoggerSupport.trace(c.prefix.splice.underlying, message.splice, args(0).splice, args(1).splice)
+            c.prefix.splice.underlying.trace(message.splice, args(0).splice, args(1).splice: Any)
         )
       case _ =>
         logParams(c)(message, args)("trace")
