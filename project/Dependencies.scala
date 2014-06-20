@@ -20,12 +20,8 @@ object Dependencies {
 
   import Library._
 
-  def scalaLoggingSlf4jMacro(scalaVersion: String) = List (
+  def scalaLoggingSlf4j(scalaVersion: String) = List(
     scalaReflect % scalaVersion,
-    slf4jApi
-  )
-
-  val scalaLoggingSlf4j = List(
     slf4jApi,
     scalaTest % "test",
     mockitoAll % "test",

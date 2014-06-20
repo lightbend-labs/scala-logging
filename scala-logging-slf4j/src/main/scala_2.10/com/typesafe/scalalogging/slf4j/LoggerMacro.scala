@@ -24,9 +24,7 @@ import scala.reflect.macros.Context
 private object LoggerMacro {
 
   type LoggerContext = Context {
-    type PrefixType = {
-      def underlying: Underlying
-    }
+    type PrefixType = Logger
   }
   // Error
 
