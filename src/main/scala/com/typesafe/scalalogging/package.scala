@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Heiko Seeberger
+ * Copyright 2014 Typesafe Inc. <http://www.typesafe.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.typesafe.scala-logging
+package com.typesafe
 
 package object scalalogging {
 
