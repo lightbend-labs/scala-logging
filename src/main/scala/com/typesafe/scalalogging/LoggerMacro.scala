@@ -17,6 +17,7 @@
 package com.typesafe.scalalogging
 
 import scala.reflect.macros.blackbox.Context
+import org.slf4j.Marker
 
 private object LoggerMacro {
 
@@ -45,6 +46,27 @@ private object LoggerMacro {
       q"if ($underlying.isErrorEnabled) $underlying.error($message, ..$args)"
   }
 
+  def errorMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message)"
+  }
+
+  def errorMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, $cause)"
+  }
+
+  def errorMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    if (args.length == 2)
+      q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+    else
+      q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, ..$args)"
+  }
+
   // Warn
 
   def warnMessage(c: LoggerContext)(message: c.Expr[String]) = {
@@ -66,6 +88,27 @@ private object LoggerMacro {
       q"if ($underlying.isWarnEnabled) $underlying.warn($message, List(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isWarnEnabled) $underlying.warn($message, ..$args)"
+  }
+
+  def warnMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message)"
+  }
+
+  def warnMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, $cause)"
+  }
+
+  def warnMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    if (args.length == 2)
+      q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+    else
+      q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, ..$args)"
   }
 
   // Info
@@ -91,6 +134,27 @@ private object LoggerMacro {
       q"if ($underlying.isInfoEnabled) $underlying.info($message, ..$args)"
   }
 
+  def infoMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message)"
+  }
+
+  def infoMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, $cause)"
+  }
+
+  def infoMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    if (args.length == 2)
+      q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+    else
+      q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, ..$args)"
+  }
+
   // Debug
 
   def debugMessage(c: LoggerContext)(message: c.Expr[String]) = {
@@ -112,6 +176,27 @@ private object LoggerMacro {
       q"if ($underlying.isDebugEnabled) $underlying.debug($message, List(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isDebugEnabled) $underlying.debug($message, ..$args)"
+  }
+
+  def debugMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message)"
+  }
+
+  def debugMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, $cause)"
+  }
+
+  def debugMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    if (args.length == 2)
+      q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+    else
+      q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, ..$args)"
   }
 
   // Trace
@@ -136,4 +221,26 @@ private object LoggerMacro {
     else
       q"if ($underlying.isTraceEnabled) $underlying.trace($message, ..$args)"
   }
+
+  def traceMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message)"
+  }
+
+  def traceMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, $cause)"
+  }
+
+  def traceMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    if (args.length == 2)
+      q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+    else
+      q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, ..$args)"
+  }
+
 }

@@ -17,6 +17,9 @@
 package com.typesafe.scalalogging
 
 import org.slf4j.{ Logger => Underlying }
+import org.slf4j.Marker
+
+import scala.language.experimental.macros
 
 /**
  * Companion for [[Logger]], providing a factory for [[Logger]]s.
@@ -43,6 +46,12 @@ final class Logger private (val underlying: Underlying) {
 
   def error(message: String, args: AnyRef*): Unit = macro LoggerMacro.errorMessageArgs
 
+  def error(marker: Marker, message: String): Unit = macro LoggerMacro.errorMessageMarker
+
+  def error(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCauseMarker
+
+  def error(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.errorMessageArgsMarker
+
   // Warn
 
   def warn(message: String): Unit = macro LoggerMacro.warnMessage
@@ -50,6 +59,12 @@ final class Logger private (val underlying: Underlying) {
   def warn(message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCause
 
   def warn(message: String, args: AnyRef*): Unit = macro LoggerMacro.warnMessageArgs
+
+  def warn(marker: Marker, message: String): Unit = macro LoggerMacro.warnMessageMarker
+
+  def warn(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCauseMarker
+
+  def warn(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.warnMessageArgsMarker
 
   // Info
 
@@ -59,6 +74,12 @@ final class Logger private (val underlying: Underlying) {
 
   def info(message: String, args: AnyRef*): Unit = macro LoggerMacro.infoMessageArgs
 
+  def info(marker: Marker, message: String): Unit = macro LoggerMacro.infoMessageMarker
+
+  def info(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCauseMarker
+
+  def info(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.infoMessageArgsMarker
+
   // Debug
 
   def debug(message: String): Unit = macro LoggerMacro.debugMessage
@@ -67,6 +88,12 @@ final class Logger private (val underlying: Underlying) {
 
   def debug(message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgs
 
+  def debug(marker: Marker, message: String): Unit = macro LoggerMacro.debugMessageMarker
+
+  def debug(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCauseMarker
+
+  def debug(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgsMarker
+
   // Trace
 
   def trace(message: String): Unit = macro LoggerMacro.traceMessage
@@ -74,4 +101,11 @@ final class Logger private (val underlying: Underlying) {
   def trace(message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCause
 
   def trace(message: String, args: AnyRef*): Unit = macro LoggerMacro.traceMessageArgs
+
+  def trace(marker: Marker, message: String): Unit = macro LoggerMacro.traceMessageMarker
+
+  def trace(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCauseMarker
+
+  def trace(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.traceMessageArgsMarker
+
 }
