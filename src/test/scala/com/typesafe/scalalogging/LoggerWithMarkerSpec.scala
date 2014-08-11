@@ -17,7 +17,6 @@
 package com.typesafe.scalalogging
 
 import java.util.NoSuchElementException
-
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }

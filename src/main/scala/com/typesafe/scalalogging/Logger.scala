@@ -19,8 +19,6 @@ package com.typesafe.scalalogging
 import org.slf4j.{ Logger => Underlying }
 import org.slf4j.Marker
 
-import scala.language.experimental.macros
-
 /**
  * Companion for [[Logger]], providing a factory for [[Logger]]s.
  */

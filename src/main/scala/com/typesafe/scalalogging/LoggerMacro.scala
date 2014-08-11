@@ -16,8 +16,8 @@
 
 package com.typesafe.scalalogging
 
-import scala.reflect.macros.blackbox.Context
 import org.slf4j.Marker
+import scala.reflect.macros.blackbox.Context
 
 private object LoggerMacro {
 
