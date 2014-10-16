@@ -16,8 +16,7 @@
 
 package com.typesafe.scalalogging
 
-import org.slf4j.{ Logger => Underlying }
-import org.slf4j.Marker
+import org.slf4j.{ Marker, Logger => Underlying }
 
 /**
  * Companion for [[Logger]], providing a factory for [[Logger]]s.
@@ -50,6 +49,8 @@ final class Logger private (val underlying: Underlying) {
 
   def error(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.errorMessageArgsMarker
 
+  def error[T](block: => T): T = macro LoggerMacro.errorMessageBlock
+
   // Warn
 
   def warn(message: String): Unit = macro LoggerMacro.warnMessage
@@ -63,6 +64,8 @@ final class Logger private (val underlying: Underlying) {
   def warn(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCauseMarker
 
   def warn(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.warnMessageArgsMarker
+
+  def warn[T](block: => T): T = macro LoggerMacro.warnMessageBlock
 
   // Info
 
@@ -78,6 +81,8 @@ final class Logger private (val underlying: Underlying) {
 
   def info(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.infoMessageArgsMarker
 
+  def info[T](block: => T): T = macro LoggerMacro.infoMessageBlock
+
   // Debug
 
   def debug(message: String): Unit = macro LoggerMacro.debugMessage
@@ -91,6 +96,8 @@ final class Logger private (val underlying: Underlying) {
   def debug(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCauseMarker
 
   def debug(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgsMarker
+
+  def debug[T](block: => T): T = macro LoggerMacro.debugMessageBlock
 
   // Trace
 
@@ -106,4 +113,5 @@ final class Logger private (val underlying: Underlying) {
 
   def trace(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.traceMessageArgsMarker
 
+  def trace[T](block: => T): T = macro LoggerMacro.traceMessageBlock
 }
