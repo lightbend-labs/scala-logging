@@ -1,8 +1,14 @@
+import com.typesafe.sbt.osgi.SbtOsgi._
+
 lazy val scalaLogging = project in file(".")
 
 name := "scala-logging"
 
-Common.settings
+Common.settings ++ defaultOsgiSettings ++ Seq(
+  packageBin in Runtime <<= OsgiKeys.bundle,
+  packagedArtifact in (Compile, packageBin) <<= (artifact in (Compile, packageBin), OsgiKeys.bundle).identityMap,
+  OsgiKeys.exportPackage := Seq("com.typesafe.scalalogging")
+)
 
 libraryDependencies ++= Dependencies.scalaLogging
 
