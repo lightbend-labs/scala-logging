@@ -52,6 +52,11 @@ class MyClass extends LazyLogging {
 }
 ```
 
+## Maintainer ##
+
+The original author [Heiko Seeberger](https://twitter.com/hseeberger) stepped down Q1 2015, starting a new adventure at codecentric. Future maintenance is taken 
+over by [Mathias Bogaert](http://twitter.com/analytically).
+
 ## Contribution policy ##
 
 Contributions via GitHub pull requests are gladly accepted from their original author. Before we can accept pull requests, you will need to agree to the [Typesafe Contributor License Agreement](http://www.typesafe.com/contribute/cla) online, using your GitHub account.

@@ -67,6 +67,11 @@ object Common {
             <name>Heiko Seeberger</name>
             <url>http://heikoseeberger.de</url>
           </developer>
+          <developer>
+            <id>analytically</id>
+            <name>Mathias Bogaert</name>
+            <url>http://twitter.com/analytically</url>
+          </developer>
         </developers>
     )
 
