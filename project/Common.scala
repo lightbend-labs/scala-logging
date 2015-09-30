@@ -1,4 +1,4 @@
-import com.typesafe.sbt.SbtPgp._
+import com.typesafe.sbt.pgp._
 import com.typesafe.sbt.SbtScalariform._
 import sbt._
 import sbt.Keys._
