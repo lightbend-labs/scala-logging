@@ -17,6 +17,7 @@
 package com.typesafe.scalalogging
 
 import org.slf4j.Marker
+
 import scala.reflect.macros.blackbox.Context
 
 private object LoggerMacro {
@@ -67,6 +68,17 @@ private object LoggerMacro {
       q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, ..$args)"
   }
 
+  def errorMessageBlock(c: LoggerContext)(block: c.Tree) = {
+    import c.universe._
+    val q"..$stats" = block
+    val underlying = q"${c.prefix}.underlying"
+    val loggedStats = stats.flatMap { stat =>
+      val msg = "executing " + showCode(stat)
+      List(q"if ($underlying.isErrorEnabled) $underlying.error($msg)", stat)
+    }
+    q"..$loggedStats"
+  }
+
   // Warn
 
   def warnMessage(c: LoggerContext)(message: c.Expr[String]) = {
@@ -109,6 +121,17 @@ private object LoggerMacro {
       q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, List(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, ..$args)"
+  }
+
+  def warnMessageBlock(c: LoggerContext)(block: c.Tree) = {
+    import c.universe._
+    val q"..$stats" = block
+    val underlying = q"${c.prefix}.underlying"
+    val loggedStats = stats.flatMap { stat =>
+      val msg = "executing " + showCode(stat)
+      List(q"if ($underlying.isWarnEnabled) $underlying.warn($msg)", stat)
+    }
+    q"..$loggedStats"
   }
 
   // Info
@@ -155,6 +178,17 @@ private object LoggerMacro {
       q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, ..$args)"
   }
 
+  def infoMessageBlock(c: LoggerContext)(block: c.Tree) = {
+    import c.universe._
+    val q"..$stats" = block
+    val underlying = q"${c.prefix}.underlying"
+    val loggedStats = stats.flatMap { stat =>
+      val msg = "executing " + showCode(stat)
+      List(q"if ($underlying.isInfoEnabled) $underlying.info($msg)", stat)
+    }
+    q"..$loggedStats"
+  }
+
   // Debug
 
   def debugMessage(c: LoggerContext)(message: c.Expr[String]) = {
@@ -197,6 +231,17 @@ private object LoggerMacro {
       q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, List(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, ..$args)"
+  }
+
+  def debugMessageBlock(c: LoggerContext)(block: c.Tree) = {
+    import c.universe._
+    val q"..$stats" = block
+    val underlying = q"${c.prefix}.underlying"
+    val loggedStats = stats.flatMap { stat =>
+      val msg = "executing " + showCode(stat)
+      List(q"if ($underlying.isDebugEnabled) $underlying.debug($msg)", stat)
+    }
+    q"..$loggedStats"
   }
 
   // Trace
@@ -243,4 +288,14 @@ private object LoggerMacro {
       q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, ..$args)"
   }
 
+  def traceMessageBlock(c: LoggerContext)(block: c.Tree) = {
+    import c.universe._
+    val q"..$stats" = block
+    val underlying = q"${c.prefix}.underlying"
+    val loggedStats = stats.flatMap { stat =>
+      val msg = "executing " + showCode(stat)
+      List(q"if ($underlying.isTraceEnabled) $underlying.trace($msg)", stat)
+    }
+    q"..$loggedStats"
+  }
 }

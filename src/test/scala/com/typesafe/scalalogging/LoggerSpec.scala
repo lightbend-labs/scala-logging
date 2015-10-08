@@ -18,9 +18,9 @@ package com.typesafe.scalalogging
 
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.slf4j.{ Logger => Underlying }
-import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.mock.MockitoSugar
+import org.scalatest.{ Matchers, WordSpec }
+import org.slf4j.{ Logger => Underlying }
 
 class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
 
@@ -85,6 +85,29 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
+  "Calling error with a block" should {
+
+    "call the underlying logger's error message if the error level is enabled" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      val result: String = logger.error {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying).error(s"executing f.arg1")
+    }
+
+    "not call the underlying logger's error method if the error level is not enabled" in {
+      val f = fixture(_.isErrorEnabled, false)
+      import f._
+      val result: String = logger.error {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying, never).error(msg, List(arg1): _*)
+    }
+  }
+
   // Warn
 
   "Calling warn with a message" should {
@@ -143,6 +166,29 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying, never).warn(msg, List(arg1, arg2): _*)
       logger.warn(msg, arg1, arg2, arg3)
       verify(underlying, never).warn(msg, arg1, arg2, arg3)
+    }
+  }
+
+  "Calling warn with a block" should {
+
+    "call the underlying logger's warn message if the warn level is enabled" in {
+      val f = fixture(_.isWarnEnabled, true)
+      import f._
+      val result: String = logger.warn {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying).warn(s"executing f.arg1")
+    }
+
+    "not call the underlying logger's warn method if the warn level is not enabled" in {
+      val f = fixture(_.isWarnEnabled, false)
+      import f._
+      val result: String = logger.warn {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying, never).warn(msg, List(arg1): _*)
     }
   }
 
@@ -207,6 +253,29 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
+  "Calling info with a block" should {
+
+    "call the underlying logger's warn message if the warn level is enabled" in {
+      val f = fixture(_.isInfoEnabled, true)
+      import f._
+      val result: String = logger.info {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying).info(s"executing f.arg1")
+    }
+
+    "not call the underlying logger's warn method if the warn level is not enabled" in {
+      val f = fixture(_.isInfoEnabled, false)
+      import f._
+      val result: String = logger.info {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying, never).info(msg, List(arg1): _*)
+    }
+  }
+
   // Debug
 
   "Calling debug with a message" should {
@@ -268,6 +337,29 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
+  "Calling debug with a block" should {
+
+    "call the underlying logger's warn message if the warn level is enabled" in {
+      val f = fixture(_.isDebugEnabled, true)
+      import f._
+      val result: String = logger.debug {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying).debug(s"executing f.arg1")
+    }
+
+    "not call the underlying logger's warn method if the warn level is not enabled" in {
+      val f = fixture(_.isDebugEnabled, false)
+      import f._
+      val result: String = logger.debug {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying, never).debug(msg, List(arg1): _*)
+    }
+  }
+
   // Trace
 
   "Calling trace with a message" should {
@@ -326,6 +418,29 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying, never).trace(msg, List(arg1, arg2): _*)
       logger.trace(msg, arg1, arg2, arg3)
       verify(underlying, never).trace(msg, arg1, arg2, arg3)
+    }
+  }
+
+  "Calling trace with a block" should {
+
+    "call the underlying logger's trace message if the trace level is enabled" in {
+      val f = fixture(_.isTraceEnabled, true)
+      import f._
+      val result: String = logger.trace {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying).trace(s"executing f.arg1")
+    }
+
+    "not call the underlying logger's trace method if the trace level is not enabled" in {
+      val f = fixture(_.isTraceEnabled, false)
+      import f._
+      val result: String = logger.trace {
+        arg1
+      }
+      result shouldEqual (arg1)
+      verify(underlying, never).trace(msg, List(arg1): _*)
     }
   }
 
