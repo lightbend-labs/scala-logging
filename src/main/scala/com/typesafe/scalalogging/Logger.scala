@@ -34,7 +34,8 @@ object Logger {
 /**
  * Implementation for a performant logger based on macros and an underlying `org.slf4j.Logger`.
  */
-final class Logger private (val underlying: Underlying) {
+@SerialVersionUID(538248225L)
+final class Logger private (val underlying: Underlying) extends Serializable {
 
   // Error
 
