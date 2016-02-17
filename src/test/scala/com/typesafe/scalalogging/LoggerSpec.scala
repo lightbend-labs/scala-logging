@@ -16,6 +16,8 @@
 
 package com.typesafe.scalalogging
 
+import java.io._
+
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }
@@ -326,6 +328,37 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying, never).trace(msg, List(arg1, arg2): _*)
       logger.trace(msg, arg1, arg2, arg3)
       verify(underlying, never).trace(msg, arg1, arg2, arg3)
+    }
+  }
+
+  "Serializing Logger" should {
+
+    def serialize(logger: Logger): Array[Byte] = {
+      val byteArrayStream = new ByteArrayOutputStream
+      val out = new ObjectOutputStream(byteArrayStream)
+
+      out.writeObject(logger)
+      out.close
+      byteArrayStream.close
+
+      byteArrayStream.toByteArray
+    }
+
+    def deserialize(array: Array[Byte]): Logger = {
+      val byteArrayStream = new ByteArrayInputStream(array)
+      val in = new ObjectInputStream(byteArrayStream)
+
+      val logger = in.readObject.asInstanceOf[Logger]
+      in.close
+      byteArrayStream.close
+
+      logger
+    }
+
+    "be usable after deserialization" in {
+      val logger = deserialize(serialize(Logger(org.slf4j.LoggerFactory.getLogger("test"))))
+
+      logger.trace("Back from deserialization")
     }
   }
 
