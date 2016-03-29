@@ -18,7 +18,13 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 
 * Java 6 or higher
 * Scala 2.11
-* Logging backend compatible with SLF4J, e.g. [Logback](http://logback.qos.ch)
+* Logging backend compatible with SLF4J
+
+One logging backend can be [Logback](http://logback.qos.ch), you can add it to your sbt build definition (the most recent version can be found here: http://logback.qos.ch/download.html):
+
+```
+libraryDependencies += "ch.qos.logback" %  "logback-classic" % "1.1.6"
+```
 
 If you are looking for a version compatible with Scala 2.10, check out Scala Logging 2.x.
 
