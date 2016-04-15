@@ -4,13 +4,13 @@ Scala Logging is a **convenient** and **performant** logging library wrapping [S
 
 It's convenient, because you can simply call log methods without checking whether the respective log level is enabled:
 
-```
+```scala
 logger.debug(s"Some $expensive message!")
 ```
 
 It's performant, because thanks to Scala macros the *check-enabled-idiom* is applied, just like writing this more involved code:
 
-```
+```scala
 if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 ```
 
@@ -22,7 +22,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 
 One logging backend can be [Logback](http://logback.qos.ch), you can add it to your sbt build definition (the most recent version can be found here: http://logback.qos.ch/download.html):
 
-```
+```scala
 libraryDependencies += "ch.qos.logback" %  "logback-classic" % "1.1.7"
 ```
 
@@ -38,7 +38,7 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 
 The following example shows how to add a dependency to the latest version of Scala Logging to your sbt build definition:
 
-```
+```scala
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0"
 ```
 
@@ -51,13 +51,13 @@ deserialized logger instances are fully functional.
 
 The `Logger` class from the `com.typesafe.scalalogging` package wraps an underlying SLF4J logger. Hence, in order to create a `Logger`, you have to pass a SLF4J logger to the `apply` factory method defined in the `Logger` companion object:
 
-```
+```scala
 val logger = Logger(LoggerFactory.getLogger("name"))
 ```
 
 The `LazyLogging` and `StrictLogging` traits from the `com.typesafe.scalalogging` package define the `logger` member as a lazy or strict value respectively. In both cases the underlying SLF4J logger is named according to the class into which these traits are mixed:
 
-```
+```scala
 class MyClass extends LazyLogging {
   logger.debug("This is very convenient ;-)")
 }
@@ -67,7 +67,7 @@ class MyClass extends LazyLogging {
 
 Using the sourcecode library, it's possible to add line number information (especially useful for debugging):
 
-```
+```scala
 def foo(arg: String)(implicit line: sourcecode.Line, file: sourcecode.File) = {
   ... do something with arg ...
   ... do something with file.value ...
