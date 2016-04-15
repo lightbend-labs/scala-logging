@@ -68,7 +68,7 @@ class MyClass extends LazyLogging {
 Using the sourcecode library, it's possible to add line number information (especially useful for debugging):
 
 ```
-def foo(arg: String)(implicit file: sourcecode.File) = {
+def foo(arg: String)(implicit line: sourcecode.Line, file: sourcecode.File) = {
   ... do something with arg ...
   ... do something with file.value ...
 }
