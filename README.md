@@ -74,9 +74,14 @@ def foo(arg: String)(implicit line: sourcecode.Line, file: sourcecode.File) = {
 }
 
 foo("hello") // the implicit sourcecode.File is filled in automatically
-
-https://github.com/lihaoyi/sourcecode
+[https://github.com/lihaoyi/sourcecode](https://github.com/lihaoyi/sourcecode#logging)
 ```
+
+## Debugging Scala in IntelliJ
+
+Check out [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug) to make multithreaded bug tracing and
+prevention easier than ever with scala trace debug. Provides user-friendly prints, traces, assertions,
+container printing, and source code printing.
 
 ## Maintainer ##
 
