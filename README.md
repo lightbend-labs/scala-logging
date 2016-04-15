@@ -63,6 +63,20 @@ class MyClass extends LazyLogging {
 }
 ```
 
+## Line numbers in log message?
+
+Using the sourcecode library, it's possible to add line number information (especially useful for debugging):
+
+```
+def foo(arg: String)(implicit file: sourcecode.File) = {
+  ... do something with arg ...
+  ... do something with file.value ...
+}
+
+foo("hello") // the implicit sourcecode.File is filled in automatically
+https://github.com/lihaoyi/sourcecode#logging
+```
+
 ## Maintainer ##
 
 The original author [Heiko Seeberger](https://twitter.com/hseeberger) stepped down Q1 2015, starting a new adventure at codecentric. Future maintenance is taken 
