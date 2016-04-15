@@ -88,6 +88,10 @@ container printing, and source code printing.
 Check out [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder) if you're using [Logstash](https://www.elastic.co/products/logstash).
 Provides logback encoders, layouts, and appenders to log in JSON format.
 
+## Other noteworthy tooling
+
+ - https://github.com/godaddy/godaddy-logger
+
 ## Maintainer ##
 
 The original author [Heiko Seeberger](https://twitter.com/hseeberger) stepped down Q1 2015, starting a new adventure at codecentric. Future maintenance is taken 
