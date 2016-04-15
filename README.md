@@ -42,10 +42,20 @@ The following example shows how to add a dependency to the latest version of Sca
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0"
 ```
 
-#### New in 3.2.0
+### What's new?
 
-SLF4J loggers and our Logger now survive serialization. By survive serialization, we mean that the
-deserialized logger instances are fully functional.
+#### 3.4.0
+
+ - Fixes #38 - Logger.info() cannot be used with primitive types.
+
+#### 3.3.0
+
+ - Fixes #42 - Request: Add Logger(class). README changes.
+
+#### 3.2.0
+
+ - SLF4J loggers and our Logger now survive serialization. By survive serialization, we mean that the
+   deserialized logger instances are fully functional.
 
 ## Using Scala Logging ##
 
