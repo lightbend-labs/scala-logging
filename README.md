@@ -83,6 +83,11 @@ Check out [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug) 
 prevention easier than ever with scala trace debug. Provides user-friendly prints, traces, assertions,
 container printing, and source code printing.
 
+## Logstash
+
+Check out [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder) if you're using [Logstash](https://www.elastic.co/products/logstash).
+Provides logback encoders, layouts, and appenders to log in JSON format.
+
 ## Maintainer ##
 
 The original author [Heiko Seeberger](https://twitter.com/hseeberger) stepped down Q1 2015, starting a new adventure at codecentric. Future maintenance is taken 
