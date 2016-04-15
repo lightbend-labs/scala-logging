@@ -74,7 +74,8 @@ def foo(arg: String)(implicit line: sourcecode.Line, file: sourcecode.File) = {
 }
 
 foo("hello") // the implicit sourcecode.File is filled in automatically
-https://github.com/lihaoyi/sourcecode#logging
+
+https://github.com/lihaoyi/sourcecode
 ```
 
 ## Maintainer ##
