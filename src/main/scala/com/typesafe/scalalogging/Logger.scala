@@ -48,13 +48,13 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def error(message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
 
-  def error(message: String, args: AnyRef*): Unit = macro LoggerMacro.errorMessageArgs
+  def error(message: String, args: Any*): Unit = macro LoggerMacro.errorMessageArgs
 
   def error(marker: Marker, message: String): Unit = macro LoggerMacro.errorMessageMarker
 
   def error(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCauseMarker
 
-  def error(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.errorMessageArgsMarker
+  def error(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.errorMessageArgsMarker
 
   // Warn
 
@@ -62,13 +62,13 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def warn(message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCause
 
-  def warn(message: String, args: AnyRef*): Unit = macro LoggerMacro.warnMessageArgs
+  def warn(message: String, args: Any*): Unit = macro LoggerMacro.warnMessageArgs
 
   def warn(marker: Marker, message: String): Unit = macro LoggerMacro.warnMessageMarker
 
   def warn(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCauseMarker
 
-  def warn(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.warnMessageArgsMarker
+  def warn(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.warnMessageArgsMarker
 
   // Info
 
@@ -76,13 +76,13 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def info(message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCause
 
-  def info(message: String, args: AnyRef*): Unit = macro LoggerMacro.infoMessageArgs
+  def info(message: String, args: Any*): Unit = macro LoggerMacro.infoMessageArgs
 
   def info(marker: Marker, message: String): Unit = macro LoggerMacro.infoMessageMarker
 
   def info(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCauseMarker
 
-  def info(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.infoMessageArgsMarker
+  def info(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.infoMessageArgsMarker
 
   // Debug
 
@@ -90,13 +90,13 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def debug(message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCause
 
-  def debug(message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgs
+  def debug(message: String, args: Any*): Unit = macro LoggerMacro.debugMessageArgs
 
   def debug(marker: Marker, message: String): Unit = macro LoggerMacro.debugMessageMarker
 
   def debug(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCauseMarker
 
-  def debug(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.debugMessageArgsMarker
+  def debug(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.debugMessageArgsMarker
 
   // Trace
 
@@ -104,12 +104,12 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def trace(message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCause
 
-  def trace(message: String, args: AnyRef*): Unit = macro LoggerMacro.traceMessageArgs
+  def trace(message: String, args: Any*): Unit = macro LoggerMacro.traceMessageArgs
 
   def trace(marker: Marker, message: String): Unit = macro LoggerMacro.traceMessageMarker
 
   def trace(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCauseMarker
 
-  def trace(marker: Marker, message: String, args: AnyRef*): Unit = macro LoggerMacro.traceMessageArgsMarker
+  def trace(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.traceMessageArgsMarker
 
 }

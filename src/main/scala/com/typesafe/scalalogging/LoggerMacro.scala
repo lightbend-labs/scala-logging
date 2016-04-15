@@ -37,7 +37,7 @@ private object LoggerMacro {
     q"if ($underlying.isErrorEnabled) $underlying.error($message, $cause)"
   }
 
-  def errorMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def errorMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -58,7 +58,7 @@ private object LoggerMacro {
     q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, $cause)"
   }
 
-  def errorMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def errorMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -81,7 +81,7 @@ private object LoggerMacro {
     q"if ($underlying.isWarnEnabled) $underlying.warn($message, $cause)"
   }
 
-  def warnMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def warnMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -102,7 +102,7 @@ private object LoggerMacro {
     q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, $cause)"
   }
 
-  def warnMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def warnMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -125,7 +125,7 @@ private object LoggerMacro {
     q"if ($underlying.isInfoEnabled) $underlying.info($message, $cause)"
   }
 
-  def infoMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def infoMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -146,7 +146,7 @@ private object LoggerMacro {
     q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, $cause)"
   }
 
-  def infoMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def infoMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -169,7 +169,7 @@ private object LoggerMacro {
     q"if ($underlying.isDebugEnabled) $underlying.debug($message, $cause)"
   }
 
-  def debugMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def debugMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -190,7 +190,7 @@ private object LoggerMacro {
     q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, $cause)"
   }
 
-  def debugMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def debugMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -213,7 +213,7 @@ private object LoggerMacro {
     q"if ($underlying.isTraceEnabled) $underlying.trace($message, $cause)"
   }
 
-  def traceMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def traceMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
@@ -234,7 +234,7 @@ private object LoggerMacro {
     q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, $cause)"
   }
 
-  def traceMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def traceMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
