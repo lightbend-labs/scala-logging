@@ -1,4 +1,4 @@
-# Scala Logging # [![Build Status](https://travis-ci.org/typesafehub/scala-logging.svg?branch=master)](https://travis-ci.org/typesafehub/scala-logging)
+# scala-logging [![Build Status](https://travis-ci.org/typesafehub/scala-logging.svg?branch=master)](https://travis-ci.org/typesafehub/scala-logging)
 
 Scala Logging is a **convenient** and **performant** logging library wrapping [SLF4J](http://www.slf4j.org).
 
