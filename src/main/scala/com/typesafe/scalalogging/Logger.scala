@@ -16,8 +16,7 @@
 
 package com.typesafe.scalalogging
 
-import org.slf4j.{ Logger => Underlying }
-import org.slf4j.Marker
+import org.slf4j.{LoggerFactory, Marker, Logger => Underlying}
 
 /**
  * Companion for [[Logger]], providing a factory for [[Logger]]s.
@@ -29,6 +28,12 @@ object Logger {
    */
   def apply(underlying: Underlying): Logger =
     new Logger(underlying)
+
+  /**
+    * Create a [[Logger]] wrapping the created underlying `org.slf4j.Logger`.
+    */
+  def apply(clazz: Class): Logger =
+    new Logger(LoggerFactory.getLogger(clazz.getName))
 }
 
 /**
