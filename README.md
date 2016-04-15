@@ -55,7 +55,9 @@ The `Logger` class from the `com.typesafe.scalalogging` package wraps an underly
 val logger = Logger(LoggerFactory.getLogger("name"))
 ```
 
-The `LazyLogging` and `StrictLogging` traits from the `com.typesafe.scalalogging` package define the `logger` member as a lazy or strict value respectively. In both cases the underlying SLF4J logger is named according to the class into which these traits are mixed:
+The `LazyLogging` and `StrictLogging` traits from the `com.typesafe.scalalogging` package define the `logger` member as
+a lazy or strict value respectively. In both cases the underlying SLF4J logger is named according to the class into which
+these traits are mixed:
 
 ```scala
 class MyClass extends LazyLogging {
@@ -65,7 +67,8 @@ class MyClass extends LazyLogging {
 
 ## Line numbers in log message?
 
-Using the sourcecode library, it's possible to add line number information (especially useful for debugging):
+Using the [sourcecode](https://github.com/lihaoyi/sourcecode#logging) library, it's possible to add line number
+information (especially useful for debugging):
 
 ```scala
 def foo(arg: String)(implicit line: sourcecode.Line, file: sourcecode.File) = {
@@ -74,7 +77,6 @@ def foo(arg: String)(implicit line: sourcecode.Line, file: sourcecode.File) = {
 }
 
 foo("hello") // the implicit sourcecode.File is filled in automatically
-[https://github.com/lihaoyi/sourcecode](https://github.com/lihaoyi/sourcecode#logging)
 ```
 
 ## Debugging Scala in IntelliJ
