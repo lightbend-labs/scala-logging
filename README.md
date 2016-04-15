@@ -34,13 +34,18 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 
 - Group id / organization: *com.typesafe.scala-logging*
 - Artifact id / name: *scala-logging*
-- Latest version is 3.1.0
+- Latest version is 3.2.0
 
 The following example shows how to add a dependency to the latest version of Scala Logging to your sbt build definition:
 
 ```
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.2.0"
 ```
+
+#### New in 3.2.0
+
+SLF4J loggers and our Logger now survive serialization. By survive serialization, we mean that the
+deserialized logger instances are fully functional.
 
 ## Using Scala Logging ##
 
