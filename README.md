@@ -92,7 +92,7 @@ foo("hello") // the implicit sourcecode.File is filled in automatically
 ## Debugging Scala in IntelliJ
 
 Check out [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug) to make multithreaded bug tracing and
-prevention easier than ever with scala trace debug. Provides user-friendly prints, traces, assertions,
+prevention easier than ever. Provides user-friendly prints, traces, assertions,
 container printing, and source code printing.
 
 ## Logstash
