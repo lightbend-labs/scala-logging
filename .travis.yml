@@ -1,6 +1,25 @@
+sudo: required
+dist: trusty
 language: scala
 scala:
    - 2.11.8
-jdk:
-  - oraclejdk8
-  - oraclejdk7
+   - 2.12.0-M4
+env:
+- JDK=oraclejdk8
+- JDK=openjdk8
+- JDK=oraclejdk7
+- JDK=openjdk7
+before_script:
+  - jdk_switcher use $JDK
+    #https://github.com/travis-ci/travis-ci/issues/5227#issuecomment-165131913
+  - cat /etc/hosts # optionally check the content *before*
+  - sudo hostname "$(hostname | cut -c1-63)"
+  - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo tee /etc/hosts
+  - cat /etc/hosts # optionally check the content *after*
+matrix:
+  # scala 2.12 require java 8
+  exclude:
+    - scala: 2.12.0-M4
+      env: JDK=oraclejdk7
+    - scala: 2.12.0-M4
+      env: JDK=openjdk7

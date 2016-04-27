@@ -16,12 +16,11 @@ object Common {
       // Core settings
       organization := "com.typesafe.scala-logging",
       scalaVersion := Version.scala,
-      crossScalaVersions := List(scalaVersion.value),
+      crossScalaVersions := Version.crossScala,
       scalacOptions ++= List(
         "-unchecked",
         "-deprecation",
         "-language:_",
-        "-target:jvm-1.6",
         "-encoding", "UTF-8"
       ),
       unmanagedSourceDirectories in Compile := List((scalaSource in Compile).value),
