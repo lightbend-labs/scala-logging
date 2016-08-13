@@ -10,7 +10,7 @@ Common.settings ++ defaultOsgiSettings ++ Seq(
   OsgiKeys.exportPackage := Seq("com.typesafe.scalalogging")
 )
 
-libraryDependencies ++= Dependencies.scalaLogging
+libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value)
 
 initialCommands := """|import com.typesafe.scalalogging._
                       |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
