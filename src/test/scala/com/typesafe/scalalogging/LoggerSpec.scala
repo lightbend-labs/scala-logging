@@ -22,7 +22,7 @@ import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }
 import org.scalatest.{ Matchers, WordSpec }
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 
 class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
 
