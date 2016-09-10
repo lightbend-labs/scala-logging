@@ -17,7 +17,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 ## Prerequisites ##
 
 * Java 6 or higher
-* Scala 2.11
+* Scala 2.11 or 2.12
 * Logging backend compatible with SLF4J
 
 One logging backend can be [Logback](http://logback.qos.ch), you can add it to your sbt build definition (the most recent version can be found here: http://logback.qos.ch/download.html):
@@ -43,6 +43,10 @@ libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0"
 ```
 
 ### What's new?
+
+#### 3.5.0
+
+ - Bugfixes and upgrades, published for Scala 2.12.0-RC1
 
 #### 3.4.0
 
@@ -106,7 +110,7 @@ Provides logback encoders, layouts, and appenders to log in JSON format.
 
 ## Maintainer ##
 
-The original author [Heiko Seeberger](https://twitter.com/hseeberger) stepped down Q1 2015, starting a new adventure at codecentric. Future maintenance is taken 
+The original author [Heiko Seeberger](https://twitter.com/hseeberger) stepped down Q1 2015, starting a new adventure at codecentric. Future maintenance is taken
 over by [Mathias Bogaert](http://twitter.com/analytically).
 
 ## Contribution policy ##
