@@ -16,7 +16,7 @@
 
 package com.typesafe.scalalogging
 
-import org.slf4j.{LoggerFactory, Marker, Logger => Underlying}
+import org.slf4j.{ LoggerFactory, Marker, Logger => Underlying }
 
 import scala.reflect.ClassTag
 
@@ -31,12 +31,13 @@ object Logger {
   def apply(underlying: Underlying): Logger =
     new Logger(underlying)
 
-  /** Create a [[Logger]] for the given name.
-    * Example:
-    * {{{
-    *   val logger = Logger("application")
-    * }}}
-    */
+  /**
+   * Create a [[Logger]] for the given name.
+   * Example:
+   * {{{
+   *   val logger = Logger("application")
+   * }}}
+   */
   def apply(name: String): Logger =
     new Logger(LoggerFactory.getLogger(name))
 
@@ -46,13 +47,14 @@ object Logger {
   def apply(clazz: Class[_]): Logger =
     new Logger(LoggerFactory.getLogger(clazz.getName))
 
-  /** Create a [[Logger]] for the runtime class wrapped by the implicit class
-    * tag parameter.
-    * Example:
-    * {{{
-    *   val logger = Logger[MyClass]
-    * }}}
-    */
+  /**
+   * Create a [[Logger]] for the runtime class wrapped by the implicit class
+   * tag parameter.
+   * Example:
+   * {{{
+   *   val logger = Logger[MyClass]
+   * }}}
+   */
   def apply[T](implicit ct: ClassTag[T]): Logger =
     new Logger(LoggerFactory.getLogger(ct.runtimeClass.getName.stripSuffix("$")))
 }
