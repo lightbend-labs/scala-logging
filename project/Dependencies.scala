@@ -18,7 +18,6 @@ object Library {
 }
 
 object Dependencies {
-
   import Library._
 
   def scalaLogging(scalaVersion: String) = List(
