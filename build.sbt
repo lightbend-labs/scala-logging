@@ -1,16 +1,12 @@
-import com.typesafe.sbt.osgi.SbtOsgi._
-import com.typesafe.sbt.SbtScalariform
-import com.typesafe.sbt.SbtScalariform.ScalariformKeys
 import com.typesafe.sbt.osgi.SbtOsgi
-
-import scalariform.formatter.preferences.{AlignSingleLineCaseStatements, DoubleIndentClassDeclaration}
 
 enablePlugins(SbtOsgi)
 
-name := "scala-logging"
 organization := "com.typesafe.scala-logging"
+name := "scala-logging"
 licenses := Seq("Apache 2.0 License" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 homepage := Some(url("https://github.com/typesafehub/scala-logging"))
+incOptions := incOptions.value.withLogRecompileOnMacro(false)
 scalaVersion := Version.scala
 crossScalaVersions := Version.crossScala
 scalacOptions ++= List(
@@ -22,25 +18,13 @@ scalacOptions ++= List(
 
 osgiSettings
 
-OsgiKeys.bundleSymbolicName := s"com.typesafe.scalalogging"
-OsgiKeys.exportPackage := Seq(s"com.typesafe.scalalogging.*;version=${version.value}")
-
-packageBin in Runtime <<= OsgiKeys.bundle
-packagedArtifact in (Compile, packageBin) <<= (artifact in (Compile, packageBin), OsgiKeys.bundle).identityMap
-
-unmanagedSourceDirectories in Compile := List((scalaSource in Compile).value)
-unmanagedSourceDirectories in Test := List((scalaSource in Test).value)
+OsgiKeys.bundleSymbolicName := "com.typesafe.scala-logging"
+OsgiKeys.privatePackage := Seq()
+OsgiKeys.exportPackage := Seq("com.typesafe.scalalogging*")
 
 releaseVersionBump := sbtrelease.Version.Bump.Minor
 releaseCrossBuild := true
 releasePublishArtifactsAction := PgpKeys.publishSigned.value
-
-SbtScalariform.scalariformSettings
-
-ScalariformKeys.preferences := ScalariformKeys.preferences.value
-  .setPreference(AlignSingleLineCaseStatements, true)
-  .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 100)
-  .setPreference(DoubleIndentClassDeclaration, true)
 
 libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value)
 
