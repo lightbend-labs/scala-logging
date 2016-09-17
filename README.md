@@ -20,7 +20,8 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 * Scala 2.11 or 2.12
 * Logging backend compatible with SLF4J
 
-One logging backend can be [Logback](http://logback.qos.ch), you can add it to your sbt build definition (the most recent version can be found here: http://logback.qos.ch/download.html):
+One logging backend can be [Logback](http://logback.qos.ch), you can add it to your sbt build definition (the most
+recent version can be found here: http://logback.qos.ch/download.html):
 
 ```scala
 libraryDependencies += "ch.qos.logback" %  "logback-classic" % "1.1.7"
@@ -36,17 +37,17 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 - Artifact id / name: *scala-logging*
 - Latest version is 3.4.0
 
-The following example shows how to add a dependency to the latest version of Scala Logging to your sbt build definition:
+Usage with SBT, adding a dependency to the latest version of Scala Logging to your sbt build definition file:
 
 ```scala
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
 ```
 
 ### What's new?
 
 #### 3.5.0
 
- - Bugfixes and upgrades, published for Scala 2.12.0-RC1
+ - Bugfixes and upgrades, published for Scala 2.12.0-M5 and 2.12.0-RC1.
 
 #### 3.4.0
 
