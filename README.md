@@ -43,31 +43,31 @@ Usage with SBT, adding a dependency to the latest version of Scala Logging to yo
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
 ```
 
-### What's new?
-
-#### 3.5.0
-
- - Bugfixes and upgrades, published for Scala 2.12.0-M5 and 2.12.0-RC1.
-
-#### 3.4.0
-
- - Fixes #38 - Logger.info() cannot be used with primitive types.
-
-#### 3.3.0
-
- - Fixes #42 - Request: Add Logger(class). README changes.
-
-#### 3.2.0
-
- - SLF4J loggers and our Logger now survive serialization. By survive serialization, we mean that the
-   deserialized logger instances are fully functional.
-
 ## Using Scala Logging ##
 
-The `Logger` class from the `com.typesafe.scalalogging` package wraps an underlying SLF4J logger. Hence, in order to create a `Logger`, you have to pass a SLF4J logger to the `apply` factory method defined in the `Logger` companion object:
+The `Logger` class from the `com.typesafe.scalalogging` package wraps an underlying SLF4J logger.
+In order to create a `Logger`, you pass a name to the `apply` factory method defined in the `Logger` companion object:
+
+```scala
+val logger = Logger("name")
+```
+
+Or, you pass in a SLF4J logger instance:
 
 ```scala
 val logger = Logger(LoggerFactory.getLogger("name"))
+```
+
+Or, you pass in a class:
+
+```scala
+val logger = Logger(classOf[MyClass])
+```
+
+Or, using the runtime class wrapped by the implicit class tag parameter:
+
+```scala
+val logger = Logger[MyClass]
 ```
 
 The `LazyLogging` and `StrictLogging` traits from the `com.typesafe.scalalogging` package define the `logger` member as
@@ -79,6 +79,21 @@ class MyClass extends LazyLogging {
   logger.debug("This is very convenient ;-)")
 }
 ```
+
+### What's new?
+
+##### 3.5.0
+ - More Logger factory methods, bugfixes and upgrades, published for Scala 2.12.0-M5 and 2.12.0-RC1.
+
+##### 3.4.0
+ - Fixes #38 - Logger.info() cannot be used with primitive types.
+
+##### 3.3.0
+ - Fixes #42 - Request: Add Logger(class). README changes.
+
+##### 3.2.0
+ - SLF4J loggers and our Logger now survive serialization. By survive serialization, we mean that the
+   deserialized logger instances are fully functional.
 
 ## Line numbers in log message?
 

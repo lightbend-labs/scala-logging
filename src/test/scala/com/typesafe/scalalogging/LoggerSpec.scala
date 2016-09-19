@@ -360,6 +360,18 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
 
       logger.trace("Back from deserialization")
     }
+
+    "constructed by explicit class and be usable after deserialization" in {
+      val logger = deserialize(serialize(Logger(classOf[LoggerSpec])))
+
+      logger.trace("Back from deserialization")
+    }
+
+    "constructed by implicit class tag and be usable after deserialization" in {
+      val logger = deserialize(serialize(Logger[LoggerSpec]))
+
+      logger.trace("Back from deserialization")
+    }
   }
 
   def fixture(p: Underlying => Boolean, isEnabled: Boolean) =
