@@ -28,8 +28,14 @@ releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
 libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value)
 
-initialCommands := """|import com.typesafe.scalalogging._
-                      |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
+unmanagedSourceDirectories in Compile += {
+  if (scalaVersion.value.startsWith("2.10")) baseDirectory.value / "src" / "main" / "scala-2.10"
+  else baseDirectory.value / "src" / "main" / "scala-2.11-2.12"
+}
+
+initialCommands :=
+  """|import com.typesafe.scalalogging._
+     |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
 
 publishTo <<= isSnapshot(isSnapshot => Some(if (isSnapshot) Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging))
 publishArtifact in Test := false
