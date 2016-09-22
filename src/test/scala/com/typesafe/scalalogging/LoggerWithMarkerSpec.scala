@@ -19,9 +19,8 @@ package com.typesafe.scalalogging
 import java.util.NoSuchElementException
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.slf4j.{ Logger => Underlying }
-import org.slf4j.Marker
-import org.scalatest.{ Matchers, WordSpec }
+import org.slf4j.{Marker, Logger => Underlying}
+import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 
 object DummyMarker extends Marker {
