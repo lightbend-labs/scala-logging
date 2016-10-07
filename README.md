@@ -35,7 +35,7 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 
 - Group id / organization: *com.typesafe.scala-logging*
 - Artifact id / name: *scala-logging*
-- Latest version is 3.4.0
+- Latest version is 3.5.0
 
 Usage with SBT, adding a dependency to the latest version of Scala Logging to your sbt build definition file:
 
