@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory
  */
 trait LazyLogging {
 
-  protected lazy val logger: Logger =
+  @volatile protected lazy val logger: Logger =
     Logger(LoggerFactory.getLogger(getClass.getName))
 }
 
