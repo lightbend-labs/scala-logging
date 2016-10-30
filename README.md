@@ -83,7 +83,7 @@ class MyClass extends LazyLogging {
 ### What's new?
 
 ##### 3.5.0
- - More Logger factory methods, bugfixes and upgrades, published for Scala 2.12.0-M5 and 2.12.0-RC1.
+ - More Logger factory methods, bugfixes and upgrades, published for Scala 2.12.0-M5, 2.12.0-RC1, 2.12.0-RC2 and 2.12.0.
 
 ##### 3.4.0
  - Fixes #38 - Logger.info() cannot be used with primitive types.

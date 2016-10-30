@@ -4,7 +4,7 @@ object Version {
   val logback   = "1.1.7"
   val mockito   = "1.10.19"
   val scala     = "2.11.8"
-  val crossScala = List(scala, "2.12.0-M5", "2.12.0-RC1", "2.12.0-RC2")
+  val crossScala = List(scala, "2.12.0-M5", "2.12.0-RC1", "2.12.0-RC2", "2.12.0")
   val scalaTest = "3.0.0"
   val slf4j     = "1.7.21"
 }
