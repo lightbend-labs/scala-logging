@@ -31,7 +31,12 @@ libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value)
 initialCommands := """|import com.typesafe.scalalogging._
                       |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
 
-publishTo <<= isSnapshot(isSnapshot => Some(if (isSnapshot) Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging))
+publishTo := {
+  if (isSnapshot.value)
+    Some(Opts.resolver.sonatypeSnapshots)
+  else
+    Some(Opts.resolver.sonatypeStaging)
+}
 publishArtifact in Test := false
 pomIncludeRepository := (_ => false)
 pomExtra :=
