@@ -2,13 +2,13 @@
 
 Scala Logging is a **convenient** and **performant** logging library wrapping [SLF4J](http://www.slf4j.org).
 
-It's convenient, because you can simply call log methods without checking whether the respective log level is enabled:
+It's convenient, because you can simply call log methods, *without* checking whether the respective log level is enabled:
 
 ```scala
 logger.debug(s"Some $expensive message!")
 ```
 
-It's performant, because thanks to Scala macros the *check-enabled-idiom* is applied, just like writing this more involved code:
+It's performant, because thanks to Scala macros the *check-enabled-idiom* is applied and the following code is generated:
 
 ```scala
 if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
@@ -20,11 +20,10 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 * Scala 2.11 or 2.12
 * Logging backend compatible with SLF4J
 
-One logging backend can be [Logback](http://logback.qos.ch), you can add it to your sbt build definition (the most
-recent version can be found here: http://logback.qos.ch/download.html):
+A compatible logging backend is [Logback](http://logback.qos.ch), add it to your sbt build definition:
 
 ```scala
-libraryDependencies += "ch.qos.logback" %  "logback-classic" % "1.1.7"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.7"
 ```
 
 If you are looking for a version compatible with Scala 2.10, check out Scala Logging 2.x.
