@@ -79,6 +79,26 @@ class MyClass extends LazyLogging {
 }
 ```
 
+The `ImplicitLazyLogging` and `ImplicitStrictLogging` traits from the `com.typesafe.scalalogging` package define the `logger` member as
+an implicit lazy or strict value respectively. You can use it with `com.typesafe.scalalogging.fluent.FluentLogging` implicit class to
+inject logging into the computation.
+
+```scala
+class MyClass extends ImplicitLazyLogging {
+  def complexComputation =
+    (list: List[Any])
+      .map(f1)
+      .info("so far we have " + _)
+      .collect(f2)
+      .info("and now we have " + _)
+      
+  def simpleComputation =
+    f3.debug(_ + " is logged directly from the statement, value passes through")
+    
+  val asExpected = simpleComputation
+}
+```
+
 ### What's new?
 
 ##### 3.5.0

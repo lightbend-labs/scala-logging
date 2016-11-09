@@ -37,3 +37,21 @@ trait StrictLogging {
   protected val logger: Logger =
     Logger(LoggerFactory.getLogger(getClass.getName))
 }
+
+/**
+ * Defines `logger` as an implicit lazy value initialized with an underlying `org.slf4j.Logger`
+ * named according to the class into which this trait is mixed.
+ */
+trait ImplicitLazyLogging {
+  protected implicit lazy val logger: Logger =
+    Logger(LoggerFactory.getLogger(getClass.getName))
+}
+
+/**
+ * Defines `logger` as an implicit value initialized with an underlying `org.slf4j.Logger`
+ * named according to the class into which this trait is mixed.
+ */
+trait ImplicitStrictLogging {
+  protected implicit val logger: Logger =
+    Logger(LoggerFactory.getLogger(getClass.getName))
+}

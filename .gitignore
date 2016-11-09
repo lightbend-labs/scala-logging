@@ -7,7 +7,7 @@ target/
 *.sc
 
 # Eclipse
-.cache
+.cache*
 .classpath
 .project
 .scala_dependencies
@@ -31,3 +31,6 @@ snapshots/
 
 # Log files
 *.log
+
+# binaries
+/bin/
