@@ -37,3 +37,13 @@ trait StrictLogging {
   protected val logger: Logger =
     Logger(LoggerFactory.getLogger(getClass.getName))
 }
+
+/**
+ * Defines `logger` as a value initialized with an underlying `org.slf4j.Logger`
+ * named according to the class into which this trait is mixed.
+ */
+trait CompliantLogging {
+
+  protected val logger: Logger =
+    Logger(LoggerFactory.getLogger(getClass.getName))
+}
