@@ -88,7 +88,6 @@ case class CorrelationId(value: String)
 implicit case object CanLogCorrelationId extends CanLog[CorrelationId] {
   override def logMessage(originalMsg: String, a: CorrelationId): String = s"${a.value} $originalMsg"
 }
-
  
 implicit val correlationId = CorrelationId("ID") 
  
@@ -110,7 +109,6 @@ implicit case object CanLogCorrelationId extends CanLog[CorrelationId] {
     MDC.remove("correlationId")
   }
 }
-
  
 implicit val correlationId = CorrelationId("ID") 
  
