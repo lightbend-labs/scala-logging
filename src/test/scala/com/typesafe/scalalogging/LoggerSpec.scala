@@ -379,7 +379,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     implicit val correlationId = CorrelationId(value = "correlationId")
 
     implicit case object canLogCorrelationId extends CanLog[CorrelationId] {
-      override def logMessage(originalMsg: String, a: CorrelationId): String = s"${a.value} msg"
+      override def logMessage(originalMsg: String, a: CorrelationId): String = s"${a.value} $originalMsg"
     }
 
     def serialize[A](logger: LoggerTakingImplicit[A]): Array[Byte] = {
