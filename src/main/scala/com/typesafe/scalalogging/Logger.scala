@@ -60,7 +60,7 @@ object Logger {
   /**
    * Create a [[Logger]] wrapping the created underlying `org.slf4j.Logger`.
    */
-  def apply[A](clazz: Class[_]): Logger =
+  def apply(clazz: Class[_]): Logger =
     new Logger(LoggerFactory.getLogger(clazz.getName))
 
   /**
