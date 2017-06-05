@@ -92,7 +92,7 @@ implicit case object CanLogCorrelationId extends CanLog[CorrelationId] {
 implicit val correlationId = CorrelationId("ID") 
  
 val logger = Logger.takingImplicit[CorrelationId]("test")
-logger.info("Test") // logs "ID Test"
+logger.info("Test") // takes implicit correlationId and logs "ID Test"
 ```
  
 It's possible to use `MDC` through `CanLog` without any troubles with execution context.
@@ -113,7 +113,13 @@ implicit case object CanLogCorrelationId extends CanLog[CorrelationId] {
 implicit val correlationId = CorrelationId("ID") 
  
 val logger = Logger.takingImplicit[CorrelationId]("test")
-Future(logger.info("Test"))
+
+def serviceMethod(implicit correlationId: CorrelationId): Future[Result] = {
+  dbCall.map { value => 
+    logger.trace(s"Received value $value from db") // takes implicit correlationId
+    toResult(value)
+  }
+}
 ```
 
 ### What's new?
