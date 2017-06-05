@@ -32,8 +32,8 @@ object Logger {
     new Logger(underlying)
 
   /**
-    * Create a [[LoggerTakingImplicit]] wrapping the given underlying `org.slf4j.Logger`.
-    */
+   * Create a [[LoggerTakingImplicit]] wrapping the given underlying `org.slf4j.Logger`.
+   */
   def takingImplicit[A](underlying: Underlying)(implicit ev: CanLog[A]): LoggerTakingImplicit[A] =
     new LoggerTakingImplicit[A](underlying)
 
@@ -48,12 +48,12 @@ object Logger {
     new Logger(LoggerFactory.getLogger(name))
 
   /**
-    * Create a [[LoggerTakingImplicit]] for the given name.
-    * Example:
-    * {{{
-    *   val logger = Logger.takingImplicit[CorrelationId]("application")
-    * }}}
-    */
+   * Create a [[LoggerTakingImplicit]] for the given name.
+   * Example:
+   * {{{
+   *   val logger = Logger.takingImplicit[CorrelationId]("application")
+   * }}}
+   */
   def takingImplicit[A](name: String)(implicit ev: CanLog[A]): LoggerTakingImplicit[A] =
     new LoggerTakingImplicit[A](LoggerFactory.getLogger(name))
 
@@ -64,8 +64,8 @@ object Logger {
     new Logger(LoggerFactory.getLogger(clazz.getName))
 
   /**
-    * Create a [[LoggerTakingImplicit]] wrapping the created underlying `org.slf4j.Logger`.
-    */
+   * Create a [[LoggerTakingImplicit]] wrapping the created underlying `org.slf4j.Logger`.
+   */
   def takingImplicit[A](clazz: Class[_])(implicit ev: CanLog[A]): LoggerTakingImplicit[A] =
     new LoggerTakingImplicit[A](LoggerFactory.getLogger(clazz.getName))
 
@@ -81,13 +81,13 @@ object Logger {
     new Logger(LoggerFactory.getLogger(ct.runtimeClass.getName.stripSuffix("$")))
 
   /**
-    * Create a [[LoggerTakingImplicit]] for the runtime class wrapped by the implicit class
-    * tag parameter.
-    * Example:
-    * {{{
-    *   val logger = Logger.takingImplicit[MyClass]
-    * }}}
-    */
+   * Create a [[LoggerTakingImplicit]] for the runtime class wrapped by the implicit class
+   * tag parameter.
+   * Example:
+   * {{{
+   *   val logger = Logger.takingImplicit[MyClass, CorrelationId]
+   * }}}
+   */
   def takingImplicit[T, A](implicit ct: ClassTag[T], ev: CanLog[A]): LoggerTakingImplicit[A] =
     new LoggerTakingImplicit[A](LoggerFactory.getLogger(ct.runtimeClass.getName.stripSuffix("$")))
 }

@@ -8,8 +8,7 @@ trait CanLog[A] { this: Serializable =>
 }
 
 @SerialVersionUID(957385465L)
-final class LoggerTakingImplicit[A] private[scalalogging] (val underlying: Underlying)
-    (implicit val canLogEv: CanLog[A]) extends Serializable {
+final class LoggerTakingImplicit[A] private[scalalogging] (val underlying: Underlying)(implicit val canLogEv: CanLog[A]) extends Serializable {
 
   // Error
 
