@@ -43,6 +43,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.error(msg)
       verify(underlying, never).error(anyString)
     }
+
+    "call the underlying logger's error method with arguments if the error level is enabled and string is interpolated" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"msg $arg1 $arg2 $arg3")
+      verify(underlying).error("msg {} {} {}", arg1, arg2, arg3)
+    }
   }
 
   "Calling error with a message and cause" should {
@@ -103,6 +110,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       import f._
       logger.warn(msg)
       verify(underlying, never).warn(anyString)
+    }
+
+    "call the underlying logger's warn method if the warn level is enabled and string is interpolated" in {
+      val f = fixture(_.isWarnEnabled, true)
+      import f._
+      logger.warn(s"msg $arg1 $arg2 $arg3")
+      verify(underlying).warn("msg {} {} {}", arg1, arg2, arg3)
     }
   }
 
@@ -165,6 +179,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.info(msg)
       verify(underlying, never).info(anyString)
     }
+
+    "call the underlying logger's info method if the info level is enabled and string is interpolated" in {
+      val f = fixture(_.isInfoEnabled, true)
+      import f._
+      logger.info(s"msg $arg1 $arg2 $arg3")
+      verify(underlying).info("msg {} {} {}", arg1, arg2, arg3)
+    }
   }
 
   "Calling info with a message and cause" should {
@@ -226,6 +247,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.debug(msg)
       verify(underlying, never).debug(anyString)
     }
+
+    "call the underlying logger's debug method if the debug level is enabled and string is interpolated" in {
+      val f = fixture(_.isDebugEnabled, true)
+      import f._
+      logger.debug(s"msg $arg1 $arg2 $arg3")
+      verify(underlying).debug("msg {} {} {}", arg1, arg2, arg3)
+    }
   }
 
   "Calling debug with a message and cause" should {
@@ -286,6 +314,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       import f._
       logger.trace(msg)
       verify(underlying, never).trace(anyString)
+    }
+
+    "call the underlying logger's trace method if the trace level is enabled and string is interpolated" in {
+      val f = fixture(_.isTraceEnabled, true)
+      import f._
+      logger.trace(s"msg $arg1 $arg2 $arg3")
+      verify(underlying).trace("msg {} {} {}", arg1, arg2, arg3)
     }
   }
 
