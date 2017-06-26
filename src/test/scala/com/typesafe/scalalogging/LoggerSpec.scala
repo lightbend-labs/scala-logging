@@ -50,6 +50,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.error(s"msg $arg1 $arg2 $arg3")
       verify(underlying).error("msg {} {} {}", arg1, arg2, arg3)
     }
+
+    "call the underlying logger's error method with two arguments if the error level is enabled and string is interpolated" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"msg $arg1 $arg2")
+      verify(underlying).error("msg {} {}", List(arg1, arg2): _*)
+    }
   }
 
   "Calling error with a message and cause" should {

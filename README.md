@@ -23,7 +23,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 A compatible logging backend is [Logback](http://logback.qos.ch), add it to your sbt build definition:
 
 ```scala
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.7"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 ```
 
 If you are looking for a version compatible with Scala 2.10, check out Scala Logging 2.x.
@@ -93,6 +93,28 @@ class MyClass extends LazyLogging {
 ##### 3.2.0
  - SLF4J loggers and our Logger now survive serialization. By survive serialization, we mean that the
    deserialized logger instances are fully functional.
+
+## String Interpolation
+It is idiomatic to use Scala's string interpolation `logger.error(s"log $value")` instead of SLF4J string interpolation `logger.error("log {}", value)`.
+However there are some tools (such as [Sentry](https://sentry.io)) that use the log message format as grouping key. Therefore they do not work well with
+Scala's string interpolation.
+
+Scala Logging replaces simple string interpolations with their SLF4J counterparts like this:
+
+```scala
+logger.error(s"my log message: $arg1 $arg2 $arg3")
+```
+
+```scala
+logger.error("my log message: {} {} {}", arg1, arg2, arg3)
+```
+
+This has no effect on behavior and performace should be comparable (depends on the underlying logging library).
+
+### Limitations
+ - Works only when string interpolation is directly used inside the logging statement. That is when the log message is static (available at compile time).
+ - Works only for the `logger.<level>(message)` and `logger.<level>(marker, message)` logging methods. It does not work if you want to log an exception and
+ use string interpolation too (this is a limitation of the SLF4J API).
 
 ## Line numbers in log message?
 
