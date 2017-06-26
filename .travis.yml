@@ -2,11 +2,8 @@ sudo: required
 dist: trusty
 language: scala
 scala:
-   - 2.11.8
-   - 2.12.0-M5
-   - 2.12.0-RC1
-   - 2.12.0-RC2
-   - 2.12.0
+   - 2.11.11
+   - 2.12.2
 env:
 - JDK=oraclejdk8
 - JDK=openjdk8
@@ -22,19 +19,7 @@ before_script:
 matrix:
   # scala 2.12 requires java 8
   exclude:
-    - scala: 2.12.0-M5
+    - scala: 2.12.2
       env: JDK=oraclejdk7
-    - scala: 2.12.0-M5
-      env: JDK=openjdk7
-    - scala: 2.12.0-RC1
-      env: JDK=oraclejdk7
-    - scala: 2.12.0-RC1
-      env: JDK=openjdk7
-    - scala: 2.12.0-RC2
-      env: JDK=oraclejdk7
-    - scala: 2.12.0-RC2
-      env: JDK=openjdk7
-    - scala: 2.12.0
-      env: JDK=oraclejdk7
-    - scala: 2.12.0
+    - scala: 2.12.2
       env: JDK=openjdk7
