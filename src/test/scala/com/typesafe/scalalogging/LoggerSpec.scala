@@ -57,6 +57,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.error(s"msg $arg1 $arg2")
       verify(underlying).error("msg {} {}", List(arg1, arg2): _*)
     }
+
+    "call the underlying logger's error method with the string representation of interpolated AnyVal arguments" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"msg ${1}")
+      verify(underlying).error("msg {}", 1.toString)
+    }
   }
 
   "Calling error with a message and cause" should {
@@ -260,6 +267,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       import f._
       logger.debug(s"msg $arg1 $arg2 $arg3")
       verify(underlying).debug("msg {} {} {}", arg1, arg2, arg3)
+    }
+
+    "call the underlying logger's debug method with the string representation of interpolated AnyVal arguments" in {
+      val f = fixture(_.isDebugEnabled, true)
+      import f._
+      logger.debug(s"msg ${1}")
+      verify(underlying).debug("msg {}", 1.toString)
     }
   }
 

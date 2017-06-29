@@ -243,7 +243,10 @@ private object LoggerMacro {
       case q"scala.StringContext.apply(..$parts).s(..$args)" =>
         val strings = parts.collect { case Literal(Constant(s: String)) => s }
         val messageFormat = strings.mkString(ArgumentMarker)
-        (c.Expr(q"$messageFormat"), args.map(arg => q"$arg").map(c.Expr[Any](_)))
+        (c.Expr(q"$messageFormat"), args map { arg =>
+          // Box interpolated AnyVals by explicitly getting the string representation
+          c.Expr[Any](if (arg.tpe <:< weakTypeOf[AnyVal]) q"$arg.toString" else arg)
+        })
 
       case _ => (message, Seq.empty)
     }
