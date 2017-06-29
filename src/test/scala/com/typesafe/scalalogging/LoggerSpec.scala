@@ -64,6 +64,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.error(s"msg ${1}")
       verify(underlying).error("msg {}", 1.toString)
     }
+
+    "call the underlying logger's error method preserving literal format anchors when the message is interpolated" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"foo {} bar $arg1")
+      verify(underlying).error("foo \\{} bar {}", arg1)
+    }
   }
 
   "Calling error with a message and cause" should {

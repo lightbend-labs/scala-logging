@@ -21,8 +21,6 @@ import scala.reflect.macros.blackbox.Context
 
 private object LoggerMacro {
 
-  private final val ArgumentMarker = "{}"
-
   type LoggerContext = Context { type PrefixType = Logger }
 
   // Error
@@ -241,8 +239,8 @@ private object LoggerMacro {
 
     message.tree match {
       case q"scala.StringContext.apply(..$parts).s(..$args)" =>
-        val strings = parts.collect { case Literal(Constant(s: String)) => s }
-        val messageFormat = strings.mkString(ArgumentMarker)
+        // Escape slf4j format anchors
+        val messageFormat = parts.map({ case Literal(Constant(s: String)) => s.replace("{}", "\\{}") }).mkString("{}")
         (c.Expr(q"$messageFormat"), args map { arg =>
           // Box interpolated AnyVals by explicitly getting the string representation
           c.Expr[Any](if (arg.tpe <:< weakTypeOf[AnyVal]) q"$arg.toString" else arg)
