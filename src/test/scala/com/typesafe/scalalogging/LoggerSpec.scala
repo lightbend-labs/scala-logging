@@ -43,22 +43,25 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.error(msg)
       verify(underlying, never).error(anyString)
     }
+  }
 
-    "call the underlying logger's error method with arguments if the error level is enabled and string is interpolated" in {
+  "Calling error with an interpolated message" should {
+
+    "call the underlying logger's error method with arguments if the error level is enabled" in {
       val f = fixture(_.isErrorEnabled, true)
       import f._
       logger.error(s"msg $arg1 $arg2 $arg3")
       verify(underlying).error("msg {} {} {}", arg1, arg2, arg3)
     }
 
-    "call the underlying logger's error method with two arguments if the error level is enabled and string is interpolated" in {
+    "call the underlying logger's error method with two arguments if the error level is enabled" in {
       val f = fixture(_.isErrorEnabled, true)
       import f._
       logger.error(s"msg $arg1 $arg2")
       verify(underlying).error("msg {} {}", List(arg1, arg2): _*)
     }
 
-    "call the underlying logger's error method with the string representation of interpolated AnyVal arguments" in {
+    "call the underlying logger's error method with the string representation AnyVal arguments" in {
       val f = fixture(_.isErrorEnabled, true)
       import f._
       logger.error(s"msg ${1}")
@@ -132,8 +135,10 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.warn(msg)
       verify(underlying, never).warn(anyString)
     }
+  }
+  "Calling warn with an interpolated message" should {
 
-    "call the underlying logger's warn method if the warn level is enabled and string is interpolated" in {
+    "call the underlying logger's warn method if the warn level is enabled" in {
       val f = fixture(_.isWarnEnabled, true)
       import f._
       logger.warn(s"msg $arg1 $arg2 $arg3")
@@ -200,8 +205,10 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.info(msg)
       verify(underlying, never).info(anyString)
     }
+  }
+  "Calling info with an interpolated message" should {
 
-    "call the underlying logger's info method if the info level is enabled and string is interpolated" in {
+    "call the underlying logger's info method if the info level is enabled" in {
       val f = fixture(_.isInfoEnabled, true)
       import f._
       logger.info(s"msg $arg1 $arg2 $arg3")
@@ -268,15 +275,17 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.debug(msg)
       verify(underlying, never).debug(anyString)
     }
+  }
+  "Calling debug with an interpolated message" should {
 
-    "call the underlying logger's debug method if the debug level is enabled and string is interpolated" in {
+    "call the underlying logger's debug method if the debug level is enabled" in {
       val f = fixture(_.isDebugEnabled, true)
       import f._
       logger.debug(s"msg $arg1 $arg2 $arg3")
       verify(underlying).debug("msg {} {} {}", arg1, arg2, arg3)
     }
 
-    "call the underlying logger's debug method with the string representation of interpolated AnyVal arguments" in {
+    "call the underlying logger's debug method with the string representation of AnyVal arguments" in {
       val f = fixture(_.isDebugEnabled, true)
       import f._
       logger.debug(s"msg ${1}")
@@ -343,8 +352,10 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.trace(msg)
       verify(underlying, never).trace(anyString)
     }
+  }
+  "Calling trace with an interpolated message" should {
 
-    "call the underlying logger's trace method if the trace level is enabled and string is interpolated" in {
+    "call the underlying logger's trace method if the trace level is enabled" in {
       val f = fixture(_.isTraceEnabled, true)
       import f._
       logger.trace(s"msg $arg1 $arg2 $arg3")
