@@ -74,6 +74,19 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       logger.error(s"foo {} bar $arg1")
       verify(underlying).error("foo \\{} bar {}", arg1)
     }
+
+    "call the underlying logger's error method when the interpolated string contains escape sequences" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"foo\nbar $arg1")
+      verify(underlying).error(s"foo\nbar {}", arg1)
+    }
+    "call the underlying logger's error method when the interpolated string is triple quoted and contains escape sequences" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"""foo\nbar $arg1""")
+      verify(underlying).error(s"""foo\nbar {}""", arg1)
+    }
   }
 
   "Calling error with a message and cause" should {
