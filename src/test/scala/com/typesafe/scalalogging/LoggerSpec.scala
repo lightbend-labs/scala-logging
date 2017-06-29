@@ -61,37 +61,6 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).error("msg {} {}", List(arg1, arg2): _*)
     }
 
-    "call the underlying logger's error method with the string representation AnyVal arguments" in {
-      val f = fixture(_.isErrorEnabled, true)
-      import f._
-      logger.error(s"msg ${1}")
-      verify(underlying).error("msg {}", 1.toString)
-    }
-
-    "call the underlying logger's error method escaping literal format anchors" in {
-      val f = fixture(_.isErrorEnabled, true)
-      import f._
-      logger.error(s"foo {} bar $arg1")
-      verify(underlying).error("foo \\{} bar {}", arg1)
-    }
-    "call the underlying logger's error method without escaping format anchors when the message has no interpolations" in {
-      val f = fixture(_.isErrorEnabled, true)
-      import f._
-      logger.error(s"foo {} bar")
-      verify(underlying).error("foo {} bar")
-    }
-    "call the underlying logger's error method when the interpolated string contains escape sequences" in {
-      val f = fixture(_.isErrorEnabled, true)
-      import f._
-      logger.error(s"foo\nbar $arg1")
-      verify(underlying).error(s"foo\nbar {}", arg1)
-    }
-    "call the underlying logger's error method when the interpolated string is triple quoted and contains escape sequences" in {
-      val f = fixture(_.isErrorEnabled, true)
-      import f._
-      logger.error(s"""foo\nbar $arg1""")
-      verify(underlying).error(s"""foo\nbar {}""", arg1)
-    }
   }
 
   "Calling error with a message and cause" should {
@@ -154,6 +123,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying, never).warn(anyString)
     }
   }
+
   "Calling warn with an interpolated message" should {
 
     "call the underlying logger's warn method if the warn level is enabled" in {
@@ -161,6 +131,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       import f._
       logger.warn(s"msg $arg1 $arg2 $arg3")
       verify(underlying).warn("msg {} {} {}", arg1, arg2, arg3)
+    }
+
+    "call the underlying logger's warn method with two arguments if the warn level is enabled" in {
+      val f = fixture(_.isWarnEnabled, true)
+      import f._
+      logger.warn(s"msg $arg1 $arg2")
+      verify(underlying).warn("msg {} {}", List(arg1, arg2): _*)
     }
   }
 
@@ -224,6 +201,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying, never).info(anyString)
     }
   }
+
   "Calling info with an interpolated message" should {
 
     "call the underlying logger's info method if the info level is enabled" in {
@@ -231,6 +209,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       import f._
       logger.info(s"msg $arg1 $arg2 $arg3")
       verify(underlying).info("msg {} {} {}", arg1, arg2, arg3)
+    }
+
+    "call the underlying logger's info method with two arguments if the info level is enabled" in {
+      val f = fixture(_.isInfoEnabled, true)
+      import f._
+      logger.info(s"msg $arg1 $arg2")
+      verify(underlying).info("msg {} {}", List(arg1, arg2): _*)
     }
   }
 
@@ -303,11 +288,11 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).debug("msg {} {} {}", arg1, arg2, arg3)
     }
 
-    "call the underlying logger's debug method with the string representation of AnyVal arguments" in {
+    "call the underlying logger's debug method with two arguments if the debug level is enabled" in {
       val f = fixture(_.isDebugEnabled, true)
       import f._
-      logger.debug(s"msg ${1}")
-      verify(underlying).debug("msg {}", 1.toString)
+      logger.debug(s"msg $arg1 $arg2")
+      verify(underlying).debug("msg {} {}", List(arg1, arg2): _*)
     }
   }
 
@@ -371,6 +356,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying, never).trace(anyString)
     }
   }
+
   "Calling trace with an interpolated message" should {
 
     "call the underlying logger's trace method if the trace level is enabled" in {
@@ -378,6 +364,13 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       import f._
       logger.trace(s"msg $arg1 $arg2 $arg3")
       verify(underlying).trace("msg {} {} {}", arg1, arg2, arg3)
+    }
+
+    "call the underlying logger's trace method with two arguments if the trace level is enabled" in {
+      val f = fixture(_.isTraceEnabled, true)
+      import f._
+      logger.trace(s"msg $arg1 $arg2")
+      verify(underlying).trace("msg {} {}", List(arg1, arg2): _*)
     }
   }
 
@@ -420,6 +413,46 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying, never).trace(msg, List(arg1, arg2): _*)
       logger.trace(msg, arg1, arg2, arg3)
       verify(underlying, never).trace(msg, arg1, arg2, arg3)
+    }
+  }
+
+  // Interpolator destructuring corner cases
+
+  "Logging a message using the standard string interpolator" should {
+
+    "call the underlying format method with the string representation of AnyVal arguments" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"msg ${1}")
+      verify(underlying).error("msg {}", 1.toString)
+    }
+
+    "call the underlying format method escaping literal format anchors" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"foo {} bar $arg1")
+      verify(underlying).error("foo \\{} bar {}", arg1)
+    }
+
+    "call the underlying method without escaping format anchors when the message has no interpolations" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"foo {} bar")
+      verify(underlying).error("foo {} bar")
+    }
+
+    "call the underlying format method when the interpolated string contains escape sequences" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"foo\nbar $arg1")
+      verify(underlying).error(s"foo\nbar {}", arg1)
+    }
+
+    "call the underlying format method when the interpolated string is triple quoted and contains escape sequences" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"""foo\nbar $arg1""")
+      verify(underlying).error(s"""foo\nbar {}""", arg1)
     }
   }
 
