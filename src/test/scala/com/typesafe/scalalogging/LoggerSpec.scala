@@ -420,11 +420,18 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
 
   "Logging a message using the standard string interpolator" should {
 
-    "call the underlying format method with the string representation of AnyVal arguments" in {
+    "call the underlying format method with boxed versions of value arguments" in {
       val f = fixture(_.isErrorEnabled, true)
       import f._
       logger.error(s"msg ${1}")
-      verify(underlying).error("msg {}", 1.toString)
+      verify(underlying).error("msg {}", 1.asInstanceOf[AnyRef])
+    }
+
+    "call the underlying format method with boxed versions of arguments of type Any" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"msg ${1.asInstanceOf[Any]}")
+      verify(underlying).error("msg {}", 1.asInstanceOf[AnyRef])
     }
 
     "call the underlying format method escaping literal format anchors" in {
