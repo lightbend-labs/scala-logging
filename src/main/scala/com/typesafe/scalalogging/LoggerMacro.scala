@@ -239,8 +239,13 @@ private object LoggerMacro {
 
     message.tree match {
       case q"scala.StringContext.apply(..$parts).s(..$args)" =>
-        // Emulate standard interpolator escaping and escape literal slf4j format anchors
-        val messageFormat = parts.map({ case Literal(Constant(s: String)) => StringContext.treatEscapes(s).replace("{}", "\\{}") }).mkString("{}")
+        val messageFormat = parts.iterator.map({ case Literal(Constant(str: String)) => str })
+          // Emulate standard interpolator escaping
+          .map(StringContext.treatEscapes)
+          // Escape literal slf4j format anchors if the resulting call will require a format string
+          .map(str => if (args.nonEmpty) str.replace("{}", "\\{}") else str)
+          .mkString("{}")
+
         (c.Expr(q"$messageFormat"), args map { arg =>
           // Box interpolated AnyVals by explicitly getting the string representation
           c.Expr[Any](if (arg.tpe <:< weakTypeOf[AnyVal]) q"$arg.toString" else arg)

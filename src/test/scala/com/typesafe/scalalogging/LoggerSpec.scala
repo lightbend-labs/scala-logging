@@ -68,13 +68,18 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       verify(underlying).error("msg {}", 1.toString)
     }
 
-    "call the underlying logger's error method preserving literal format anchors when the message is interpolated" in {
+    "call the underlying logger's error method escaping literal format anchors" in {
       val f = fixture(_.isErrorEnabled, true)
       import f._
       logger.error(s"foo {} bar $arg1")
       verify(underlying).error("foo \\{} bar {}", arg1)
     }
-
+    "call the underlying logger's error method without escaping format anchors when the message has no interpolations" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error(s"foo {} bar")
+      verify(underlying).error("foo {} bar")
+    }
     "call the underlying logger's error method when the interpolated string contains escape sequences" in {
       val f = fixture(_.isErrorEnabled, true)
       import f._
