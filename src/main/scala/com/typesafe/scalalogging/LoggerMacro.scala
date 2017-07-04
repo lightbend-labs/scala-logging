@@ -21,8 +21,6 @@ import scala.reflect.macros.blackbox.Context
 
 private object LoggerMacro {
 
-  private final val ArgumentMarker = "{}"
-
   type LoggerContext = Context { type PrefixType = Logger }
 
   // Error
@@ -42,7 +40,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isErrorEnabled) $underlying.error($message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isErrorEnabled) $underlying.error($message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isErrorEnabled) $underlying.error($message, ..$args)"
   }
@@ -62,7 +60,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, ..$args)"
   }
@@ -84,7 +82,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isWarnEnabled) $underlying.warn($message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isWarnEnabled) $underlying.warn($message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isWarnEnabled) $underlying.warn($message, ..$args)"
   }
@@ -104,7 +102,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, ..$args)"
   }
@@ -126,7 +124,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isInfoEnabled) $underlying.info($message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isInfoEnabled) $underlying.info($message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isInfoEnabled) $underlying.info($message, ..$args)"
   }
@@ -146,7 +144,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, ..$args)"
   }
@@ -168,7 +166,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isDebugEnabled) $underlying.debug($message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isDebugEnabled) $underlying.debug($message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isDebugEnabled) $underlying.debug($message, ..$args)"
   }
@@ -188,7 +186,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, ..$args)"
   }
@@ -210,7 +208,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isTraceEnabled) $underlying.trace($message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isTraceEnabled) $underlying.trace($message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isTraceEnabled) $underlying.trace($message, ..$args)"
   }
@@ -230,7 +228,7 @@ private object LoggerMacro {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     if (args.length == 2)
-      q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, _root_.scala.List(${args(0)}, ${args(1)}): _*)"
+      q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, _root_.scala.Array(${args(0)}, ${args(1)}): _*)"
     else
       q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, ..$args)"
   }
@@ -241,9 +239,18 @@ private object LoggerMacro {
 
     message.tree match {
       case q"scala.StringContext.apply(..$parts).s(..$args)" =>
-        val strings = parts.collect { case Literal(Constant(s: String)) => s }
-        val messageFormat = strings.mkString(ArgumentMarker)
-        (c.Expr(q"$messageFormat"), args.map(arg => q"$arg").map(c.Expr[Any](_)))
+        val format = parts.iterator.map({ case Literal(Constant(str: String)) => str })
+          // Emulate standard interpolator escaping
+          .map(StringContext.treatEscapes)
+          // Escape literal slf4j format anchors if the resulting call will require a format string
+          .map(str => if (args.nonEmpty) str.replace("{}", "\\{}") else str)
+          .mkString("{}")
+
+        val formatArgs = args map { arg =>
+          c.Expr[AnyRef](if (arg.tpe <:< weakTypeOf[AnyRef]) arg else q"$arg.asInstanceOf[_root_.scala.AnyRef]")
+        }
+
+        (c.Expr(q"$format"), formatArgs)
 
       case _ => (message, Seq.empty)
     }
