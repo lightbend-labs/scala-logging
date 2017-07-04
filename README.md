@@ -81,8 +81,10 @@ class MyClass extends LazyLogging {
 
 ### What's new?
 
-##### 3.6.0
+##### 3.7.0
  - Deconstruct Scala's string interpolation into SLF4J string interpolation.
+ 
+##### 3.6.0 - flawed release
 
 ##### 3.5.0
  - More Logger factory methods, bugfixes and upgrades, published for Scala 2.12.0-M5, 2.12.0-RC1, 2.12.0-RC2 and 2.12.0.
