@@ -463,6 +463,24 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
+  "Logging a message using slf4 interpolator and Any args" should {
+    "map args to AnyRef for 2 args" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error("foo {}, bar {}", arg4, arg5)
+      verify(underlying).error("foo {}, bar {}", Array(arg4ref, arg5ref): _*)
+    }
+
+    "map args to AnyRef for non 2 args" in {
+      val f = fixture(_.isErrorEnabled, true)
+      import f._
+      logger.error("foo {}", arg4)
+      verify(underlying).error("foo {}", arg4ref)
+      logger.error("foo {}, bar {}, {}", arg4, arg5, arg6)
+      verify(underlying).error("foo {}, bar {}, {}", arg4ref, arg5ref, arg6ref)
+    }
+  }
+
   "Serializing Logger" should {
 
     def serialize(logger: Logger): Array[Byte] = {
@@ -513,6 +531,12 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val arg1 = "arg1"
       val arg2 = new Integer(1)
       val arg3 = "arg3"
+      val arg4 = 4
+      val arg4ref = arg4.asInstanceOf[AnyRef]
+      val arg5 = true
+      val arg5ref = arg5.asInstanceOf[AnyRef]
+      val arg6 = 6L
+      val arg6ref = arg6.asInstanceOf[AnyRef]
       val underlying = mock[org.slf4j.Logger]
       when(p(underlying)).thenReturn(isEnabled)
       val logger = Logger(underlying)
