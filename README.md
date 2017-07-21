@@ -34,12 +34,12 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 
 - Group id / organization: *com.typesafe.scala-logging*
 - Artifact id / name: *scala-logging*
-- Latest version is 3.7.1
+- Latest version is 3.7.2
 
 Usage with SBT, adding a dependency to the latest version of Scala Logging to your sbt build definition file:
 
 ```scala
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.1"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
 ```
 
 ## Using Scala Logging ##
@@ -80,6 +80,9 @@ class MyClass extends LazyLogging {
 ```
 
 ### What's new?
+
+#### 3.7.2
+ - Make logger to consume args of type `Any` with slf4 interpolator.
 
 #### 3.7.1
  - Remove @volatile from lazy logger, failing with strict compiler settings
