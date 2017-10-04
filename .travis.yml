@@ -4,7 +4,7 @@ language: scala
 scala:
    - 2.11.11
    - 2.12.2
-   - 2.13.0-M1
+   - 2.13.0-M2
 env:
 - JDK=oraclejdk8
 - JDK=openjdk8
@@ -24,7 +24,7 @@ matrix:
       env: JDK=oraclejdk7
     - scala: 2.12.2
       env: JDK=openjdk7
-    - scala: 2.13.0-M1
+    - scala: 2.13.0-M2
       env: JDK=oraclejdk7
-    - scala: 2.13.0-M1
+    - scala: 2.13.0-M2
       env: JDK=openjdk7
