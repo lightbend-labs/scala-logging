@@ -8,7 +8,6 @@ scala:
 env:
 - JDK=oraclejdk8
 - JDK=openjdk8
-- JDK=oraclejdk7
 - JDK=openjdk7
 addons:
   # https://github.com/travis-ci/travis-ci/issues/5227#issuecomment-165131913
@@ -21,10 +20,6 @@ matrix:
   # scala 2.12 and 2.13 require java 8
   exclude:
     - scala: 2.12.4
-      env: JDK=oraclejdk7
-    - scala: 2.12.4
       env: JDK=openjdk7
-    - scala: 2.13.0-M2
-      env: JDK=oraclejdk7
     - scala: 2.13.0-M2
       env: JDK=openjdk7
