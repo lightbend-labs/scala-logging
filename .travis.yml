@@ -16,6 +16,9 @@ addons:
   hostname: scala-logging
 before_script:
   - jdk_switcher use $JDK
+script:
+- sbt "++ ${TRAVIS_SCALA_VERSION}!" test
+- git diff --exit-code # check scalariform
 matrix:
   # scala 2.12 and 2.13 require java 8
   exclude:
