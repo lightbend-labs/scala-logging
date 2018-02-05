@@ -559,10 +559,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
         deserialize[CorrelationId](
           serialize[CorrelationId](
             Logger.takingImplicit[CorrelationId](
-              org.slf4j.LoggerFactory.getLogger("test")
-            )
-          )
-        )
+              org.slf4j.LoggerFactory.getLogger("test"))))
 
       logger.trace("Back from deserialization")
     }
@@ -572,10 +569,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
         deserialize[CorrelationId](
           serialize[CorrelationId](
             Logger.takingImplicit[CorrelationId](
-              classOf[LoggerSpec]
-            )
-          )
-        )
+              classOf[LoggerSpec])))
 
       logger.trace("Back from deserialization")
     }
@@ -584,9 +578,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val logger =
         deserialize[CorrelationId](
           serialize[CorrelationId](
-            Logger.takingImplicit[LoggerSpec, CorrelationId]
-          )
-        )
+            Logger.takingImplicit[LoggerSpec, CorrelationId]))
 
       logger.trace("Back from deserialization")
     }
