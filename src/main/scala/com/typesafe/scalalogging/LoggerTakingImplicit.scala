@@ -2,7 +2,7 @@ package com.typesafe.scalalogging
 
 import org.slf4j.{ Marker, Logger => Underlying }
 
-trait CanLog[A] { this: Serializable =>
+trait CanLog[A] {
   def logMessage(originalMsg: String, a: A): String
   def afterLog(a: A): Unit = ()
 }
