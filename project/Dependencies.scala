@@ -1,12 +1,12 @@
 import sbt._
 
 object Version {
-  val logback   = "1.1.7"
+  val logback   = "1.2.3"
   val mockito   = "1.10.19"
-  val scala     = "2.11.8"
-  val crossScala = List(scala, "2.12.0-M5", "2.12.0-RC1", "2.12.0-RC2", "2.12.0")
-  val scalaTest = "3.0.0"
-  val slf4j     = "1.7.21"
+  val scala     = "2.11.12"
+  val crossScala = List(scala, "2.12.4", "2.13.0-M2")
+  val scalaTest = "3.0.4"
+  val slf4j     = "1.7.25"
 }
 
 object Library {
