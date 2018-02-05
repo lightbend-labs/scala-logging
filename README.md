@@ -79,6 +79,49 @@ class MyClass extends LazyLogging {
 }
 ```
 
+`LoggerTakingImplicit` provides the same methods as `Logger` class, but with additional implicit parameter `A`.
+During creation of the `LoggerTakingImplicit` evidence `CanLog[A]` is required.
+It may be useful when contextual parameter (e.g. _Correlation ID_) is being passed around and you would like to include it in the log messages:
+ 
+```scala
+case class CorrelationId(value: String)
+implicit case object CanLogCorrelationId extends CanLog[CorrelationId] {
+  override def logMessage(originalMsg: String, a: CorrelationId): String = s"${a.value} $originalMsg"
+}
+ 
+implicit val correlationId = CorrelationId("ID") 
+ 
+val logger = Logger.takingImplicit[CorrelationId]("test")
+logger.info("Test") // takes implicit correlationId and logs "ID Test"
+```
+ 
+It's possible to use `MDC` through `CanLog` without any troubles with execution context.
+
+```scala
+case class CorrelationId(value: String)
+implicit case object CanLogCorrelationId extends CanLog[CorrelationId] {
+  override def logMessage(originalMsg: String, a: CorrelationId): String = {
+    MDC.put("correlationId", a.value)
+    originalMsg
+  }
+  
+  override def afterLog(a: A): Unit = {
+    MDC.remove("correlationId")
+  }
+}
+ 
+implicit val correlationId = CorrelationId("ID") 
+ 
+val logger = Logger.takingImplicit[CorrelationId]("test")
+
+def serviceMethod(implicit correlationId: CorrelationId): Future[Result] = {
+  dbCall.map { value => 
+    logger.trace(s"Received value $value from db") // takes implicit correlationId
+    toResult(value)
+  }
+}
+```
+
 ### What's new?
 
 #### 3.7.2

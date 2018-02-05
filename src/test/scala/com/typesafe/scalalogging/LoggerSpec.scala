@@ -524,6 +524,66 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
+  "Serializing LoggerTakingImplicit" should {
+    case class CorrelationId(value: String)
+    implicit val correlationId = CorrelationId(value = "correlationId")
+
+    implicit case object canLogCorrelationId extends CanLog[CorrelationId] {
+      def logMessage(originalMsg: String, a: CorrelationId): String = s"${a.value} $originalMsg"
+    }
+
+    def serialize[A](logger: LoggerTakingImplicit[A]): Array[Byte] = {
+      val byteArrayStream = new ByteArrayOutputStream
+      val out = new ObjectOutputStream(byteArrayStream)
+
+      out.writeObject(logger)
+      out.close()
+      byteArrayStream.close()
+
+      byteArrayStream.toByteArray
+    }
+
+    def deserialize[A](array: Array[Byte]): LoggerTakingImplicit[A] = {
+      val byteArrayStream = new ByteArrayInputStream(array)
+      val in = new ObjectInputStream(byteArrayStream)
+
+      val logger = in.readObject.asInstanceOf[LoggerTakingImplicit[A]]
+      in.close()
+      byteArrayStream.close()
+
+      logger
+    }
+
+    "be usable after deserialization" in {
+      val logger =
+        deserialize[CorrelationId](
+          serialize[CorrelationId](
+            Logger.takingImplicit[CorrelationId](
+              org.slf4j.LoggerFactory.getLogger("test"))))
+
+      logger.trace("Back from deserialization")
+    }
+
+    "constructed by explicit class and be usable after deserialization" in {
+      val logger =
+        deserialize[CorrelationId](
+          serialize[CorrelationId](
+            Logger.takingImplicit[CorrelationId](
+              classOf[LoggerSpec])))
+
+      logger.trace("Back from deserialization")
+    }
+
+    "constructed by implicit class tag and be usable after deserialization" in {
+      val logger =
+        deserialize[CorrelationId](
+          serialize[CorrelationId](
+            Logger.takingImplicit[LoggerSpec, CorrelationId]))
+
+      logger.trace("Back from deserialization")
+    }
+  }
+
   def fixture(p: Underlying => Boolean, isEnabled: Boolean) =
     new {
       val msg = "msg"
