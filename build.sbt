@@ -5,7 +5,7 @@ enablePlugins(SbtOsgi)
 organization := "com.typesafe.scala-logging"
 name := "scala-logging"
 licenses := Seq("Apache 2.0 License" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-homepage := Some(url("https://github.com/typesafehub/scala-logging"))
+homepage := Some(url("https://github.com/lightbend/scala-logging"))
 incOptions := incOptions.value.withLogRecompileOnMacro(false)
 scalaVersion := Version.scala
 crossScalaVersions := Version.crossScala
@@ -41,8 +41,8 @@ publishArtifact in Test := false
 pomIncludeRepository := (_ => false)
 pomExtra :=
   <scm>
-    <url>https://github.com/typesafehub/scala-logging</url>
-    <connection>scm:git:git://github.com/typesafehub/scala-logging.git</connection>
+    <url>https://github.com/lightbend/scala-logging</url>
+    <connection>scm:git:git://github.com/lightbend/scala-logging.git</connection>
   </scm>
     <developers>
       <developer>
