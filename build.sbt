@@ -1,4 +1,5 @@
 import com.typesafe.sbt.osgi.SbtOsgi
+import sbt._
 
 enablePlugins(SbtOsgi)
 
@@ -39,20 +40,22 @@ publishTo := {
 }
 publishArtifact in Test := false
 pomIncludeRepository := (_ => false)
-pomExtra :=
-  <scm>
-    <url>https://github.com/lightbend/scala-logging</url>
-    <connection>scm:git:git://github.com/lightbend/scala-logging.git</connection>
-  </scm>
-    <developers>
-      <developer>
-        <id>hseeberger</id>
-        <name>Heiko Seeberger</name>
-        <url>http://heikoseeberger.de</url>
-      </developer>
-      <developer>
-        <id>analytically</id>
-        <name>Mathias Bogaert</name>
-        <url>http://twitter.com/analytically</url>
-      </developer>
-    </developers>
+
+scmInfo := Some(
+  ScmInfo(url("https://github.com/lightbend/scala-logging"), "scm:git:git@github.com:lightbend/scala-logging.git")
+)
+
+developers := List(
+  Developer(
+    id = "hseeberger",
+    name = "Heiko Seeberger",
+    email = "",
+    url = url("http://heikoseeberger.de")
+  ),
+  Developer(
+    id = "analytically",
+    name = "Mathias Bogaert",
+    email = "",
+    url = url("http://twitter.com/analytically")
+  )
+)
