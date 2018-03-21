@@ -1,6 +1,6 @@
 package com.typesafe.scalalogging
 
-import org.slf4j.{Marker, Logger => Underlying}
+import org.slf4j.{ Marker, Logger => Underlying }
 import scala.language.experimental.macros
 
 trait CanLog[A] {

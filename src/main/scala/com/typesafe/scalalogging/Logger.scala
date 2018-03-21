@@ -16,7 +16,7 @@
 
 package com.typesafe.scalalogging
 
-import org.slf4j.{LoggerFactory, Marker, Logger => Underlying}
+import org.slf4j.{ LoggerFactory, Marker, Logger => Underlying }
 import scala.language.experimental.macros
 import scala.reflect.ClassTag
 
