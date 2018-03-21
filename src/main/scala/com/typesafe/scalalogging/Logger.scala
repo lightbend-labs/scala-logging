@@ -112,7 +112,7 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def error(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.errorMessageArgsMarker
 
-  def whenError(body: Unit): Unit = macro LoggerMacro.errorCode
+  def whenErrorEnabled(body: Unit): Unit = macro LoggerMacro.errorCode
 
   // Warn
 
@@ -128,7 +128,7 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def warn(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.warnMessageArgsMarker
 
-  def whenWarn(body: Unit): Unit = macro LoggerMacro.warnCode
+  def whenWarnEnabled(body: Unit): Unit = macro LoggerMacro.warnCode
 
   // Info
 
@@ -144,7 +144,7 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def info(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.infoMessageArgsMarker
 
-  def whenInfo(body: Unit): Unit = macro LoggerMacro.infoCode
+  def whenInfoEnabled(body: Unit): Unit = macro LoggerMacro.infoCode
 
   // Debug
 
@@ -160,7 +160,7 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def debug(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.debugMessageArgsMarker
 
-  def whenDebug(body: Unit): Unit = macro LoggerMacro.debugCode
+  def whenDebugEnabled(body: Unit): Unit = macro LoggerMacro.debugCode
 
   // Trace
 
@@ -176,6 +176,6 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def trace(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.traceMessageArgsMarker
 
-  def whenTrace(body: Unit): Unit = macro LoggerMacro.traceCode
+  def whenTraceEnabled(body: Unit): Unit = macro LoggerMacro.traceCode
 
 }
