@@ -67,7 +67,7 @@ private object LoggerMacro {
       q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, ..$anyRefArgs)"
   }
 
-  def errorCode(c: LoggerContext)(body: c.Expr[Unit => Unit]): c.universe.Tree = {
+  def errorCode(c: LoggerContext)(body: c.Expr[Unit]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isErrorEnabled) $body"

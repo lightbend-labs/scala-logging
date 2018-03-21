@@ -593,7 +593,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val arg3 = "arg3"
       val arg4 = 4
       val arg4ref = arg4.asInstanceOf[AnyRef]
-      val arg5 = isEnabled = true
+      val arg5 = true
       val arg5ref = arg5.asInstanceOf[AnyRef]
       val arg6 = 6L
       val arg6ref = arg6.asInstanceOf[AnyRef]
