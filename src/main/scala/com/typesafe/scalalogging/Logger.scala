@@ -17,7 +17,7 @@
 package com.typesafe.scalalogging
 
 import org.slf4j.{ LoggerFactory, Marker, Logger => Underlying }
-
+import scala.language.experimental.macros
 import scala.reflect.ClassTag
 
 /**
@@ -93,7 +93,7 @@ object Logger {
 }
 
 /**
- * Implementation for a performant logger based on macros and an underlying `org.slf4j.Logger`.
+ * Implementation of a fast logger based on macros and an underlying `org.slf4j.Logger`.
  */
 @SerialVersionUID(538248225L)
 final class Logger private (val underlying: Underlying) extends Serializable {
@@ -112,6 +112,8 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def error(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.errorMessageArgsMarker
 
+  def whenErrorEnabled(body: Unit): Unit = macro LoggerMacro.errorCode
+
   // Warn
 
   def warn(message: String): Unit = macro LoggerMacro.warnMessage
@@ -125,6 +127,8 @@ final class Logger private (val underlying: Underlying) extends Serializable {
   def warn(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCauseMarker
 
   def warn(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.warnMessageArgsMarker
+
+  def whenWarnEnabled(body: Unit): Unit = macro LoggerMacro.warnCode
 
   // Info
 
@@ -140,6 +144,8 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def info(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.infoMessageArgsMarker
 
+  def whenInfoEnabled(body: Unit): Unit = macro LoggerMacro.infoCode
+
   // Debug
 
   def debug(message: String): Unit = macro LoggerMacro.debugMessage
@@ -154,6 +160,8 @@ final class Logger private (val underlying: Underlying) extends Serializable {
 
   def debug(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.debugMessageArgsMarker
 
+  def whenDebugEnabled(body: Unit): Unit = macro LoggerMacro.debugCode
+
   // Trace
 
   def trace(message: String): Unit = macro LoggerMacro.traceMessage
@@ -167,5 +175,7 @@ final class Logger private (val underlying: Underlying) extends Serializable {
   def trace(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCauseMarker
 
   def trace(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.traceMessageArgsMarker
+
+  def whenTraceEnabled(body: Unit): Unit = macro LoggerMacro.traceCode
 
 }

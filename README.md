@@ -1,6 +1,6 @@
 # scala-logging [![Build Status](https://travis-ci.org/lightbend/scala-logging.svg?branch=master)](https://travis-ci.org/lightbend/scala-logging)
 
-Scala Logging is a **convenient** and **performant** logging library wrapping [SLF4J](http://www.slf4j.org).
+Scala Logging is a **convenient** and **fast** logging library wrapping [SLF4J](http://www.slf4j.org).
 
 It's convenient, because you can simply call log methods, *without* checking whether the respective log level is enabled:
 
@@ -8,7 +8,7 @@ It's convenient, because you can simply call log methods, *without* checking whe
 logger.debug(s"Some $expensive message!")
 ```
 
-It's performant, because thanks to Scala macros the *check-enabled-idiom* is applied and the following code is generated:
+It's fast, because thanks to Scala macros the *check-enabled-idiom* is applied and the following code is generated:
 
 ```scala
 if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
@@ -76,6 +76,11 @@ these traits are mixed:
 ```scala
 class MyClass extends LazyLogging {
   logger.debug("This is very convenient ;-)")
+  
+  logger.whenDebugEnabled {
+    println("This would only execute when the debug level is enabled.")
+    (1 to 10).foreach(x => println("Scala logging is great!"))
+  }
 }
 ```
 
