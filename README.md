@@ -110,7 +110,7 @@ implicit case object CanLogCorrelationId extends CanLog[CorrelationId] {
     originalMsg
   }
   
-  override def afterLog(a: A): Unit = {
+  override def afterLog(a: CorrelationId): Unit = {
     MDC.remove("correlationId")
   }
 }
