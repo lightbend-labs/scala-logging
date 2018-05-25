@@ -18,8 +18,6 @@ package com.typesafe
 
 package object scalalogging {
 
-  type Traversable[+A] = scala.collection.immutable.Traversable[A]
-
   type Iterable[+A] = scala.collection.immutable.Iterable[A]
 
   type Seq[+A] = scala.collection.immutable.Seq[A]
