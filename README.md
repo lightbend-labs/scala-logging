@@ -17,7 +17,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 ## Prerequisites ##
 
 * Java 6 or higher
-* Scala 2.11 or 2.12
+* Scala 2.11, 2.12 or 2.13
 * Logging backend compatible with SLF4J
 
 A compatible logging backend is [Logback](http://logback.qos.ch), add it to your sbt build definition:
@@ -194,26 +194,6 @@ def foo(arg: String)(implicit line: sourcecode.Line, file: sourcecode.File) = {
 
 foo("hello") // the implicit sourcecode.File is filled in automatically
 ```
-
-## Debugging Scala in IntelliJ
-
-Check out [scala-trace-debug](https://github.com/JohnReedLOL/scala-trace-debug) to make multithreaded bug tracing and
-prevention easier than ever. Provides user-friendly prints, traces, assertions,
-container printing, and source code printing.
-
-## Logstash
-
-Check out [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder) if you're using [Logstash](https://www.elastic.co/products/logstash).
-Provides logback encoders, layouts, and appenders to log in JSON format.
-
-## Other noteworthy tooling
-
- - https://github.com/godaddy/godaddy-logger
-
-## Maintainer ##
-
-The original author [Heiko Seeberger](https://twitter.com/hseeberger) stepped down Q1 2015, starting a new adventure at codecentric. Future maintenance is taken
-over by [Mathias Bogaert](http://twitter.com/analytically).
 
 ## Contribution policy ##
 
