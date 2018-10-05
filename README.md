@@ -195,6 +195,14 @@ def foo(arg: String)(implicit line: sourcecode.Line, file: sourcecode.File) = {
 foo("hello") // the implicit sourcecode.File is filled in automatically
 ```
 
+If you are using an IDE, you might also want to consider the [pos](https://github.com/JohnReedLOL/pos#Logging) library, which generates hyperlinked log lines, either via a helper method:
+
+![pos Logging](https://i.imgur.com/wkXxbCd.png)
+
+Or by returning the psudo stack trace as a String:
+
+`logger.warn("FooBar" + pos())`
+
 ## Contribution policy ##
 
 Contributions via GitHub pull requests are gladly accepted from their original author. Before we can accept pull requests, you will need to agree to the [Typesafe Contributor License Agreement](http://www.typesafe.com/contribute/cla) online, using your GitHub account.
