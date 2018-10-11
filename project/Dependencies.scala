@@ -5,7 +5,7 @@ object Version {
   val mockito   = "1.10.19"
   val scala     = "2.12.6"
   val crossScala = List(scala, "2.11.12", "2.13.0-M4")
-  val scalaTest = "3.0.6-SNAP1"  // only version available for 2.13.0-M4
+  val scalaTest = "3.0.6-SNAP2"  // only version available for 2.13.0-M4
   val slf4j     = "1.7.25"
 }
 
