@@ -44,3 +44,18 @@ pomIncludeRepository := (_ => false)
 scmInfo := Some(
   ScmInfo(url("https://github.com/lightbend/scala-logging"), "scm:git:git@github.com:lightbend/scala-logging.git")
 )
+
+developers := List(
+  Developer(
+    id = "hseeberger",
+    name = "Heiko Seeberger",
+    email = "",
+    url = url("http://heikoseeberger.de")
+  ),
+  Developer(
+    id = "analytically",
+    name = "Mathias Bogaert",
+    email = "",
+    url = url("http://twitter.com/analytically")
+  )
+)
