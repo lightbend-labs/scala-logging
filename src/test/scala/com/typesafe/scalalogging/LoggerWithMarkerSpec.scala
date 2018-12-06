@@ -381,7 +381,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
-  def fixture(p: Underlying => Boolean, isEnabled: Boolean) =
+  def fixture(p: Underlying => Marker => Boolean, isEnabled: Boolean) =
     new {
       val marker = DummyMarker
       val msg = "msg"
@@ -390,7 +390,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar {
       val arg2 = new Integer(1)
       val arg3 = "arg3"
       val underlying = mock[org.slf4j.Logger]
-      when(p(underlying)).thenReturn(isEnabled)
+      when(p(underlying)(marker)).thenReturn(isEnabled)
       val logger = Logger(underlying)
     }
 }
