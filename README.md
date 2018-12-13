@@ -34,7 +34,7 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 
 - Group id / organization: *com.typesafe.scala-logging*
 - Artifact id / name: *scala-logging*
-- Latest version is 3.9.0
+- Latest version is 3.9.2
 
 Usage with SBT, adding a dependency to the latest version of Scala Logging to your sbt build definition file:
 
@@ -128,6 +128,9 @@ def serviceMethod(implicit correlationId: CorrelationId): Future[Result] = {
 ```
 
 ### What's new?
+
+### 3.9.2
+ - Use marker inside macros in is*Enabled methods
 
 ### 3.9.0
  - Functions for on demand code execution added in Logger class
