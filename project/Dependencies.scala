@@ -6,7 +6,7 @@ object Version {
   val scala     = "2.12.7"
   val crossScala = List(scala, "2.11.12", "2.13.0-M5")
   val scalaTest = "3.0.6-SNAP6"  // only version available for 2.13.0-M4
-  val slf4j     = "1.7.25"
+  val slf4j     = "1.7.26"
 }
 
 object Library {
