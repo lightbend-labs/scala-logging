@@ -24,7 +24,13 @@ import org.slf4j.{ Logger => Underlying }
 import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.mockito.MockitoSugar
 
-class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
+trait Varargs {
+  // TODO: we used to wrap in List(...): _*, which I assume was to force the varags method to be chosen.
+  // I encapsulated that here in something that works across 2.12/2.13.
+  def forceVarargs[T](xs: T*): scala.Seq[T] = scala.Seq(xs: _*)
+}
+
+class LoggerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
 
   // Error
 
@@ -58,7 +64,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isErrorEnabled, isEnabled = true)
       import f._
       logger.error(s"msg $arg1 $arg2")
-      verify(underlying).error("msg {} {}", List(arg1, arg2): _*)
+      verify(underlying).error("msg {} {}", forceVarargs(arg1, arg2): _*)
     }
 
   }
@@ -86,9 +92,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isErrorEnabled, isEnabled = true)
       import f._
       logger.error(msg, arg1)
-      verify(underlying).error(msg, List(arg1): _*)
+      verify(underlying).error(msg, arg1)
       logger.error(msg, arg1, arg2)
-      verify(underlying).error(msg, List(arg1, arg2): _*)
+      verify(underlying).error(msg, forceVarargs(arg1, arg2): _*)
       logger.error(msg, arg1, arg2, arg3)
       verify(underlying).error(msg, arg1, arg2, arg3)
     }
@@ -97,9 +103,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(msg, arg1)
-      verify(underlying, never).error(msg, List(arg1): _*)
+      verify(underlying, never).error(msg, arg1)
       logger.error(msg, arg1, arg2)
-      verify(underlying, never).error(msg, List(arg1, arg2): _*)
+      verify(underlying, never).error(msg, forceVarargs(arg1, arg2): _*)
       logger.error(msg, arg1, arg2, arg3)
       verify(underlying, never).error(msg, arg1, arg2, arg3)
     }
@@ -137,7 +143,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isWarnEnabled, isEnabled = true)
       import f._
       logger.warn(s"msg $arg1 $arg2")
-      verify(underlying).warn("msg {} {}", List(arg1, arg2): _*)
+      verify(underlying).warn("msg {} {}", forceVarargs(arg1, arg2): _*)
     }
   }
 
@@ -164,9 +170,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isWarnEnabled, isEnabled = true)
       import f._
       logger.warn(msg, arg1)
-      verify(underlying).warn(msg, List(arg1): _*)
+      verify(underlying).warn(msg, arg1)
       logger.warn(msg, arg1, arg2)
-      verify(underlying).warn(msg, List(arg1, arg2): _*)
+      verify(underlying).warn(msg, forceVarargs(arg1, arg2): _*)
       logger.warn(msg, arg1, arg2, arg3)
       verify(underlying).warn(msg, arg1, arg2, arg3)
     }
@@ -175,9 +181,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(msg, arg1)
-      verify(underlying, never).warn(msg, List(arg1): _*)
+      verify(underlying, never).warn(msg, arg1)
       logger.warn(msg, arg1, arg2)
-      verify(underlying, never).warn(msg, List(arg1, arg2): _*)
+      verify(underlying, never).warn(msg, forceVarargs(arg1, arg2): _*)
       logger.warn(msg, arg1, arg2, arg3)
       verify(underlying, never).warn(msg, arg1, arg2, arg3)
     }
@@ -215,7 +221,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isInfoEnabled, isEnabled = true)
       import f._
       logger.info(s"msg $arg1 $arg2")
-      verify(underlying).info("msg {} {}", List(arg1, arg2): _*)
+      verify(underlying).info("msg {} {}", forceVarargs(arg1, arg2): _*)
     }
   }
 
@@ -242,9 +248,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isInfoEnabled, isEnabled = true)
       import f._
       logger.info(msg, arg1)
-      verify(underlying).info(msg, List(arg1): _*)
+      verify(underlying).info(msg, arg1)
       logger.info(msg, arg1, arg2)
-      verify(underlying).info(msg, List(arg1, arg2): _*)
+      verify(underlying).info(msg, forceVarargs(arg1, arg2): _*)
       logger.info(msg, arg1, arg2, arg3)
       verify(underlying).info(msg, arg1, arg2, arg3)
     }
@@ -253,9 +259,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(msg, arg1)
-      verify(underlying, never).info(msg, List(arg1): _*)
+      verify(underlying, never).info(msg, arg1)
       logger.info(msg, arg1, arg2)
-      verify(underlying, never).info(msg, List(arg1, arg2): _*)
+      verify(underlying, never).info(msg, forceVarargs(arg1, arg2): _*)
       logger.info(msg, arg1, arg2, arg3)
       verify(underlying, never).info(msg, arg1, arg2, arg3)
     }
@@ -292,7 +298,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isDebugEnabled, isEnabled = true)
       import f._
       logger.debug(s"msg $arg1 $arg2")
-      verify(underlying).debug("msg {} {}", List(arg1, arg2): _*)
+      verify(underlying).debug("msg {} {}", forceVarargs(arg1, arg2): _*)
     }
   }
 
@@ -319,9 +325,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isDebugEnabled, isEnabled = true)
       import f._
       logger.debug(msg, arg1)
-      verify(underlying).debug(msg, List(arg1): _*)
+      verify(underlying).debug(msg, arg1)
       logger.debug(msg, arg1, arg2)
-      verify(underlying).debug(msg, List(arg1, arg2): _*)
+      verify(underlying).debug(msg, forceVarargs(arg1, arg2): _*)
       logger.debug(msg, arg1, arg2, arg3)
       verify(underlying).debug(msg, arg1, arg2, arg3)
     }
@@ -330,9 +336,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(msg, arg1)
-      verify(underlying, never).debug(msg, List(arg1): _*)
+      verify(underlying, never).debug(msg, arg1)
       logger.debug(msg, arg1, arg2)
-      verify(underlying, never).debug(msg, List(arg1, arg2): _*)
+      verify(underlying, never).debug(msg, forceVarargs(arg1, arg2): _*)
       logger.debug(msg, arg1, arg2, arg3)
       verify(underlying, never).debug(msg, arg1, arg2, arg3)
     }
@@ -370,7 +376,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isTraceEnabled, isEnabled = true)
       import f._
       logger.trace(s"msg $arg1 $arg2")
-      verify(underlying).trace("msg {} {}", List(arg1, arg2): _*)
+      verify(underlying).trace("msg {} {}", forceVarargs(arg1, arg2): _*)
     }
   }
 
@@ -397,9 +403,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isTraceEnabled, isEnabled = true)
       import f._
       logger.trace(msg, arg1)
-      verify(underlying).trace(msg, List(arg1): _*)
+      verify(underlying).trace(msg, arg1)
       logger.trace(msg, arg1, arg2)
-      verify(underlying).trace(msg, List(arg1, arg2): _*)
+      verify(underlying).trace(msg, forceVarargs(arg1, arg2): _*)
       logger.trace(msg, arg1, arg2, arg3)
       verify(underlying).trace(msg, arg1, arg2, arg3)
     }
@@ -408,9 +414,9 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(msg, arg1)
-      verify(underlying, never).trace(msg, List(arg1): _*)
+      verify(underlying, never).trace(msg, arg1)
       logger.trace(msg, arg1, arg2)
-      verify(underlying, never).trace(msg, List(arg1, arg2): _*)
+      verify(underlying, never).trace(msg, forceVarargs(arg1, arg2): _*)
       logger.trace(msg, arg1, arg2, arg3)
       verify(underlying, never).trace(msg, arg1, arg2, arg3)
     }
@@ -468,7 +474,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
       val f = fixture(_.isErrorEnabled, isEnabled = true)
       import f._
       logger.error("foo {}, bar {}", arg4, arg5)
-      verify(underlying).error("foo {}, bar {}", Array(arg4ref, arg5ref): _*)
+      verify(underlying).error("foo {}, bar {}", forceVarargs(arg4ref, arg5ref): _*)
     }
 
     "map args to AnyRef for non 2 args" in {

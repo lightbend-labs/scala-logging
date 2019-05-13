@@ -23,4 +23,5 @@ package object scalalogging {
   type Seq[+A] = scala.collection.immutable.Seq[A]
 
   type IndexedSeq[+A] = scala.collection.immutable.IndexedSeq[A]
+
 }
