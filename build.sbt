@@ -17,6 +17,9 @@ scalacOptions ++= List(
   "-encoding", "UTF-8"
 )
 
+// TODO: drop when RC2 artifacts are available for mockito (or 2.13.0 final)
+conflictWarning := ConflictWarning.disable
+
 osgiSettings
 
 OsgiKeys.bundleSymbolicName := "com.typesafe.scala-logging"

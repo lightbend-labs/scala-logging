@@ -18,7 +18,7 @@ package com.typesafe.scalalogging
 
 import java.io._
 
-import org.mockito.Matchers._
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }
 import org.scalatest.{ Matchers, WordSpec }
