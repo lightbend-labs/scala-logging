@@ -275,9 +275,23 @@ private object LoggerMacro {
 
   /** Checks whether `message` is an interpolated string and transforms it into SLF4J string interpolation. */
   private def deconstructInterpolatedMessage(c: LoggerContext)(message: c.Expr[String]) = {
-    import c.universe._
+    val u: c.universe.type = c.universe
+    // Eww; gross! In 2.13, the `s` interpolator on StringContext became a macro, so we have to look at the pre-macro
+    // expansion tree to recover what the user wrote...
+    val tree: u.Tree = {
+      // ... but there's no way to do that within scala.reflect.api!
+      // Worse, MacroExpansionAttachment is in scala-compiler, not scala-reflect, so we don't even have it on the compilation classpath.
+      // Hence, getClass.getSimplename....
+      val uInternal = u.asInstanceOf[scala.reflect.internal.SymbolTable]
+      import uInternal._
+      message.tree.asInstanceOf[uInternal.Tree].attachments.all.collect {
+        case orig if orig.getClass.getSimpleName == "MacroExpansionAttachment" => orig.asInstanceOf[{ def expandee: Tree }].expandee.asInstanceOf[u.Tree]
+      }.headOption.getOrElse(message.tree)
+    }
 
-    message.tree match {
+    import u._
+
+    tree match {
       case q"scala.StringContext.apply(..$parts).s(..$args)" =>
         val format = parts.iterator.map({ case Literal(Constant(str: String)) => str })
           // Emulate standard interpolator escaping
