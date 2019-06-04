@@ -2,7 +2,7 @@ package com.typesafe.scalalogging
 
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 import org.scalatest.{ Matchers, WordSpec }
 import org.slf4j.{ Logger => Underlying }
 
@@ -50,7 +50,7 @@ class LoggerTakingImplicitSpec extends WordSpec with Matchers with MockitoSugar 
       logger.error(msg, cause)
       verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).error(anyString, anyObject)
+      verify(underlying, never).error(anyString, any[Object])
     }
   }
 
@@ -123,7 +123,7 @@ class LoggerTakingImplicitSpec extends WordSpec with Matchers with MockitoSugar 
       logger.warn(msg, cause)
       verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).warn(anyString, anyObject)
+      verify(underlying, never).warn(anyString, any[Object])
     }
   }
 
@@ -196,7 +196,7 @@ class LoggerTakingImplicitSpec extends WordSpec with Matchers with MockitoSugar 
       logger.info(msg, cause)
       verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).info(anyString, anyObject)
+      verify(underlying, never).info(anyString, any[Object])
     }
   }
 
@@ -269,7 +269,7 @@ class LoggerTakingImplicitSpec extends WordSpec with Matchers with MockitoSugar 
       logger.debug(msg, cause)
       verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).debug(anyString, anyObject)
+      verify(underlying, never).debug(anyString, any[Object])
     }
   }
 
@@ -342,7 +342,7 @@ class LoggerTakingImplicitSpec extends WordSpec with Matchers with MockitoSugar 
       logger.trace(msg, cause)
       verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).trace(anyString, anyObject)
+      verify(underlying, never).trace(anyString, any[Object])
     }
   }
 

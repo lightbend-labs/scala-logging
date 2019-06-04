@@ -22,7 +22,7 @@ import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }
 import org.slf4j.Marker
 import org.scalatest.{ Matchers, WordSpec }
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 
 object DummyMarker extends Marker {
   def add(childMarker: Marker): Unit = {}
@@ -80,7 +80,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(marker, msg, cause)
-      verify(underlying, never).error(refEq(DummyMarker), anyString, anyObject)
+      verify(underlying, never).error(refEq(DummyMarker), anyString, any[Object])
     }
   }
 
@@ -148,7 +148,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(marker, msg, cause)
-      verify(underlying, never).warn(refEq(DummyMarker), anyString, anyObject)
+      verify(underlying, never).warn(refEq(DummyMarker), anyString, any[Object])
     }
   }
 
@@ -216,7 +216,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(marker, msg, cause)
-      verify(underlying, never).info(refEq(DummyMarker), anyString, anyObject)
+      verify(underlying, never).info(refEq(DummyMarker), anyString, any[Object])
     }
   }
 
@@ -284,7 +284,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(marker, msg, cause)
-      verify(underlying, never).debug(refEq(DummyMarker), anyString, anyObject)
+      verify(underlying, never).debug(refEq(DummyMarker), anyString, any[Object])
     }
   }
 
@@ -352,7 +352,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(marker, msg, cause)
-      verify(underlying, never).trace(refEq(DummyMarker), anyString, anyObject)
+      verify(underlying, never).trace(refEq(DummyMarker), anyString, any[Object])
     }
   }
 
