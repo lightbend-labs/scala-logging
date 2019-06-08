@@ -22,7 +22,7 @@ import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }
 import org.scalatest.{ Matchers, WordSpec }
-import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar
 
 trait Varargs {
   // TODO: we used to wrap in List(...): _*, which I assume was to force the varags method to be chosen.
@@ -82,7 +82,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(msg, cause)
-      verify(underlying, never).error(anyString, anyObject)
+      verify(underlying, never).error(anyString, any[Object])
     }
   }
 
@@ -160,7 +160,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(msg, cause)
-      verify(underlying, never).warn(anyString, anyObject)
+      verify(underlying, never).warn(anyString, any[Object])
     }
   }
 
@@ -238,7 +238,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(msg, cause)
-      verify(underlying, never).info(anyString, anyObject)
+      verify(underlying, never).info(anyString, any[Object])
     }
   }
 
@@ -315,7 +315,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(msg, cause)
-      verify(underlying, never).debug(anyString, anyObject)
+      verify(underlying, never).debug(anyString, any[Object])
     }
   }
 
@@ -393,7 +393,7 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(msg, cause)
-      verify(underlying, never).trace(anyString, anyObject)
+      verify(underlying, never).trace(anyString, any[Object])
     }
   }
 
