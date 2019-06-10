@@ -17,12 +17,10 @@
 package com.typesafe.scalalogging
 
 import java.util.NoSuchElementException
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
-import org.slf4j.{ Logger => Underlying }
-import org.slf4j.Marker
+
+import org.mockito.scalatest.IdiomaticMockito
 import org.scalatest.{ Matchers, WordSpec }
-import org.scalatestplus.mockito.MockitoSugar
+import org.slf4j.{ Marker, Logger => Underlying }
 
 object DummyMarker extends Marker {
   def add(childMarker: Marker): Unit = {}
@@ -39,7 +37,11 @@ object DummyMarker extends Marker {
   def remove(child: Marker): Boolean = false
 }
 
-class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
+class LoggerWithMarkerSpec
+  extends WordSpec
+  with Matchers
+  with IdiomaticMockito
+  with Varargs {
 
   // Error
 
@@ -49,21 +51,21 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isErrorEnabled, isEnabled = true)
       import f._
       logger.error(marker, msg)
-      verify(underlying).error(marker, msg)
+      underlying.error(marker, msg) was called
     }
 
     "not call the underlying logger's error method if the error level is not enabled" in {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(marker, msg)
-      verify(underlying, never).error(refEq(DummyMarker), anyString)
+      underlying.error(DummyMarker, *) wasNever called
     }
 
     "call the underlying logger's error method if the error level is enabled and string is interpolated" in {
       val f = fixture(_.isErrorEnabled, isEnabled = true)
       import f._
       logger.error(marker, s"msg $arg1 $arg2 $arg3")
-      verify(underlying).error(marker, "msg {} {} {}", arg1, arg2, arg3)
+      underlying.error(marker, "msg {} {} {}", arg1, arg2, arg3) was called
     }
   }
 
@@ -73,14 +75,14 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isErrorEnabled, isEnabled = true)
       import f._
       logger.error(marker, msg, cause)
-      verify(underlying).error(marker, msg, cause)
+      underlying.error(marker, msg, cause) was called
     }
 
     "not call the underlying logger's error method if the error level is not enabled" in {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(marker, msg, cause)
-      verify(underlying, never).error(refEq(DummyMarker), anyString, any[Object])
+      underlying.error(DummyMarker, *, *) wasNever called
     }
   }
 
@@ -90,22 +92,22 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isErrorEnabled, isEnabled = true)
       import f._
       logger.error(marker, msg, arg1)
-      verify(underlying).error(marker, msg, arg1)
+      underlying.error(marker, msg, arg1) was called
       logger.error(marker, msg, arg1, arg2)
-      verify(underlying).error(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.error(marker, msg, forceVarargs(arg1, arg2): _*) was called
       logger.error(marker, msg, arg1, arg2, arg3)
-      verify(underlying).error(marker, msg, arg1, arg2, arg3)
+      underlying.error(marker, msg, arg1, arg2, arg3) was called
     }
 
     "not call the underlying logger's error method if the error level is not enabled" in {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(marker, msg, arg1)
-      verify(underlying, never).error(marker, msg, arg1)
+      underlying.error(marker, msg, arg1) wasNever called
       logger.error(marker, msg, arg1, arg2)
-      verify(underlying, never).error(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.error(marker, msg, forceVarargs(arg1, arg2): _*) wasNever called
       logger.error(marker, msg, arg1, arg2, arg3)
-      verify(underlying, never).error(marker, msg, arg1, arg2, arg3)
+      underlying.error(marker, msg, arg1, arg2, arg3) wasNever called
     }
   }
 
@@ -117,21 +119,21 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isWarnEnabled, isEnabled = true)
       import f._
       logger.warn(marker, msg)
-      verify(underlying).warn(marker, msg)
+      underlying.warn(marker, msg) was called
     }
 
     "not call the underlying logger's warn method if the warn level is not enabled" in {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(marker, msg)
-      verify(underlying, never).warn(refEq(DummyMarker), anyString)
+      underlying.warn(DummyMarker, *) wasNever called
     }
 
     "call the underlying logger's warn method if the warn level is enabled and string is interpolated" in {
       val f = fixture(_.isWarnEnabled, isEnabled = true)
       import f._
       logger.warn(marker, s"msg $arg1 $arg2 $arg3")
-      verify(underlying).warn(marker, "msg {} {} {}", arg1, arg2, arg3)
+      underlying.warn(marker, "msg {} {} {}", arg1, arg2, arg3) was called
     }
   }
 
@@ -141,14 +143,14 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isWarnEnabled, isEnabled = true)
       import f._
       logger.warn(marker, msg, cause)
-      verify(underlying).warn(marker, msg, cause)
+      underlying.warn(marker, msg, cause) was called
     }
 
     "not call the underlying logger's warn method if the warn level is not enabled" in {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(marker, msg, cause)
-      verify(underlying, never).warn(refEq(DummyMarker), anyString, any[Object])
+      underlying.warn(DummyMarker, *, *) wasNever called
     }
   }
 
@@ -158,22 +160,22 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isWarnEnabled, isEnabled = true)
       import f._
       logger.warn(marker, msg, arg1)
-      verify(underlying).warn(marker, msg, arg1)
+      underlying.warn(marker, msg, arg1) was called
       logger.warn(marker, msg, arg1, arg2)
-      verify(underlying).warn(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.warn(marker, msg, forceVarargs(arg1, arg2): _*) was called
       logger.warn(marker, msg, arg1, arg2, arg3)
-      verify(underlying).warn(marker, msg, arg1, arg2, arg3)
+      underlying.warn(marker, msg, arg1, arg2, arg3) was called
     }
 
     "not call the underlying logger's warn method if the warn level is not enabled" in {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(marker, msg, arg1)
-      verify(underlying, never).warn(marker, msg, arg1)
+      underlying.warn(marker, msg, arg1) wasNever called
       logger.warn(marker, msg, arg1, arg2)
-      verify(underlying, never).warn(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.warn(marker, msg, forceVarargs(arg1, arg2): _*) wasNever called
       logger.warn(marker, msg, arg1, arg2, arg3)
-      verify(underlying, never).warn(marker, msg, arg1, arg2, arg3)
+      underlying.warn(marker, msg, arg1, arg2, arg3) wasNever called
     }
   }
 
@@ -185,21 +187,21 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isInfoEnabled, isEnabled = true)
       import f._
       logger.info(marker, msg)
-      verify(underlying).info(marker, msg)
+      underlying.info(marker, msg) was called
     }
 
     "not call the underlying logger's info method if the info level is not enabled" in {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(marker, msg)
-      verify(underlying, never).info(refEq(DummyMarker), anyString)
+      underlying.info(DummyMarker, *) wasNever called
     }
 
     "call the underlying logger's info method if the info level is enabled and string is interpolated" in {
       val f = fixture(_.isInfoEnabled, isEnabled = true)
       import f._
       logger.info(marker, s"msg $arg1 $arg2 $arg3")
-      verify(underlying).info(marker, "msg {} {} {}", arg1, arg2, arg3)
+      underlying.info(marker, "msg {} {} {}", arg1, arg2, arg3) was called
     }
   }
 
@@ -209,14 +211,14 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isInfoEnabled, isEnabled = true)
       import f._
       logger.info(marker, msg, cause)
-      verify(underlying).info(marker, msg, cause)
+      underlying.info(marker, msg, cause) was called
     }
 
     "not call the underlying logger's info method if the info level is not enabled" in {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(marker, msg, cause)
-      verify(underlying, never).info(refEq(DummyMarker), anyString, any[Object])
+      underlying.info(DummyMarker, *, *) wasNever called
     }
   }
 
@@ -226,22 +228,22 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isInfoEnabled, isEnabled = true)
       import f._
       logger.info(marker, msg, arg1)
-      verify(underlying).info(marker, msg, arg1)
+      underlying.info(marker, msg, arg1) was called
       logger.info(marker, msg, arg1, arg2)
-      verify(underlying).info(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.info(marker, msg, forceVarargs(arg1, arg2): _*) was called
       logger.info(marker, msg, arg1, arg2, arg3)
-      verify(underlying).info(marker, msg, arg1, arg2, arg3)
+      underlying.info(marker, msg, arg1, arg2, arg3) was called
     }
 
     "not call the underlying logger's info method if the info level is not enabled" in {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(marker, msg, arg1)
-      verify(underlying, never).info(marker, msg, arg1)
+      underlying.info(marker, msg, arg1) wasNever called
       logger.info(marker, msg, arg1, arg2)
-      verify(underlying, never).info(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.info(marker, msg, forceVarargs(arg1, arg2): _*) wasNever called
       logger.info(marker, msg, arg1, arg2, arg3)
-      verify(underlying, never).info(marker, msg, arg1, arg2, arg3)
+      underlying.info(marker, msg, arg1, arg2, arg3) wasNever called
     }
   }
 
@@ -253,21 +255,21 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isDebugEnabled, isEnabled = true)
       import f._
       logger.debug(marker, msg)
-      verify(underlying).debug(marker, msg)
+      underlying.debug(marker, msg) was called
     }
 
     "not call the underlying logger's debug method if the debug level is not enabled" in {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(marker, msg)
-      verify(underlying, never).debug(refEq(DummyMarker), anyString)
+      underlying.debug(DummyMarker, *) wasNever called
     }
 
     "call the underlying logger's debug method if the debug level is enabled and string is interpolated" in {
       val f = fixture(_.isDebugEnabled, isEnabled = true)
       import f._
       logger.debug(marker, s"msg $arg1 $arg2 $arg3")
-      verify(underlying).debug(marker, "msg {} {} {}", arg1, arg2, arg3)
+      underlying.debug(marker, "msg {} {} {}", arg1, arg2, arg3) was called
     }
   }
 
@@ -277,14 +279,14 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isDebugEnabled, isEnabled = true)
       import f._
       logger.debug(marker, msg, cause)
-      verify(underlying).debug(marker, msg, cause)
+      underlying.debug(marker, msg, cause) was called
     }
 
     "not call the underlying logger's debug method if the debug level is not enabled" in {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(marker, msg, cause)
-      verify(underlying, never).debug(refEq(DummyMarker), anyString, any[Object])
+      underlying.debug(DummyMarker, *, *) wasNever called
     }
   }
 
@@ -294,22 +296,22 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isDebugEnabled, isEnabled = true)
       import f._
       logger.debug(marker, msg, arg1)
-      verify(underlying).debug(marker, msg, arg1)
+      underlying.debug(marker, msg, arg1) was called
       logger.debug(marker, msg, arg1, arg2)
-      verify(underlying).debug(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.debug(marker, msg, forceVarargs(arg1, arg2): _*) was called
       logger.debug(marker, msg, arg1, arg2, arg3)
-      verify(underlying).debug(marker, msg, arg1, arg2, arg3)
+      underlying.debug(marker, msg, arg1, arg2, arg3) was called
     }
 
     "not call the underlying logger's debug method if the debug level is not enabled" in {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(marker, msg, arg1)
-      verify(underlying, never).debug(marker, msg, arg1)
+      underlying.debug(marker, msg, arg1) wasNever called
       logger.debug(marker, msg, arg1, arg2)
-      verify(underlying, never).debug(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.debug(marker, msg, forceVarargs(arg1, arg2): _*) wasNever called
       logger.debug(marker, msg, arg1, arg2, arg3)
-      verify(underlying, never).debug(marker, msg, arg1, arg2, arg3)
+      underlying.debug(marker, msg, arg1, arg2, arg3) wasNever called
     }
   }
 
@@ -321,21 +323,21 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isTraceEnabled, isEnabled = true)
       import f._
       logger.trace(marker, msg)
-      verify(underlying).trace(marker, msg)
+      underlying.trace(marker, msg) was called
     }
 
     "not call the underlying logger's trace method if the trace level is not enabled" in {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(marker, msg)
-      verify(underlying, never).trace(refEq(DummyMarker), anyString)
+      underlying.trace(DummyMarker, *) wasNever called
     }
 
     "call the underlying logger's trace method if the trace level is enabled and string is interpolated" in {
       val f = fixture(_.isTraceEnabled, isEnabled = true)
       import f._
       logger.trace(marker, s"msg $arg1 $arg2 $arg3")
-      verify(underlying).trace(marker, "msg {} {} {}", arg1, arg2, arg3)
+      underlying.trace(marker, "msg {} {} {}", arg1, arg2, arg3) was called
     }
   }
 
@@ -345,14 +347,14 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isTraceEnabled, isEnabled = true)
       import f._
       logger.trace(marker, msg, cause)
-      verify(underlying).trace(marker, msg, cause)
+      underlying.trace(marker, msg, cause) was called
     }
 
     "not call the underlying logger's trace method if the trace level is not enabled" in {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(marker, msg, cause)
-      verify(underlying, never).trace(refEq(DummyMarker), anyString, any[Object])
+      underlying.trace(DummyMarker, *, *) wasNever called
     }
   }
 
@@ -362,22 +364,22 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val f = fixture(_.isTraceEnabled, isEnabled = true)
       import f._
       logger.trace(marker, msg, arg1)
-      verify(underlying).trace(marker, msg, arg1)
+      underlying.trace(marker, msg, arg1) was called
       logger.trace(marker, msg, arg1, arg2)
-      verify(underlying).trace(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.trace(marker, msg, forceVarargs(arg1, arg2): _*) was called
       logger.trace(marker, msg, arg1, arg2, arg3)
-      verify(underlying).trace(marker, msg, arg1, arg2, arg3)
+      underlying.trace(marker, msg, arg1, arg2, arg3) was called
     }
 
     "not call the underlying logger's trace method if the trace level is not enabled" in {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(marker, msg, arg1)
-      verify(underlying, never).trace(marker, msg, arg1)
+      underlying.trace(marker, msg, arg1) wasNever called
       logger.trace(marker, msg, arg1, arg2)
-      verify(underlying, never).trace(marker, msg, forceVarargs(arg1, arg2): _*)
+      underlying.trace(marker, msg, forceVarargs(arg1, arg2): _*) wasNever called
       logger.trace(marker, msg, arg1, arg2, arg3)
-      verify(underlying, never).trace(marker, msg, arg1, arg2, arg3)
+      underlying.trace(marker, msg, arg1, arg2, arg3) wasNever called
     }
   }
 
@@ -390,7 +392,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val arg2 = new Integer(1)
       val arg3 = "arg3"
       val underlying = mock[org.slf4j.Logger]
-      when(p(underlying)(marker)).thenReturn(isEnabled)
+      p(underlying)(marker) returns isEnabled
       val logger = Logger(underlying)
     }
 }

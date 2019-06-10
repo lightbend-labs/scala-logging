@@ -10,11 +10,11 @@ object Version {
 }
 
 object Library {
-  val logbackClassic                     = "ch.qos.logback" %  "logback-classic" % Version.logback
-  val mockitoScala                       = "org.mockito"    %% "mockito-scala"   % Version.mockito
-  def scalaReflect(scalaVersion: String) = "org.scala-lang" %  "scala-reflect"   % scalaVersion
-  val scalaTest                          = "org.scalatest"  %% "scalatest"       % Version.scalaTest
-  val slf4jApi                           = "org.slf4j"      %  "slf4j-api"       % Version.slf4j
+  val logbackClassic                     = "ch.qos.logback" %  "logback-classic"         % Version.logback
+  val mockitoScala                       = "org.mockito"    %% "mockito-scala-scalatest" % Version.mockito
+  def scalaReflect(scalaVersion: String) = "org.scala-lang" %  "scala-reflect"           % scalaVersion
+  val scalaTest                          = "org.scalatest"  %% "scalatest"               % Version.scalaTest
+  val slf4jApi                           = "org.slf4j"      %  "slf4j-api"               % Version.slf4j
 }
 
 object Dependencies {
