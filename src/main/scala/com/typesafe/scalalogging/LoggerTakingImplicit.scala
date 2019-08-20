@@ -9,7 +9,7 @@ trait CanLog[A] {
 }
 
 @SerialVersionUID(957385465L)
-final class LoggerTakingImplicit[A] private[scalalogging] (val underlying: Underlying)(implicit val canLogEv: CanLog[A]) extends Serializable {
+class LoggerTakingImplicit[A] private[scalalogging] (val underlying: Underlying)(implicit val canLogEv: CanLog[A]) extends Serializable {
 
   // Error
 
