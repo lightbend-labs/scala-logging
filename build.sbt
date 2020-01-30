@@ -14,7 +14,8 @@ scalacOptions ++= List(
   "-unchecked",
   "-deprecation",
   "-language:_",
-  "-encoding", "UTF-8"
+  "-encoding", "UTF-8",
+  "-Ywarn-unused"
 )
 
 osgiSettings

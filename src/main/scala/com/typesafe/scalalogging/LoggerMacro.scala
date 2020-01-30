@@ -19,7 +19,7 @@ package com.typesafe.scalalogging
 import org.slf4j.Marker
 import scala.reflect.macros.blackbox
 
-private object LoggerMacro {
+private[scalalogging] object LoggerMacro {
 
   type LoggerContext = blackbox.Context { type PrefixType = Logger }
 
