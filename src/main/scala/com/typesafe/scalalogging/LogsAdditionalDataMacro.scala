@@ -3,9 +3,9 @@ package com.typesafe.scalalogging
 import org.slf4j.Marker
 import scala.reflect.macros.blackbox
 
-private object LoggerTakingImplicitMacro {
+private object LogsAdditionalDataMacro {
 
-  type LoggerContext[A] = blackbox.Context { type PrefixType = LoggerTakingImplicit[A] }
+  type LoggerContext[A] = blackbox.Context { type PrefixType = LogsAdditionalData[A] }
 
   // Error
 

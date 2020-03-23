@@ -38,6 +38,12 @@ object Logger {
     new LoggerTakingImplicit[A](underlying)
 
   /**
+   * Create a [[LoggerTakingConstructorArg]] wrapping the given underlying `org.slf4j.Logger`.
+   */
+  def inContextOf[A](underlying: Underlying)(implicit ev: CanLog[A], a: A): LoggerTakingConstructorArg[A] =
+    new LoggerTakingConstructorArg[A](underlying, ev, a)
+
+  /**
    * Create a [[Logger]] for the given name.
    * Example:
    * {{{
@@ -57,6 +63,17 @@ object Logger {
   def takingImplicit[A](name: String)(implicit ev: CanLog[A]): LoggerTakingImplicit[A] =
     new LoggerTakingImplicit[A](LoggerFactory.getLogger(name))
 
+
+  /**
+   * Create a [[LoggerTakingConstructorArg]] for the given name.
+   * Example:
+   * {{{
+   *   val logger = Logger.inContextOf[CorrelationId]("application")
+   * }}}
+   */
+  def inContextOf[A](name: String)(implicit ev: CanLog[A], a: A): LoggerTakingConstructorArg[A] =
+    new LoggerTakingConstructorArg[A](LoggerFactory.getLogger(name), ev, a)
+
   /**
    * Create a [[Logger]] wrapping the created underlying `org.slf4j.Logger`.
    */
@@ -68,6 +85,12 @@ object Logger {
    */
   def takingImplicit[A](clazz: Class[_])(implicit ev: CanLog[A]): LoggerTakingImplicit[A] =
     new LoggerTakingImplicit[A](LoggerFactory.getLogger(clazz.getName))
+
+  /**
+   * Create a [[LoggerTakingConstructorArg]] named after the given class parameter.
+   */
+  def inContextOf[A](clazz: Class[_])(implicit ev: CanLog[A], a: A): LoggerTakingConstructorArg[A] =
+    new LoggerTakingConstructorArg[A](LoggerFactory.getLogger(clazz.getName), ev, a)
 
   /**
    * Create a [[Logger]] for the runtime class wrapped by the implicit class
@@ -90,91 +113,102 @@ object Logger {
    */
   def takingImplicit[T, A](implicit ct: ClassTag[T], ev: CanLog[A]): LoggerTakingImplicit[A] =
     new LoggerTakingImplicit[A](LoggerFactory.getLogger(ct.runtimeClass.getName.stripSuffix("$")))
+
+  /**
+   * Create a [[LoggerTakingConstructorArg]] for the runtime class wrapped by the implicit class
+   * tag parameter.
+   * Example:
+   * {{{
+   *   val logger = Logger.inContextOf[MyClass, CorrelationId]
+   * }}}
+   */
+  def inContextOf[T,A](implicit ct: ClassTag[T], ev: CanLog[A], a: A): LoggerTakingConstructorArg[A] =
+    new LoggerTakingConstructorArg[A](LoggerFactory.getLogger(ct.runtimeClass.getName.stripSuffix("$")), ev, a)
 }
 
 /**
  * Implementation of a fast logger based on macros and an underlying `org.slf4j.Logger`.
  */
 @SerialVersionUID(538248225L)
-final class Logger private (val underlying: Underlying) extends Serializable {
+final class Logger private (val underlying: Underlying) extends ALogger with Serializable {
 
   // Error
 
-  def error(message: String): Unit = macro LoggerMacro.errorMessage
+  override def error(message: String): Unit = macro LoggerMacro.errorMessage
 
-  def error(message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
+  override def error(message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCause
 
-  def error(message: String, args: Any*): Unit = macro LoggerMacro.errorMessageArgs
+  override def error(message: String, args: Any*): Unit = macro LoggerMacro.errorMessageArgs
 
-  def error(marker: Marker, message: String): Unit = macro LoggerMacro.errorMessageMarker
+  override def error(marker: Marker, message: String): Unit = macro LoggerMacro.errorMessageMarker
 
-  def error(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCauseMarker
+  override def error(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.errorMessageCauseMarker
 
-  def error(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.errorMessageArgsMarker
+  override def error(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.errorMessageArgsMarker
 
   def whenErrorEnabled(body: Unit): Unit = macro LoggerMacro.errorCode
 
   // Warn
 
-  def warn(message: String): Unit = macro LoggerMacro.warnMessage
+  override def warn(message: String): Unit = macro LoggerMacro.warnMessage
 
-  def warn(message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCause
+  override def warn(message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCause
 
-  def warn(message: String, args: Any*): Unit = macro LoggerMacro.warnMessageArgs
+  override def warn(message: String, args: Any*): Unit = macro LoggerMacro.warnMessageArgs
 
-  def warn(marker: Marker, message: String): Unit = macro LoggerMacro.warnMessageMarker
+  override def warn(marker: Marker, message: String): Unit = macro LoggerMacro.warnMessageMarker
 
-  def warn(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCauseMarker
+  override def warn(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.warnMessageCauseMarker
 
-  def warn(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.warnMessageArgsMarker
+  override def warn(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.warnMessageArgsMarker
 
   def whenWarnEnabled(body: Unit): Unit = macro LoggerMacro.warnCode
 
   // Info
 
-  def info(message: String): Unit = macro LoggerMacro.infoMessage
+  override def info(message: String): Unit = macro LoggerMacro.infoMessage
 
-  def info(message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCause
+  override def info(message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCause
 
-  def info(message: String, args: Any*): Unit = macro LoggerMacro.infoMessageArgs
+  override def info(message: String, args: Any*): Unit = macro LoggerMacro.infoMessageArgs
 
-  def info(marker: Marker, message: String): Unit = macro LoggerMacro.infoMessageMarker
+  override def info(marker: Marker, message: String): Unit = macro LoggerMacro.infoMessageMarker
 
-  def info(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCauseMarker
+  override def info(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.infoMessageCauseMarker
 
-  def info(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.infoMessageArgsMarker
+  override def info(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.infoMessageArgsMarker
 
   def whenInfoEnabled(body: Unit): Unit = macro LoggerMacro.infoCode
 
   // Debug
 
-  def debug(message: String): Unit = macro LoggerMacro.debugMessage
+  override def debug(message: String): Unit = macro LoggerMacro.debugMessage
 
-  def debug(message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCause
+  override def debug(message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCause
 
-  def debug(message: String, args: Any*): Unit = macro LoggerMacro.debugMessageArgs
+  override def debug(message: String, args: Any*): Unit = macro LoggerMacro.debugMessageArgs
 
-  def debug(marker: Marker, message: String): Unit = macro LoggerMacro.debugMessageMarker
+  override def debug(marker: Marker, message: String): Unit = macro LoggerMacro.debugMessageMarker
 
-  def debug(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCauseMarker
+  override def debug(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.debugMessageCauseMarker
 
-  def debug(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.debugMessageArgsMarker
+  override def debug(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.debugMessageArgsMarker
 
   def whenDebugEnabled(body: Unit): Unit = macro LoggerMacro.debugCode
 
   // Trace
 
-  def trace(message: String): Unit = macro LoggerMacro.traceMessage
+  override def trace(message: String): Unit = macro LoggerMacro.traceMessage
 
-  def trace(message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCause
+  override def trace(message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCause
 
-  def trace(message: String, args: Any*): Unit = macro LoggerMacro.traceMessageArgs
+  override def trace(message: String, args: Any*): Unit = macro LoggerMacro.traceMessageArgs
 
-  def trace(marker: Marker, message: String): Unit = macro LoggerMacro.traceMessageMarker
+  override def trace(marker: Marker, message: String): Unit = macro LoggerMacro.traceMessageMarker
 
-  def trace(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCauseMarker
+  override def trace(marker: Marker, message: String, cause: Throwable): Unit = macro LoggerMacro.traceMessageCauseMarker
 
-  def trace(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.traceMessageArgsMarker
+  override def trace(marker: Marker, message: String, args: Any*): Unit = macro LoggerMacro.traceMessageArgsMarker
 
   def whenTraceEnabled(body: Unit): Unit = macro LoggerMacro.traceCode
 
