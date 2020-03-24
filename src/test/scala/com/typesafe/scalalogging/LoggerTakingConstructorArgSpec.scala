@@ -2,9 +2,9 @@ package com.typesafe.scalalogging
 
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 import org.scalatestplus.mockito.MockitoSugar
-import org.slf4j.{Logger => Underlying}
+import org.slf4j.{ LoggerFactory, Logger => Underlying }
 
 class LoggerTakingConstructorArgSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
 
@@ -373,12 +373,111 @@ class LoggerTakingConstructorArgSpec extends WordSpec with Matchers with Mockito
       verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
     }
+
+  }
+
+  "getting logger instance via abstract class" should {
+
+    "works via inheritance from LazyLoggingInContextOf" in {
+
+      val f = fixture(_.isTraceEnabled, isEnabled = true)
+
+      import f.correlationId
+      import f.msg
+      import f.canLogCorrelationId
+
+      //this is how we use the LazyLogginInContextOf[A] abstract class, we define the class in scope of implicit CanLog[A] (from  imports usually)
+      class SomeClassInContextOfCorrelationId(protected val context: CorrelationId) extends LazyLoggingInContextOf[CorrelationId] {
+
+        override protected def underlying: Underlying = f.underlying
+
+        //expose one of the logger function for test
+        def trace(msg: String) = logger.trace(msg)
+      }
+
+      val anExample = new SomeClassInContextOfCorrelationId(correlationId)
+      anExample.trace(msg)
+
+      verify(f.underlying).trace(canLogCorrelationId.logMessage(msg, correlationId))
+    }
+
+    "works as abstract library mixed in with LazyLoggingInContextOfCorrelationId" in {
+
+      val f = fixture(_.isTraceEnabled, isEnabled = true)
+
+      import f.correlationId
+      import f.msg
+      import f.canLogCorrelationId
+
+      val testLogger = f.underlying
+
+      //this is a library class, sometimes used in a context, other times not so
+      abstract class SomeClassMaybeInContextOfCorrelationIdMaybeNot {
+
+        protected def logger: Any
+
+        lazy val alogger: ALogger = ALoggerAdapter(logger.asInstanceOf[LoggerTakingConstructorArg[CorrelationId]])
+
+        //expose one of the logger function for test
+        def trace(msg: String) = alogger.trace(msg)
+      }
+
+      //this is how we extend CustomizeLazyLoggingInContextOf, we set the canLog reference to be hardcoded
+      trait LazyLoggingInContextOfCorrelationId extends CustomizeLazyLoggingInContextOf[CorrelationId] {
+        override protected def canLog: CanLog[CorrelationId] = f.canLogCorrelationId
+        override protected def underlying: Underlying = testLogger
+      }
+
+      //this is an instance of our library, wired to have logger in context. this could also be done via mixin where you override the context.
+      class AClassInContextOfCorrelationId(override protected val context: CorrelationId) extends SomeClassMaybeInContextOfCorrelationIdMaybeNot with LazyLoggingInContextOfCorrelationId
+
+      val anExample = new AClassInContextOfCorrelationId(correlationId)
+      anExample.trace(msg)
+
+      verify(testLogger).trace(canLogCorrelationId.logMessage(msg, correlationId))
+    }
+
+    "abstract library still works with regular logger" in {
+
+      val f = fixture(_.isTraceEnabled, isEnabled = true)
+
+      import f.msg
+
+      val testLogger = f.underlying
+      //this is a library class, sometimes used in a context, other times not so
+      abstract class SomeClassMaybeInContextOfCorrelationIdMaybeNot {
+
+        protected def logger: Any
+
+        lazy val alogger: ALogger = ALoggerAdapter(logger.asInstanceOf[Logger])
+
+        //expose one of the logger function for test
+        def trace(msg: String) = alogger.trace(msg)
+      }
+
+      trait TestableLazyLogging {
+
+        @transient
+        protected lazy val logger: Logger = Logger(testLogger)
+      }
+
+      //this is an instance of our library, wired to have logger without a context.
+      class SomeClassWithoutContext extends SomeClassMaybeInContextOfCorrelationIdMaybeNot with TestableLazyLogging
+
+      val anExample = new SomeClassWithoutContext
+      anExample.trace(msg)
+
+      verify(testLogger).trace(msg)
+    }
+
   }
 
   def fixture(p: Underlying => Boolean, isEnabled: Boolean) =
     new {
+
       implicit val correlationId = CorrelationId("corrId")
-      implicit val canLogCorrelationId = mock[CanLog[CorrelationId]]
+      implicit val canLogCorrelationId: CanLog[CorrelationId] = mock[CanLog[CorrelationId]]
+
       val msg = "msg"
       val cause = new RuntimeException("cause")
       val arg1 = "arg1"
@@ -388,6 +487,7 @@ class LoggerTakingConstructorArgSpec extends WordSpec with Matchers with Mockito
       val underlying = mock[org.slf4j.Logger]
       when(p(underlying)).thenReturn(isEnabled)
       when(canLogCorrelationId.logMessage(anyString(), any[CorrelationId])).thenReturn(logMsg)
+
       val logger = Logger.inContextOf[CorrelationId](underlying)
     }
 }

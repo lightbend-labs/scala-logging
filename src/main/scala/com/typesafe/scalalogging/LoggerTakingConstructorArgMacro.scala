@@ -29,7 +29,7 @@ private object LoggerTakingConstructorArgMacro {
   def errorMessageArgs[A](c: LoggerContext[A])(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.errorMessageArgs[A](c)(message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.errorMessageArgs[A](c)(message, args: _*)(c.Expr(a))
   }
 
   def errorMessageMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
@@ -47,7 +47,7 @@ private object LoggerTakingConstructorArgMacro {
   def errorMessageArgsMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.errorMessageArgsMarker[A](c)(marker, message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.errorMessageArgsMarker[A](c)(marker, message, args: _*)(c.Expr(a))
   }
 
   // Warn
@@ -67,7 +67,7 @@ private object LoggerTakingConstructorArgMacro {
   def warnMessageArgs[A](c: LoggerContext[A])(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.warnMessageArgs[A](c)(message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.warnMessageArgs[A](c)(message, args: _*)(c.Expr(a))
   }
 
   def warnMessageMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
@@ -85,7 +85,7 @@ private object LoggerTakingConstructorArgMacro {
   def warnMessageArgsMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.warnMessageArgsMarker[A](c)(marker, message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.warnMessageArgsMarker[A](c)(marker, message, args: _*)(c.Expr(a))
   }
 
   // Info
@@ -105,7 +105,7 @@ private object LoggerTakingConstructorArgMacro {
   def infoMessageArgs[A](c: LoggerContext[A])(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.infoMessageArgs[A](c)(message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.infoMessageArgs[A](c)(message, args: _*)(c.Expr(a))
   }
 
   def infoMessageMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
@@ -120,13 +120,11 @@ private object LoggerTakingConstructorArgMacro {
     LogsAdditionalDataMacro.infoMessageCauseMarker[A](c)(marker, message, cause)(c.Expr(a))
   }
 
-
   def infoMessageArgsMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.infoMessageArgsMarker[A](c)(marker, message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.infoMessageArgsMarker[A](c)(marker, message, args: _*)(c.Expr(a))
   }
-
 
   // Debug
 
@@ -135,7 +133,6 @@ private object LoggerTakingConstructorArgMacro {
     val a = q"${c.prefix}.a"
     LogsAdditionalDataMacro.debugMessage[A](c)(message)(c.Expr(a))
   }
-
 
   def debugMessageCause[A](c: LoggerContext[A])(message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
@@ -146,7 +143,7 @@ private object LoggerTakingConstructorArgMacro {
   def debugMessageArgs[A](c: LoggerContext[A])(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.debugMessageArgs[A](c)(message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.debugMessageArgs[A](c)(message, args: _*)(c.Expr(a))
   }
 
   def debugMessageMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
@@ -164,7 +161,7 @@ private object LoggerTakingConstructorArgMacro {
   def debugMessageArgsMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.debugMessageArgsMarker[A](c)(marker, message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.debugMessageArgsMarker[A](c)(marker, message, args: _*)(c.Expr(a))
   }
 
   // Trace
@@ -184,7 +181,7 @@ private object LoggerTakingConstructorArgMacro {
   def traceMessageArgs[A](c: LoggerContext[A])(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.traceMessageArgs[A](c)(message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.traceMessageArgs[A](c)(message, args: _*)(c.Expr(a))
   }
 
   def traceMessageMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
@@ -202,6 +199,6 @@ private object LoggerTakingConstructorArgMacro {
   def traceMessageArgsMarker[A](c: LoggerContext[A])(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val a = q"${c.prefix}.a"
-    LogsAdditionalDataMacro.traceMessageArgsMarker[A](c)(marker, message, args:_*)(c.Expr(a))
+    LogsAdditionalDataMacro.traceMessageArgsMarker[A](c)(marker, message, args: _*)(c.Expr(a))
   }
 }
