@@ -41,7 +41,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isErrorEnabled) $underlying.error($message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isErrorEnabled) $underlying.error($message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isErrorEnabled) $underlying.error($message, ..$anyRefArgs)"
   }
@@ -62,7 +62,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, ..$anyRefArgs)"
   }
@@ -91,7 +91,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isWarnEnabled) $underlying.warn($message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isWarnEnabled) $underlying.warn($message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isWarnEnabled) $underlying.warn($message, ..$anyRefArgs)"
   }
@@ -112,7 +112,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, ..$anyRefArgs)"
   }
@@ -141,7 +141,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isInfoEnabled) $underlying.info($message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isInfoEnabled) $underlying.info($message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isInfoEnabled) $underlying.info($message, ..$anyRefArgs)"
   }
@@ -162,7 +162,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, ..$anyRefArgs)"
   }
@@ -191,7 +191,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isDebugEnabled) $underlying.debug($message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isDebugEnabled) $underlying.debug($message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isDebugEnabled) $underlying.debug($message, ..$anyRefArgs)"
   }
@@ -212,7 +212,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, ..$anyRefArgs)"
   }
@@ -241,7 +241,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isTraceEnabled) $underlying.trace($message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isTraceEnabled) $underlying.trace($message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isTraceEnabled) $underlying.trace($message, ..$anyRefArgs)"
   }
@@ -262,7 +262,7 @@ private object LoggerMacro {
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
     if (args.length == 2)
-      q"if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, _root_.scala.Array(${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
+      q"if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, _root_.scala.Array[AnyRef](${anyRefArgs.head}, ${anyRefArgs(1)}): _*)"
     else
       q"if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, ..$anyRefArgs)"
   }
