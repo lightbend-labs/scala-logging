@@ -21,8 +21,9 @@ import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }
 import org.slf4j.Marker
-import org.scalatest.{ Matchers, WordSpec }
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 object DummyMarker extends Marker {
   def add(childMarker: Marker): Unit = {}
@@ -39,7 +40,7 @@ object DummyMarker extends Marker {
   def remove(child: Marker): Boolean = false
 }
 
-class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
+class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with MockitoSugar with Varargs {
 
   // Error
 
