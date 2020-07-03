@@ -1,11 +1,12 @@
 package com.typesafe.scalalogging
 
 import org.slf4j.{ Marker, Logger => Underlying }
-import scala.language.experimental.macros
 
 trait CanLog[A] {
   def logMessage(originalMsg: String, a: A): String
-  def afterLog(a: A): Unit = ()
+  def afterLog(a: A): Unit = {
+    val _ = a
+  }
 }
 
 @SerialVersionUID(957385465L)
