@@ -19,7 +19,7 @@ package com.typesafe.scalalogging
 import org.slf4j.Marker
 import scala.reflect.macros.blackbox
 
-private object LoggerMacro {
+private[scalalogging] object LoggerMacro {
 
   type LoggerContext = blackbox.Context { type PrefixType = Logger }
 
@@ -295,7 +295,7 @@ private object LoggerMacro {
       case q"scala.StringContext.apply(..$parts).s(..$args)" =>
         val format = parts.iterator.map({ case Literal(Constant(str: String)) => str })
           // Emulate standard interpolator escaping
-          .map(StringContext.treatEscapes)
+          .map(StringContext.processEscapes)
           // Escape literal slf4j format anchors if the resulting call will require a format string
           .map(str => if (args.nonEmpty) str.replace("{}", "\\{}") else str)
           .mkString("{}")
