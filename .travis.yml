@@ -2,9 +2,9 @@ sudo: required
 dist: trusty
 language: scala
 scala:
-   - 2.12.8
+   - 2.12.11
    - 2.11.12
-   - 2.13.0
+   - 2.13.1
 env:
 - JDK=oraclejdk8
 - JDK=openjdk8
