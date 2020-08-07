@@ -3,10 +3,11 @@ package com.typesafe.scalalogging
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
-import org.scalatest.{ Matchers, WordSpec }
 import org.slf4j.{ Logger => Underlying }
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class LoggerTakingImplicitSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
+class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with MockitoSugar with Varargs {
 
   case class CorrelationId(value: String)
 
