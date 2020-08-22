@@ -1,12 +1,13 @@
 package com.typesafe.scalalogging
 
-import org.scalatest.{ Matchers, WordSpec }
 
 import java.lang.ClassCastException
 import org.slf4j.{ Logger => Underlying }
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 object tag {
 
@@ -20,7 +21,7 @@ object tag {
   }
 }
 
-class LoggerWithTaggedAargsSpec extends WordSpec with MockitoSugar with Matchers with Varargs {
+class LoggerWithTaggedAargsSpec extends AnyWordSpec with MockitoSugar with Matchers with Varargs {
 
   trait Tag
 

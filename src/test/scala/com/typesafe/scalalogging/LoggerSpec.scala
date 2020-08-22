@@ -21,8 +21,9 @@ import java.io._
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }
-import org.scalatest.{ Matchers, WordSpec }
 import org.scalatestplus.mockito.MockitoSugar
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 trait Varargs {
   // TODO: we used to wrap in List(...): _*, which I assume was to force the varags method to be chosen.
@@ -30,7 +31,7 @@ trait Varargs {
   def forceVarargs[T](xs: T*): scala.Seq[T] = scala.Seq(xs: _*)
 }
 
-class LoggerSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
+class LoggerSpec extends AnyWordSpec with Matchers with MockitoSugar with Varargs {
 
   // Error
 
