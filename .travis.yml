@@ -5,12 +5,10 @@ scala:
    - 2.12.11
    - 2.11.12
    - 2.13.1
-env:
-- JDK=oraclejdk8
-- JDK=openjdk8
-- JDK=openjdk11
-before_script:
-  - jdk_switcher use $JDK
+jdk:
+  - oraclejdk8
+  - openjdk8
+  - openjdk11
 script:
 - sbt "++ ${TRAVIS_SCALA_VERSION}!" test
 - git diff --exit-code # check scalariform
