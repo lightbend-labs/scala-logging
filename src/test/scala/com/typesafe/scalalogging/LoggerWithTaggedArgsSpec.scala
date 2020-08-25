@@ -1,10 +1,9 @@
 package com.typesafe.scalalogging
 
-import org.scalatest.{ Matchers, WordSpec }
-
 import org.slf4j.{ Logger => Underlying }
-import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 object tag {
 
@@ -18,7 +17,7 @@ object tag {
   }
 }
 
-class LoggerWithTaggedAargsSpec extends WordSpec with MockitoSugar with Matchers with Varargs {
+class LoggerWithTaggedAargsSpec extends AnyWordSpec with Matchers with Varargs {
 
   trait Tag
 
@@ -102,7 +101,7 @@ class LoggerWithTaggedAargsSpec extends WordSpec with MockitoSugar with Matchers
     new {
       val arg1 = tag[Tag][String]("arg1")
       val arg2 = tag[Tag][Integer](Integer.valueOf(1))
-      val underlying = mock[org.slf4j.Logger]
+      val underlying = mock(classOf[org.slf4j.Logger])
       when(p(underlying)).thenReturn(isEnabled)
       val logger = Logger(underlying)
     }
