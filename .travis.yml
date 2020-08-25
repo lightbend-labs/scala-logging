@@ -1,14 +1,24 @@
 sudo: required
 dist: trusty
+
 language: scala
 scala:
    - 2.12.11
    - 2.11.12
    - 2.13.1
+
 jdk:
   - oraclejdk8
   - openjdk8
   - openjdk11
+
 script:
 - sbt "++ ${TRAVIS_SCALA_VERSION}!" test
 - git diff --exit-code # check scalariform
+
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt/boot/
+
