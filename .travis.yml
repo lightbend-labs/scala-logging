@@ -1,5 +1,4 @@
-sudo: required
-dist: trusty
+dist: bionic
 
 language: scala
 scala:
@@ -8,7 +7,7 @@ scala:
    - 2.13.1
 
 jdk:
-  - oraclejdk8
+  - oraclejdk11
   - openjdk8
   - openjdk11
 
