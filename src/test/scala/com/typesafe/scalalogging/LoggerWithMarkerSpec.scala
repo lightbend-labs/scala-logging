@@ -387,7 +387,7 @@ class LoggerWithMarkerSpec extends WordSpec with Matchers with MockitoSugar with
       val msg = "msg"
       val cause = new RuntimeException("cause")
       val arg1 = "arg1"
-      val arg2 = new Integer(1)
+      val arg2 = Integer.valueOf(1)
       val arg3 = "arg3"
       val underlying = mock[org.slf4j.Logger]
       when(p(underlying)(marker)).thenReturn(isEnabled)
