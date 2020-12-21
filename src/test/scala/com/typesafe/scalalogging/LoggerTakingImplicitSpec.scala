@@ -2,11 +2,11 @@ package com.typesafe.scalalogging
 
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
-import org.scalatestplus.mockito.MockitoSugar
-import org.scalatest.{ Matchers, WordSpec }
 import org.slf4j.{ Logger => Underlying }
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class LoggerTakingImplicitSpec extends WordSpec with Matchers with MockitoSugar with Varargs {
+class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
 
   case class CorrelationId(value: String)
 
@@ -378,14 +378,14 @@ class LoggerTakingImplicitSpec extends WordSpec with Matchers with MockitoSugar 
   def fixture(p: Underlying => Boolean, isEnabled: Boolean) =
     new {
       implicit val correlationId = CorrelationId("corrId")
-      implicit val canLogCorrelationId = mock[CanLog[CorrelationId]]
+      implicit val canLogCorrelationId = mock(classOf[CanLog[CorrelationId]])
       val msg = "msg"
       val cause = new RuntimeException("cause")
       val arg1 = "arg1"
-      val arg2 = new Integer(1)
+      val arg2 = Integer.valueOf(1)
       val arg3 = "arg3"
       val logMsg = "corrId - msg"
-      val underlying = mock[org.slf4j.Logger]
+      val underlying = mock(classOf[org.slf4j.Logger])
       when(p(underlying)).thenReturn(isEnabled)
       when(canLogCorrelationId.logMessage(anyString(), any[CorrelationId])).thenReturn(logMsg)
       val logger = Logger.takingImplicit[CorrelationId](underlying)
