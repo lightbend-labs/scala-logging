@@ -5,7 +5,7 @@ object Version {
   val mockito   = "1.5.18"
   val scala     = "2.13.1"
   val crossScala = List(scala, "2.11.12", "2.12.12")
-  val scalaTest = "3.2.1"
+  val scalaTest = "3.2.3"
   val slf4j     = "1.7.30"
 }
 
