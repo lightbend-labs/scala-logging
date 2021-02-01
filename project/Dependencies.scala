@@ -2,7 +2,7 @@ import sbt._
 
 object Version {
   val logback   = "1.2.3"
-  val mockito   = "1.5.18"
+  val mockito   = "1.16.19"
   val scala     = "2.13.1"
   val crossScala = List(scala, "2.11.12", "2.12.12")
   val scalaTest = "3.2.1"
