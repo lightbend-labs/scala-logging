@@ -1,12 +1,11 @@
 package com.typesafe.scalalogging
 
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
+import org.mockito.scalatest.MockitoSugar
 import org.slf4j.{ Logger => Underlying }
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
+class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs with MockitoSugar {
 
   case class CorrelationId(value: String)
 
@@ -24,12 +23,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's error method if the error level is not enabled" in {
-      val f = fixture(_.isErrorEnabled, isEnabled = false)
+      val f = fixture(_.isErrorEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.error(msg)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).error(anyString)
+      verify(underlying, never).error(any[String])
     }
   }
 
@@ -45,12 +44,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's error method if the error level is not enabled" in {
-      val f = fixture(_.isErrorEnabled, isEnabled = false)
+      val f = fixture(_.isErrorEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.error(msg, cause)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).error(anyString, any[Object])
+      verify(underlying, never).error(any[String], any[Object])
     }
   }
 
@@ -70,7 +69,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's error method if the error level is not enabled" in {
-      val f = fixture(_.isErrorEnabled, isEnabled = false)
+      val f = fixture(_.isErrorEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.error(msg, arg1)
       verify(underlying, never).error(logMsg, arg1)
@@ -78,7 +77,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
       verify(underlying, never).error(logMsg, forceVarargs(arg1, arg2): _*)
       logger.error(msg, arg1, arg2, arg3)
       verify(underlying, never).error(logMsg, arg1, arg2, arg3)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
     }
   }
@@ -97,12 +96,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's warn method if the warn level is not enabled" in {
-      val f = fixture(_.isWarnEnabled, isEnabled = false)
+      val f = fixture(_.isWarnEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.warn(msg)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).warn(anyString)
+      verify(underlying, never).warn(any[String])
     }
   }
 
@@ -118,12 +117,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's warn method if the warn level is not enabled" in {
-      val f = fixture(_.isWarnEnabled, isEnabled = false)
+      val f = fixture(_.isWarnEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.warn(msg, cause)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).warn(anyString, any[Object])
+      verify(underlying, never).warn(any[String], any[Object])
     }
   }
 
@@ -143,7 +142,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's warn method if the warn level is not enabled" in {
-      val f = fixture(_.isWarnEnabled, isEnabled = false)
+      val f = fixture(_.isWarnEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.warn(msg, arg1)
       verify(underlying, never).warn(logMsg, arg1)
@@ -151,7 +150,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
       verify(underlying, never).warn(logMsg, forceVarargs(arg1, arg2): _*)
       logger.warn(msg, arg1, arg2, arg3)
       verify(underlying, never).warn(logMsg, arg1, arg2, arg3)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
     }
   }
@@ -170,12 +169,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's info method if the info level is not enabled" in {
-      val f = fixture(_.isInfoEnabled, isEnabled = false)
+      val f = fixture(_.isInfoEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.info(msg)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).info(anyString)
+      verify(underlying, never).info(any[String])
     }
   }
 
@@ -191,12 +190,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's info method if the info level is not enabled" in {
-      val f = fixture(_.isInfoEnabled, isEnabled = false)
+      val f = fixture(_.isInfoEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.info(msg, cause)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).info(anyString, any[Object])
+      verify(underlying, never).info(any[String], any[Object])
     }
   }
 
@@ -216,7 +215,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's info method if the info level is not enabled" in {
-      val f = fixture(_.isInfoEnabled, isEnabled = false)
+      val f = fixture(_.isInfoEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.info(msg, arg1)
       verify(underlying, never).info(logMsg, arg1)
@@ -224,7 +223,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
       verify(underlying, never).info(logMsg, forceVarargs(arg1, arg2): _*)
       logger.info(msg, arg1, arg2, arg3)
       verify(underlying, never).info(logMsg, arg1, arg2, arg3)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
     }
   }
@@ -243,12 +242,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's debug method if the debug level is not enabled" in {
-      val f = fixture(_.isDebugEnabled, isEnabled = false)
+      val f = fixture(_.isDebugEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.debug(msg)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).debug(anyString)
+      verify(underlying, never).debug(any[String])
     }
   }
 
@@ -264,12 +263,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's debug method if the debug level is not enabled" in {
-      val f = fixture(_.isDebugEnabled, isEnabled = false)
+      val f = fixture(_.isDebugEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.debug(msg, cause)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).debug(anyString, any[Object])
+      verify(underlying, never).debug(any[String], any[Object])
     }
   }
 
@@ -289,7 +288,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's debug method if the debug level is not enabled" in {
-      val f = fixture(_.isDebugEnabled, isEnabled = false)
+      val f = fixture(_.isDebugEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.debug(msg, arg1)
       verify(underlying, never).debug(logMsg, arg1)
@@ -297,7 +296,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
       verify(underlying, never).debug(logMsg, forceVarargs(arg1, arg2): _*)
       logger.debug(msg, arg1, arg2, arg3)
       verify(underlying, never).debug(logMsg, arg1, arg2, arg3)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
     }
   }
@@ -316,12 +315,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's trace method if the trace level is not enabled" in {
-      val f = fixture(_.isTraceEnabled, isEnabled = false)
+      val f = fixture(_.isTraceEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.trace(msg)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).trace(anyString)
+      verify(underlying, never).trace(any[String])
     }
   }
 
@@ -337,12 +336,12 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's trace method if the trace level is not enabled" in {
-      val f = fixture(_.isTraceEnabled, isEnabled = false)
+      val f = fixture(_.isTraceEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.trace(msg, cause)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
-      verify(underlying, never).trace(anyString, any[Object])
+      verify(underlying, never).trace(any[String], any[Object])
     }
   }
 
@@ -362,7 +361,7 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
     }
 
     "not call the underlying logger's trace method if the trace level is not enabled" in {
-      val f = fixture(_.isTraceEnabled, isEnabled = false)
+      val f = fixture(_.isTraceEnabled, isEnabled = false, stubCanLog = false)
       import f._
       logger.trace(msg, arg1)
       verify(underlying, never).trace(logMsg, arg1)
@@ -370,24 +369,24 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs {
       verify(underlying, never).trace(logMsg, forceVarargs(arg1, arg2): _*)
       logger.trace(msg, arg1, arg2, arg3)
       verify(underlying, never).trace(logMsg, arg1, arg2, arg3)
-      verify(canLogCorrelationId, never).logMessage(anyString, any[CorrelationId])
+      verify(canLogCorrelationId, never).logMessage(any[String], any[CorrelationId])
       verify(canLogCorrelationId, never).afterLog(any[CorrelationId])
     }
   }
 
-  def fixture(p: Underlying => Boolean, isEnabled: Boolean) =
+  def fixture(p: Underlying => Boolean, isEnabled: Boolean, stubCanLog: Boolean = true) =
     new {
       implicit val correlationId = CorrelationId("corrId")
-      implicit val canLogCorrelationId = mock(classOf[CanLog[CorrelationId]])
+      implicit val canLogCorrelationId = mock[CanLog[CorrelationId]]
       val msg = "msg"
       val cause = new RuntimeException("cause")
       val arg1 = "arg1"
       val arg2 = Integer.valueOf(1)
       val arg3 = "arg3"
       val logMsg = "corrId - msg"
-      val underlying = mock(classOf[org.slf4j.Logger])
+      val underlying = mock[org.slf4j.Logger]
       when(p(underlying)).thenReturn(isEnabled)
-      when(canLogCorrelationId.logMessage(anyString(), any[CorrelationId])).thenReturn(logMsg)
+      if (stubCanLog) when(canLogCorrelationId.logMessage(any[String], any[CorrelationId])).thenReturn(logMsg)
       val logger = Logger.takingImplicit[CorrelationId](underlying)
     }
 }

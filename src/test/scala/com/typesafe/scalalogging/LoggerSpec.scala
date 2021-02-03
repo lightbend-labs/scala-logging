@@ -1,9 +1,8 @@
 package com.typesafe.scalalogging
 
-import java.io._
+import org.mockito.scalatest.MockitoSugar
 
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
+import java.io._
 import org.slf4j.{ Logger => Underlying }
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -14,7 +13,7 @@ trait Varargs {
   def forceVarargs[T](xs: T*): scala.Seq[T] = scala.Seq(xs: _*)
 }
 
-class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
+class LoggerSpec extends AnyWordSpec with Matchers with Varargs with MockitoSugar {
 
   // Error
 
@@ -31,7 +30,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(msg)
-      verify(underlying, never).error(anyString)
+      verify(underlying, never).error(any[String])
     }
   }
 
@@ -66,7 +65,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(msg, cause)
-      verify(underlying, never).error(anyString, any[Object])
+      verify(underlying, never).error(any[String], any[Object])
     }
   }
 
@@ -110,7 +109,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(msg)
-      verify(underlying, never).warn(anyString)
+      verify(underlying, never).warn(any[String])
     }
   }
 
@@ -144,7 +143,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(msg, cause)
-      verify(underlying, never).warn(anyString, any[Object])
+      verify(underlying, never).warn(any[String], any[Object])
     }
   }
 
@@ -188,7 +187,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(msg)
-      verify(underlying, never).info(anyString)
+      verify(underlying, never).info(any[String])
     }
   }
 
@@ -222,7 +221,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(msg, cause)
-      verify(underlying, never).info(anyString, any[Object])
+      verify(underlying, never).info(any[String], any[Object])
     }
   }
 
@@ -266,7 +265,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(msg)
-      verify(underlying, never).debug(anyString)
+      verify(underlying, never).debug(any[String])
     }
   }
   "Calling debug with an interpolated message" should {
@@ -299,7 +298,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(msg, cause)
-      verify(underlying, never).debug(anyString, any[Object])
+      verify(underlying, never).debug(any[String], any[Object])
     }
   }
 
@@ -343,7 +342,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(msg)
-      verify(underlying, never).trace(anyString)
+      verify(underlying, never).trace(any[String])
     }
   }
 
@@ -377,7 +376,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(msg, cause)
-      verify(underlying, never).trace(anyString, any[Object])
+      verify(underlying, never).trace(any[String], any[Object])
     }
   }
 
@@ -587,7 +586,7 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs {
       val arg5ref = arg5.asInstanceOf[AnyRef]
       val arg6 = 6L
       val arg6ref = arg6.asInstanceOf[AnyRef]
-      val underlying = mock(classOf[org.slf4j.Logger])
+      val underlying = mock[org.slf4j.Logger]
       when(p(underlying)).thenReturn(isEnabled)
       val logger = Logger(underlying)
     }
