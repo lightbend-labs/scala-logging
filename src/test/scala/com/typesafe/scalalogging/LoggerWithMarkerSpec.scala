@@ -1,8 +1,8 @@
 package com.typesafe.scalalogging
 
+import org.mockito.scalatest.MockitoSugar
+
 import java.util.NoSuchElementException
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito._
 import org.slf4j.{ Logger => Underlying }
 import org.slf4j.Marker
 import org.scalatest.matchers.should.Matchers
@@ -23,7 +23,7 @@ object DummyMarker extends Marker {
   def remove(child: Marker): Boolean = false
 }
 
-class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
+class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs with MockitoSugar {
 
   // Error
 
@@ -40,7 +40,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(marker, msg)
-      verify(underlying, never).error(refEq(DummyMarker), anyString)
+      verify(underlying, never).error(refEq(DummyMarker), any[String])
     }
 
     "call the underlying logger's error method if the error level is enabled and string is interpolated" in {
@@ -64,7 +64,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isErrorEnabled, isEnabled = false)
       import f._
       logger.error(marker, msg, cause)
-      verify(underlying, never).error(refEq(DummyMarker), anyString, any[Object])
+      verify(underlying, never).error(refEq(DummyMarker), any[String], any[Object])
     }
   }
 
@@ -108,7 +108,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(marker, msg)
-      verify(underlying, never).warn(refEq(DummyMarker), anyString)
+      verify(underlying, never).warn(refEq(DummyMarker), any[String])
     }
 
     "call the underlying logger's warn method if the warn level is enabled and string is interpolated" in {
@@ -132,7 +132,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isWarnEnabled, isEnabled = false)
       import f._
       logger.warn(marker, msg, cause)
-      verify(underlying, never).warn(refEq(DummyMarker), anyString, any[Object])
+      verify(underlying, never).warn(refEq(DummyMarker), any[String], any[Object])
     }
   }
 
@@ -176,7 +176,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(marker, msg)
-      verify(underlying, never).info(refEq(DummyMarker), anyString)
+      verify(underlying, never).info(refEq(DummyMarker), any[String])
     }
 
     "call the underlying logger's info method if the info level is enabled and string is interpolated" in {
@@ -200,7 +200,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isInfoEnabled, isEnabled = false)
       import f._
       logger.info(marker, msg, cause)
-      verify(underlying, never).info(refEq(DummyMarker), anyString, any[Object])
+      verify(underlying, never).info(refEq(DummyMarker), any[String], any[Object])
     }
   }
 
@@ -244,7 +244,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(marker, msg)
-      verify(underlying, never).debug(refEq(DummyMarker), anyString)
+      verify(underlying, never).debug(refEq(DummyMarker), any[String])
     }
 
     "call the underlying logger's debug method if the debug level is enabled and string is interpolated" in {
@@ -268,7 +268,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isDebugEnabled, isEnabled = false)
       import f._
       logger.debug(marker, msg, cause)
-      verify(underlying, never).debug(refEq(DummyMarker), anyString, any[Object])
+      verify(underlying, never).debug(refEq(DummyMarker), any[String], any[Object])
     }
   }
 
@@ -312,7 +312,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(marker, msg)
-      verify(underlying, never).trace(refEq(DummyMarker), anyString)
+      verify(underlying, never).trace(refEq(DummyMarker), any[String])
     }
 
     "call the underlying logger's trace method if the trace level is enabled and string is interpolated" in {
@@ -336,7 +336,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val f = fixture(_.isTraceEnabled, isEnabled = false)
       import f._
       logger.trace(marker, msg, cause)
-      verify(underlying, never).trace(refEq(DummyMarker), anyString, any[Object])
+      verify(underlying, never).trace(refEq(DummyMarker), any[String], any[Object])
     }
   }
 
@@ -373,7 +373,7 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs {
       val arg1 = "arg1"
       val arg2 = Integer.valueOf(1)
       val arg3 = "arg3"
-      val underlying = mock(classOf[org.slf4j.Logger])
+      val underlying = mock[org.slf4j.Logger]
       when(p(underlying)(marker)).thenReturn(isEnabled)
       val logger = Logger(underlying)
     }
