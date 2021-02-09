@@ -1,4 +1,4 @@
-package com.lightbend.scalalogging
+package com.typesafe.scalalogging
 
 import org.mockito.scalatest.MockitoSugar
 

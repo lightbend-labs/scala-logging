@@ -1,4 +1,4 @@
-package com.lightbend.scalalogging
+package com.typesafe.scalalogging
 
 import org.slf4j.{ LoggerFactory, Marker, Logger => Underlying }
 import scala.reflect.ClassTag
