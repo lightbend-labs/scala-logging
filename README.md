@@ -32,18 +32,18 @@ If you are looking for a version compatible with Scala 2.10, check out Scala Log
 
 Scala Logging is published to Sonatype OSS and Maven Central:
 
-- Group id / organization: *com.typesafe.scala-logging*
+- Group id / organization: *com.lightbend*
 - Artifact id / name: *scala-logging*
 
 sbt users may add this to their `build.sbt`:
 
 ```scala
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
+libraryDependencies += "com.lightbend" %% "scala-logging" % "3.9.2"
 ```
 
 ## Using Scala Logging
 
-The `Logger` class from the `com.typesafe.scalalogging` package wraps an underlying SLF4J logger.
+The `Logger` class from the `com.lightbend.scalalogging` package wraps an underlying SLF4J logger.
 In order to create a `Logger`, you pass a name to the `apply` factory method defined in the `Logger` companion object:
 
 ```scala
@@ -68,7 +68,7 @@ Or, using the runtime class wrapped by the implicit class tag parameter:
 val logger = Logger[MyClass]
 ```
 
-The `LazyLogging` and `StrictLogging` traits from the `com.typesafe.scalalogging` package define the `logger` member as
+The `LazyLogging` and `StrictLogging` traits from the `com.lightbend.scalalogging` package define the `logger` member as
 a lazy or strict value respectively. In both cases the underlying SLF4J logger is named according to the class into which
 these traits are mixed:
 
