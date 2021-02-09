@@ -1,4 +1,4 @@
-package com.typesafe.scalalogging
+package com.lightbend.scalalogging
 
 import org.slf4j.Marker
 import scala.reflect.macros.blackbox

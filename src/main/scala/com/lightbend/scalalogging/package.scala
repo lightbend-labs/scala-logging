@@ -1,4 +1,4 @@
-package com.typesafe
+package com.lightbend
 
 package object scalalogging {
 

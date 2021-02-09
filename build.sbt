@@ -10,7 +10,7 @@ scalacOptions ++= Seq(
 )
 incOptions := incOptions.value.withLogRecompileOnMacro(false)
 libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value)
-initialCommands := """|import com.typesafe.scalalogging._
+initialCommands := """|import com.lightbend.scalalogging._
                       |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
 
 // OSGi
@@ -18,13 +18,13 @@ initialCommands := """|import com.typesafe.scalalogging._
 import com.typesafe.sbt.osgi.SbtOsgi
 enablePlugins(SbtOsgi)
 osgiSettings
-OsgiKeys.bundleSymbolicName := "com.typesafe.scala-logging"
+OsgiKeys.bundleSymbolicName := "com.lightbend.scala-logging"
 OsgiKeys.privatePackage := Seq()
-OsgiKeys.exportPackage := Seq("com.typesafe.scalalogging*")
+OsgiKeys.exportPackage := Seq("com.lightbend.scalalogging*")
 
 // publishing
 
-organization := "com.typesafe.scala-logging"
+organization := "com.lightbend"
 licenses := Seq("Apache 2.0 License" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 homepage := Some(url("https://github.com/lightbend/scala-logging"))
 Test / publishArtifact := false
