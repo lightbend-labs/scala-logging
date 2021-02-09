@@ -3,14 +3,30 @@ import: scala/scala-dev:travis/default.yml
 language: scala
 
 scala:
-   - 2.12.13
-   - 2.11.12
-   - 2.13.4
+  - 2.11.12
+  - 2.12.13
+  - 2.13.4
 
 env:
   - ADOPTOPENJDK=8
   - ADOPTOPENJDK=11
 
+before_install:
+  - git fetch --tags
+
 script:
-- sbt "++ ${TRAVIS_SCALA_VERSION}!" test
-- git diff --exit-code # check scalariform
+  - sbt "++${TRAVIS_SCALA_VERSION}" test
+  - git diff --exit-code # check scalariform
+
+stages:
+  - name: release
+    if: (tag IS present) AND NOT fork
+
+jobs:
+  include:
+    - stage: release
+      script: sbt ci-release
+
+notifications:
+  email:
+  - seth.tisue@lightbend.com
