@@ -2,7 +2,7 @@ package com.typesafe.scalalogging
 
 import org.slf4j.{ Marker, Logger => Underlying }
 
-import scala.quoted._
+import scala.quoted.*
 
 private[scalalogging] object LoggerTakingImplicitMacro {
 
@@ -29,7 +29,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
           }}
     else
       '{if ($underlying.isErrorEnabled) {
-            $underlying.error($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+            $underlying.error($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
             $canLogEv.afterLog($a)
           }}
   }
@@ -55,7 +55,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
     else
       '{if ($underlying.isErrorEnabled($marker)) {
-          $underlying.error($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+          $underlying.error($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
           $canLogEv.afterLog($a)
         }}
   }
@@ -86,7 +86,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
           }}
     else
       '{if ($underlying.isWarnEnabled) {
-            $underlying.warn($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+            $underlying.warn($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
             $canLogEv.afterLog($a)
           }}
   }
@@ -112,7 +112,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
     else
       '{if ($underlying.isWarnEnabled($marker)) {
-          $underlying.warn($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+          $underlying.warn($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
           $canLogEv.afterLog($a)
         }}
   }
@@ -143,7 +143,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
           }}
     else
       '{if ($underlying.isInfoEnabled) {
-            $underlying.info($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+            $underlying.info($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
             $canLogEv.afterLog($a)
           }}
   }
@@ -169,7 +169,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
     else
       '{if ($underlying.isInfoEnabled($marker)) {
-          $underlying.info($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+          $underlying.info($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
           $canLogEv.afterLog($a)
         }}
   }
@@ -200,7 +200,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
           }}
     else
       '{if ($underlying.isDebugEnabled) {
-            $underlying.debug($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+            $underlying.debug($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
             $canLogEv.afterLog($a)
           }}
   }
@@ -226,7 +226,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
     else
       '{if ($underlying.isDebugEnabled($marker)) {
-          $underlying.debug($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+          $underlying.debug($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
           $canLogEv.afterLog($a)
         }}
   }
@@ -257,7 +257,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
           }}
     else
       '{if ($underlying.isTraceEnabled) {
-            $underlying.trace($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+            $underlying.trace($canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
             $canLogEv.afterLog($a)
           }}
   }
@@ -283,7 +283,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
     else
       '{if ($underlying.isTraceEnabled($marker)) {
-          $underlying.trace($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}: _*)
+          $underlying.trace($marker, $canLogEv.logMessage($message, $a), ${Expr.ofSeq(formatedArgs)}*)
           $canLogEv.afterLog($a)
         }}
   }

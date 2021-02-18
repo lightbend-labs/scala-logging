@@ -1,8 +1,8 @@
 package com.typesafe.scalalogging
 
 import org.slf4j.Marker
-import scala.quoted._
-import org.slf4j.{ Logger => Underlying }
+import scala.quoted.*
+import org.slf4j.{ Logger as Underlying }
 
 private[scalalogging] object LoggerMacro {
 
@@ -23,7 +23,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{ if ($underlying.isErrorEnabled) $underlying.error($message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isErrorEnabled) $underlying.error($message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isErrorEnabled) $underlying.error($message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def errorMessageMarker(underlying: Expr[Underlying], marker: Expr[Marker], message: Expr[String]) (using Quotes) = {
@@ -41,7 +41,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def errorCode(underlying: Expr[Underlying], body: Expr[Unit]) (using Quotes) =
@@ -67,7 +67,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{ if ($underlying.isWarnEnabled) $underlying.warn($message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isWarnEnabled) $underlying.warn($message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isWarnEnabled) $underlying.warn($message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def warnMessageMarker(underlying: Expr[Underlying], marker: Expr[Marker], message: Expr[String]) (using Quotes) = {
@@ -85,7 +85,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def warnCode(underlying: Expr[Underlying], body: Expr[Unit]) (using Quotes) =
@@ -111,7 +111,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{ if ($underlying.isInfoEnabled) $underlying.info($message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isInfoEnabled) $underlying.info($message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isInfoEnabled) $underlying.info($message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def infoMessageMarker(underlying: Expr[Underlying], marker: Expr[Marker], message: Expr[String]) (using Quotes) = {
@@ -129,7 +129,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def infoCode(underlying: Expr[Underlying], body: Expr[Unit]) (using Quotes) =
@@ -156,7 +156,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{ if ($underlying.isDebugEnabled) $underlying.debug($message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isDebugEnabled) $underlying.debug($message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isDebugEnabled) $underlying.debug($message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def debugMessageMarker(underlying: Expr[Underlying], marker: Expr[Marker], message: Expr[String]) (using Quotes) = {
@@ -174,7 +174,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def debugCode(underlying: Expr[Underlying], body: Expr[Unit]) (using Quotes) =
@@ -200,7 +200,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{ if ($underlying.isTraceEnabled) $underlying.trace($message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isTraceEnabled) $underlying.trace($message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isTraceEnabled) $underlying.trace($message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def traceMessageMarker(underlying: Expr[Underlying], marker: Expr[Marker], message: Expr[String]) (using Quotes) = {
@@ -218,7 +218,7 @@ private[scalalogging] object LoggerMacro {
     else if(anyRefArgs.length == 1)
       '{if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, ${anyRefArgs.head}) }
     else
-      '{ if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, ${Expr.ofSeq(anyRefArgs)}:_*) }
+      '{ if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
   }
 
   def traceCode(underlying: Expr[Underlying], body: Expr[Unit]) (using Quotes) =
@@ -228,8 +228,8 @@ private[scalalogging] object LoggerMacro {
 
   /** Checks whether `message` is an interpolated string and transforms it into SLF4J string interpolation. */
   private def deconstructInterpolatedMessage(message: Expr[String])(using Quotes): (Expr[String], Seq[Expr[Any]]) = {
-    import quotes.reflect._
-    import util._
+    import quotes.reflect.*
+    import util.*
 
     message.asTerm match{
       case Inlined(_, _, Apply(Select(Apply(Select(Select(_, "StringContext"), _), messageNode), _), argumentsNode)) =>
@@ -262,8 +262,8 @@ private[scalalogging] object LoggerMacro {
     }
   }
   def formatArgs(args: Expr[Seq[Any]])(using q: Quotes): Seq[Expr[AnyRef]] = {
-    import quotes.reflect._
-    import util._
+    import quotes.reflect.*
+    import util.*
 
     args.asTerm match {
       case p@Inlined(_, _, Typed(Repeated(v, _),_)) =>

@@ -1,6 +1,6 @@
 package com.typesafe.scalalogging
 
-import org.slf4j.{Marker, Logger => Underlying }
+import org.slf4j.{Marker, Logger as Underlying }
 
 trait LoggerTakingImplicitImpl[A] {
   def underlying: Underlying
