@@ -1,20 +1,19 @@
 package com.typesafe.scalalogging
 
-import org.mockito.scalatest.MockitoSugar
 import org.slf4j.{ Logger => Underlying }
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito._
 
 object tag {
-
-  def apply[U] = new Tagger[U]
-
   trait Tagged[U]
   type @@[+T, U] = T with Tagged[U]
 
-  class Tagger[U] {
-    def apply[T](t: T): T @@ U = t.asInstanceOf[T @@ U]
-  }
+  def taggedString[T](s: String): String @@ T = s.asInstanceOf[String @@ T]
+  def taggedInteger[T](i: Integer): Integer @@ T = i.asInstanceOf[Integer @@ T]
+  def taggedBoolean[T](b: Boolean): Boolean @@ T = b.asInstanceOf[Boolean @@ T]
 }
 
 class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs with MockitoSugar {
@@ -29,7 +28,7 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
       noException shouldBe thrownBy {
         logger.error("This should not throw: {}, {} - {}", arg1, arg2, arg3)
       }
-      verify(underlying).error(any[String], *, *, *)
+      verify(underlying).error(any[String], any, any, any)
     }
 
     "not throw ClassCastException when interpolated message is passed" in {
@@ -38,7 +37,7 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
       noException shouldBe thrownBy {
         logger.error(s"This should not throw: $arg1, $arg2, $arg3")
       }
-      verify(underlying).error(any[String], *, *, *)
+      verify(underlying).error(any[String], any, any, any)
     }
   }
 
@@ -50,7 +49,7 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
       noException shouldBe thrownBy {
         logger.trace("This should not throw: {}, {} - {}", arg1, arg2, arg3)
       }
-      verify(underlying).trace(any[String], *, *, *)
+      verify(underlying).trace(any[String], any, any, any)
     }
 
     "not throw ClassCastException when interpolated message is passed" in {
@@ -59,7 +58,7 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
       noException shouldBe thrownBy {
         logger.trace(s"This should not throw: $arg1, $arg2, $arg3")
       }
-      verify(underlying).trace(any[String], *, *, *)
+      verify(underlying).trace(any[String], any, any, any)
     }
   }
 
@@ -71,7 +70,7 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
       noException shouldBe thrownBy {
         logger.debug("This should not throw: {}, {} - {}", arg1, arg2, arg3)
       }
-      verify(underlying).debug(any[String], *, *, *)
+      verify(underlying).debug(any[String], any, any, any)
     }
 
     "not throw ClassCastException when interpolated message is passed" in {
@@ -80,7 +79,7 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
       noException shouldBe thrownBy {
         logger.debug(s"This should not throw: $arg1, $arg2, $arg3")
       }
-      verify(underlying).debug(any[String], *, *, *)
+      verify(underlying).debug(any[String], any, any, any)
     }
   }
 
@@ -92,7 +91,7 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
       noException shouldBe thrownBy {
         logger.info("This should not throw: {}, {} - {}", arg1, arg2, arg3)
       }
-      verify(underlying).info(any[String], *, *, *)
+      verify(underlying).info(any[String], any, any, any)
     }
 
     "not throw ClassCastException when interpolated message is passed" in {
@@ -101,17 +100,17 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
       noException shouldBe thrownBy {
         logger.info(s"This should not throw: $arg1, $arg2, $arg3")
       }
-      verify(underlying).info(any[String], *, *, *)
+      verify(underlying).info(any[String], any, any, any)
     }
   }
 
-  def fixture(p: Underlying => Boolean, isEnabled: Boolean = true) =
-    new {
-      val arg1 = tag[Tag][String]("arg1")
-      val arg2 = tag[Tag][Integer](Integer.valueOf(1))
-      val arg3 = tag[Tag][Boolean](true)
-      val underlying = mock[org.slf4j.Logger]
-      when(p(underlying)).thenReturn(isEnabled)
-      val logger = Logger(underlying)
-    }
+  private def fixture(p: Underlying => Boolean, isEnabled: Boolean = true) = new LoggerF(p, isEnabled)
+  private class LoggerF(p: Underlying => Boolean, isEnabled: Boolean = true) {
+    val arg1 = tag.taggedString[Tag]("arg1")
+    val arg2 = tag.taggedInteger[Tag](Integer.valueOf(1))
+    val arg3 = tag.taggedBoolean[Boolean](true)
+    val underlying = mock[org.slf4j.Logger]
+    when(p(underlying)).thenReturn(isEnabled)
+    val logger = Logger(underlying)
+  }
 }

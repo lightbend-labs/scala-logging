@@ -1,12 +1,13 @@
 package com.typesafe.scalalogging
 
-import org.mockito.scalatest.MockitoSugar
-
 import java.util.NoSuchElementException
 import org.slf4j.{ Logger => Underlying }
 import org.slf4j.Marker
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito._
 
 object DummyMarker extends Marker {
   def add(childMarker: Marker): Unit = {}
@@ -365,16 +366,16 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs with M
     }
   }
 
-  def fixture(p: Underlying => Marker => Boolean, isEnabled: Boolean) =
-    new {
-      val marker = DummyMarker
-      val msg = "msg"
-      val cause = new RuntimeException("cause")
-      val arg1 = "arg1"
-      val arg2 = Integer.valueOf(1)
-      val arg3 = "arg3"
-      val underlying = mock[org.slf4j.Logger]
-      when(p(underlying)(marker)).thenReturn(isEnabled)
-      val logger = Logger(underlying)
-    }
+  private def fixture(p: Underlying => Marker => Boolean, isEnabled: Boolean) = new LoggerF(p, isEnabled)
+  private class LoggerF(p: Underlying => Marker => Boolean, isEnabled: Boolean) {
+    val marker = DummyMarker
+    val msg = "msg"
+    val cause = new RuntimeException("cause")
+    val arg1 = "arg1"
+    val arg2 = Integer.valueOf(1)
+    val arg3 = "arg3"
+    val underlying = mock[org.slf4j.Logger]
+    when(p(underlying)(marker)).thenReturn(isEnabled)
+    val logger = Logger(underlying)
+  }
 }
