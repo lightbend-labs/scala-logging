@@ -2,6 +2,7 @@
 lib_managed/
 project/project
 target/
+.bsp
 
 # Worksheets (Eclipse or IntelliJ)
 *.sc
