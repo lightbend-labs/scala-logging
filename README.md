@@ -17,7 +17,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 ## Prerequisites
 
 * Java 8 or higher
-* Scala 2.11, 2.12 or 2.13
+* Scala 2.11, 2.12, 2.13 or 3.0
 * Logging backend compatible with SLF4J
 
 A compatible logging backend is [Logback](http://logback.qos.ch), add it to your sbt build definition:
@@ -38,7 +38,7 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 sbt users may add this to their `build.sbt`:
 
 ```scala
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.3"
 ```
 
 ## Using Scala Logging
