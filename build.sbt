@@ -13,8 +13,8 @@ libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, isDotty.va
 initialCommands := """|import com.typesafe.scalalogging._
                       |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
 
-unmanagedSourceDirectories in Compile ++= {
-  val sourceDir = (sourceDirectory in Compile).value
+Compile / unmanagedSourceDirectories ++= {
+  val sourceDir = (Compile / sourceDirectory).value
   val extraFilesOpt = CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, _)) => Some(sourceDir / "scala-2.x")
     case Some((3, _)) => Some(sourceDir / "scala-3.x")
