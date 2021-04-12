@@ -9,7 +9,10 @@ scalacOptions ++= Seq(
   "-Ywarn-unused"
 )
 incOptions := incOptions.value.withLogRecompileOnMacro(false)
-libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, isDotty.value)
+val isScala3 = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value).exists(_._1 != 2)
+}
+libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, isScala3.value)
 initialCommands := """|import com.typesafe.scalalogging._
                       |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
 

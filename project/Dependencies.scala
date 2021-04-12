@@ -18,8 +18,8 @@ object Library {
 object Dependencies {
   import Library._
 
-  def scalaLogging(scalaVersion: String, isDotty: Boolean) = {
-    List(scalaReflect(scalaVersion)).filter(_ => !isDotty) ++
+  def scalaLogging(scalaVersion: String, isScala3: Boolean) = {
+    List(scalaReflect(scalaVersion)).filter(_ => !isScala3) ++
       List(
         slf4jApi,
         logbackClassic % "test",
