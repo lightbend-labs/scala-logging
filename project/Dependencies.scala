@@ -2,7 +2,7 @@ import sbt._
 
 object Version {
   val logback   = "1.2.6"
-  val mockito   = "3.2.9.0"
+  val mockito   = "3.2.10.0"
   val scalaTest = "3.2.10"
   val slf4j     = "1.7.32"
 }
