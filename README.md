@@ -1,5 +1,3 @@
-# scala-logging [![Build Status](https://travis-ci.com/lightbend/scala-logging.svg?branch=master)](https://travis-ci.com/lightbend/scala-logging)
-
 Scala Logging is a **convenient** and **fast** logging library wrapping [SLF4J](http://www.slf4j.org).
 
 It's convenient, because you can simply call log methods, *without* checking whether the respective log level is enabled:

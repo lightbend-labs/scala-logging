@@ -1,6 +1,8 @@
 // basics
 
 name := "scala-logging"
+crossScalaVersions := Seq("3.0.2", "2.11.12", "2.12.15", "2.13.6")
+scalaVersion := crossScalaVersions.value.head
 scalacOptions ++= Seq(
   "-unchecked",
   "-deprecation",
