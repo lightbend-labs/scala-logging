@@ -1,0 +1,27 @@
+name: test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [8, 11, 17]
+        scala: [2.11.12, 2.12.15, 2.13.6, 3.0.2]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: coursier/cache-action@v6
+    - uses: actions/setup-java@v2
+      with:
+        distribution: temurin
+        java-version: ${{matrix.java}}
+    - name: Test
+      run: |
+         sbt ++${{matrix.scala}} test
+         git diff --exit-code  # check scalariform
