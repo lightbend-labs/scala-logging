@@ -295,7 +295,7 @@ private[scalalogging] object LoggerMacro {
   private def formatArgs(c: LoggerContext)(args: c.Expr[Any]*) = {
     import c.universe._
     args.map { arg =>
-      c.Expr[AnyRef](if (arg.tree.tpe <:< weakTypeOf[AnyRef]) arg.tree else q"$arg.asInstanceOf[_root_.scala.AnyRef]")
+      c.Expr[AnyRef](if (arg.tree.tpe <:< weakTypeOf[AnyRef]) q"$arg: _root_.scala.AnyRef" else q"$arg.asInstanceOf[_root_.scala.AnyRef]")
     }
   }
 }
