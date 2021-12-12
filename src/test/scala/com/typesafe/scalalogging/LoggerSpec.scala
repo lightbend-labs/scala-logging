@@ -451,6 +451,13 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs with MockitoSuga
       logger.error(s"""foo\nbar $arg1""")
       verify(underlying).error(s"""foo\nbar {}""", arg1)
     }
+
+    "call the underlying format method when interpolated argument is a Throwable" in {
+      val f = fixture(_.isErrorEnabled, isEnabled = true)
+      import f._
+      logger.error(s"""foo\nbar $arg7""")
+      verify(underlying).error(s"""foo\nbar {}""", arg7ref)
+    }
   }
 
   "Logging a message using slf4 interpolator and Any args" should {
@@ -587,6 +594,8 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs with MockitoSuga
     val arg5ref = arg5.asInstanceOf[AnyRef]
     val arg6 = 6L
     val arg6ref = arg6.asInstanceOf[AnyRef]
+    val arg7 = new Throwable
+    val arg7ref = arg7.asInstanceOf[AnyRef]
     val underlying = mock[org.slf4j.Logger]
     when(p(underlying)).thenReturn(isEnabled)
     val logger = Logger(underlying)
