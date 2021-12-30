@@ -83,6 +83,16 @@ private[scalalogging] object LoggerTakingImplicitMacro {
     }
   }
 
+  def errorCode[A](c: LoggerContext[A])(body: c.Expr[Unit])(a: c.Expr[A]): c.universe.Tree = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    val canLogEv = q"${c.prefix}.canLogEv"
+    q"""if ($underlying.isErrorEnabled) {
+          $underlying.error($canLogEv.logMessage($body))
+          $canLogEv.afterLog($a)
+        }"""
+  }
+
   // Warn
 
   def warnMessage[A](c: LoggerContext[A])(message: c.Expr[String])(a: c.Expr[A]): c.universe.Tree = {
@@ -157,6 +167,16 @@ private[scalalogging] object LoggerTakingImplicitMacro {
           $canLogEv.afterLog($a)
         }"""
     }
+  }
+
+  def warnCode[A](c: LoggerContext[A])(body: c.Expr[Unit])(a: c.Expr[A]): c.universe.Tree = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    val canLogEv = q"${c.prefix}.canLogEv"
+    q"""if ($underlying.isWarnEnabled) {
+          $underlying.warn($canLogEv.logMessage($body))
+          $canLogEv.afterLog($a)
+        }"""
   }
 
   // Info
@@ -235,6 +255,16 @@ private[scalalogging] object LoggerTakingImplicitMacro {
     }
   }
 
+  def infoCode[A](c: LoggerContext[A])(body: c.Expr[Unit])(a: c.Expr[A]): c.universe.Tree = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    val canLogEv = q"${c.prefix}.canLogEv"
+    q"""if ($underlying.isInfoEnabled) {
+          $underlying.info($canLogEv.logMessage($body))
+          $canLogEv.afterLog($a)
+        }"""
+  }
+
   // Debug
 
   def debugMessage[A](c: LoggerContext[A])(message: c.Expr[String])(a: c.Expr[A]): c.universe.Tree = {
@@ -311,6 +341,17 @@ private[scalalogging] object LoggerTakingImplicitMacro {
     }
   }
 
+  def debugCode[A](c: LoggerContext[A])(body: c.Expr[Unit])(a: c.Expr[A]): c.universe.Tree = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    val canLogEv = q"${c.prefix}.canLogEv"
+    q"""if ($underlying.isDebugEnabled) {
+          $underlying.debug($canLogEv.logMessage($body))
+          $canLogEv.afterLog($a)
+        }"""
+  }
+
+
   // Trace
 
   def traceMessage[A](c: LoggerContext[A])(message: c.Expr[String])(a: c.Expr[A]): c.universe.Tree = {
@@ -385,5 +426,15 @@ private[scalalogging] object LoggerTakingImplicitMacro {
           $canLogEv.afterLog($a)
         }"""
     }
+  }
+
+  def traceCode[A](c: LoggerContext[A])(body: c.Expr[Unit])(a: c.Expr[A]): c.universe.Tree = {
+    import c.universe._
+    val underlying = q"${c.prefix}.underlying"
+    val canLogEv = q"${c.prefix}.canLogEv"
+    q"""if ($underlying.isTraceEnabled) {
+          $underlying.trace($canLogEv.logMessage($body))
+          $canLogEv.afterLog($a)
+        }"""
   }
 }
