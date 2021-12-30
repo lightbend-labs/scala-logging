@@ -18,6 +18,8 @@ class LoggerTakingImplicitImpl[A] private[scalalogging] {
 
   def error(marker: Marker, message: String, args: Any*)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.errorMessageArgsMarker[A]
 
+  def whenErrorEnabled(body: Unit)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.errorCode[A]
+
   // Warn
 
   def warn(message: String)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.warnMessage[A]
@@ -31,6 +33,8 @@ class LoggerTakingImplicitImpl[A] private[scalalogging] {
   def warn(marker: Marker, message: String, cause: Throwable)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.warnMessageCauseMarker[A]
 
   def warn(marker: Marker, message: String, args: Any*)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.warnMessageArgsMarker[A]
+
+  def whenWarnEnabled(body: Unit)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.warnCode[A]
 
   // Info
 
@@ -46,6 +50,8 @@ class LoggerTakingImplicitImpl[A] private[scalalogging] {
 
   def info(marker: Marker, message: String, args: Any*)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.infoMessageArgsMarker[A]
 
+  def whenInfoEnabled(body: Unit)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.infoCode[A]
+
   // Debug
 
   def debug(message: String)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.debugMessage[A]
@@ -59,6 +65,8 @@ class LoggerTakingImplicitImpl[A] private[scalalogging] {
   def debug(marker: Marker, message: String, cause: Throwable)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.debugMessageCauseMarker[A]
 
   def debug(marker: Marker, message: String, args: Any*)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.debugMessageArgsMarker[A]
+
+  def whenDebugEnabled(body: Unit)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.debugCode[A]
 
   // Trace
 
@@ -74,4 +82,5 @@ class LoggerTakingImplicitImpl[A] private[scalalogging] {
 
   def trace(marker: Marker, message: String, args: Any*)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.traceMessageArgsMarker[A]
 
+  def whenTraceEnabled(body: Unit)(implicit a: A): Unit = macro LoggerTakingImplicitMacro.traceCode[A]
 }
