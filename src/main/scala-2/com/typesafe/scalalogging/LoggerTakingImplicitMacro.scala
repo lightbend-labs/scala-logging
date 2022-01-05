@@ -351,7 +351,6 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }"""
   }
 
-
   // Trace
 
   def traceMessage[A](c: LoggerContext[A])(message: c.Expr[String])(a: c.Expr[A]): c.universe.Tree = {
