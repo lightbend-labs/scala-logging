@@ -60,8 +60,11 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
   }
 
-
-
+  def errorCode[A:Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], body: Expr[Unit])(a: Expr[A])(using Quotes) =
+    '{if ($underlying.isErrorEnabled) {
+          $body
+          $canLogEv.afterLog($a)
+        }}
 
   // Warn
 
@@ -117,9 +120,13 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
   }
 
+  def warnCode[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], body: Expr[Unit])(a: Expr[A])(using Quotes) =
+      '{ if ($underlying.isWarnEnabled) {
+            $body
+            $canLogEv.afterLog($a)
+          }}
 
 
-  
   // Info
 
   def infoMessage[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], message: Expr[String])(a: Expr[A])(using Quotes): Expr[Unit] =
@@ -174,9 +181,13 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
   }
 
+  def infoCode[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], body: Expr[Unit])(a: Expr[A])(using Quotes) =
+      '{ if ($underlying.isInfoEnabled) {
+            $body
+            $canLogEv.afterLog($a)
+          }}
 
 
-  
   // Debug
 
   def debugMessage[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], message: Expr[String])(a: Expr[A])(using Quotes): Expr[Unit] =
@@ -231,9 +242,13 @@ private[scalalogging] object LoggerTakingImplicitMacro {
         }}
   }
 
+  def debugCode[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], body: Expr[Unit])(a: Expr[A])(using Quotes) =
+      '{ if ($underlying.isDebugEnabled) {
+        $body
+        $canLogEv.afterLog($a)
+      }}
 
-  
-  
+
   // Trace
 
   def traceMessage[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], message: Expr[String])(a: Expr[A])(using Quotes): Expr[Unit] =
@@ -287,4 +302,10 @@ private[scalalogging] object LoggerTakingImplicitMacro {
           $canLogEv.afterLog($a)
         }}
   }
+
+  def traceCode[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], body: Expr[Unit])(a: Expr[A])(using Quotes) =
+      '{ if ($underlying.isTraceEnabled) {
+        $body
+        $canLogEv.afterLog($a)
+      }}
 }
