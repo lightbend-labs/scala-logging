@@ -27,7 +27,7 @@ trait LoggerTakingImplicitImpl[A] {
   inline def error(inline marker: Marker, inline message: String, inline args: Any*)(implicit inline a: A): Unit =
     ${LoggerTakingImplicitMacro.errorMessageArgsMarker('underlying, 'canLogEv, 'marker,'message, 'args)('a)}
 
-
+  inline def whenErrorEnabled(inline body: Unit)(implicit inline a: A): Unit = ${LoggerTakingImplicitMacro.errorCode('underlying, 'canLogEv, 'body)('a)}
 
   // Warn
 
@@ -48,6 +48,8 @@ trait LoggerTakingImplicitImpl[A] {
 
   inline def warn(inline marker: Marker, inline message: String, inline args: Any*)(implicit inline a: A): Unit =
     ${LoggerTakingImplicitMacro.warnMessageArgsMarker('underlying, 'canLogEv, 'marker,'message, 'args)('a)}
+
+  inline def whenWarnEnabled(inline body: Unit)(implicit inline a: A): Unit = ${LoggerTakingImplicitMacro.warnCode('underlying, 'canLogEv, 'body)('a)}
 
 
 
@@ -71,6 +73,7 @@ trait LoggerTakingImplicitImpl[A] {
   inline def info(inline marker: Marker, inline message: String, inline args: Any*)(implicit inline a: A): Unit =
     ${LoggerTakingImplicitMacro.infoMessageArgsMarker('underlying, 'canLogEv, 'marker,'message, 'args)('a)}
 
+  inline def whenInfoEnabled(inline body: Unit)(implicit inline a: A): Unit = ${LoggerTakingImplicitMacro.infoCode('underlying, 'canLogEv, 'body)('a)}
 
 
   // Debug
@@ -93,7 +96,7 @@ trait LoggerTakingImplicitImpl[A] {
   inline def debug(inline marker: Marker, inline message: String, inline args: Any*)(implicit inline a: A): Unit =
     ${LoggerTakingImplicitMacro.debugMessageArgsMarker('underlying, 'canLogEv, 'marker,'message, 'args)('a)}
 
-
+  inline def whenDebugEnabled(inline body: Unit)(implicit inline a: A): Unit = ${LoggerTakingImplicitMacro.debugCode('underlying, 'canLogEv, 'body)('a)}
 
   // Trace
 
@@ -114,4 +117,6 @@ trait LoggerTakingImplicitImpl[A] {
 
   inline def trace(inline marker: Marker, inline message: String, inline args: Any*)(implicit inline a: A): Unit =
     ${LoggerTakingImplicitMacro.traceMessageArgsMarker('underlying, 'canLogEv, 'marker,'message, 'args)('a)}
+
+  inline def whenTraceEnabled(inline body: Unit)(implicit inline a: A): Unit = ${LoggerTakingImplicitMacro.traceCode('underlying, 'canLogEv, 'body)('a)}
 }
