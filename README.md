@@ -67,7 +67,12 @@ val logger = Logger[MyClass]
 ```
 
 The `LazyLogging` and `StrictLogging` traits from the `com.typesafe.scalalogging` package define the `logger` member as
-a lazy or strict value respectively. In both cases the underlying SLF4J logger is named according to the class into which
+a lazy or strict value respectively. 
+
+- Use `LazyLogging` if you are creating lots of objects with this trait repetitively.
+- Use `StrictLogging` pretty much by default, especially if the class is a singleton, or you know the log methods will always be invoked.
+
+In both cases the underlying SLF4J logger is named according to the class into which
 these traits are mixed:
 
 ```scala
