@@ -22,3 +22,12 @@ trait StrictLogging {
   protected val logger: Logger =
     Logger(LoggerFactory.getLogger(getClass.getName))
 }
+
+/**
+ * Defines an abstract `logger` that will be useful while writing some trait which needs access
+ * to any logger without deciding on an specific implementation.
+ */
+trait AnyLogging {
+
+  protected val logger: Logger
+}
