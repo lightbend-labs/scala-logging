@@ -77,11 +77,24 @@ In case of `LazyLogging` and `StrictLogging`, the underlying SLF4J logger is nam
 these traits are mixed:
 
 ```scala
-class MyClass extends LazyLogging {
+class LazyLoggingExample extends LazyLogging {
   logger.debug("This is very convenient ;-)")
 
   logger.whenDebugEnabled {
     println("This would only execute when the debug level is enabled.")
+    (1 to 10).foreach(x => println("Scala logging is great!"))
+  }
+}
+```
+
+```scala
+class AnyLoggingExample extends AnyLogging {
+  override protected val logger: Logger = Logger("name")
+
+  logger.info("This is Any Logging ;-)")
+
+  logger.whenInfoEnabled {
+    println("This would only execute when the info level is enabled.")
     (1 to 10).foreach(x => println("Scala logging is great!"))
   }
 }
