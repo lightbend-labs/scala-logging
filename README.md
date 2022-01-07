@@ -67,12 +67,13 @@ val logger = Logger[MyClass]
 ```
 
 The `LazyLogging` and `StrictLogging` traits from the `com.typesafe.scalalogging` package define the `logger` member as
-a lazy or strict value respectively. 
+a lazy or strict value respectively, whereas the `AnyLogging` trait defines an abstract `logger`.
 
 - Use `LazyLogging` if you are creating lots of objects with this trait repetitively.
 - Use `StrictLogging` pretty much by default, especially if the class is a singleton, or you know the log methods will always be invoked.
+- Use `AnyLogging` when writing some trait which needs access to any logger without deciding on a specific implementation.
 
-In both cases the underlying SLF4J logger is named according to the class into which
+In case of `LazyLogging` and `StrictLogging`, the underlying SLF4J logger is named according to the class into which
 these traits are mixed:
 
 ```scala
