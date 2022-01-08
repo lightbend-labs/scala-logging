@@ -3,10 +3,11 @@ package com.typesafe.scalalogging
 import org.slf4j.{ Logger => Underlying }
 
 trait CanLog[A] {
-  def logMessage(originalMsg: String, a: A): String
-  def afterLog(a: A): Unit = {
-    val _ = a
+  def logMessage(originalMsg: String, context: A): String
+  def afterLog(context: A): Unit = {
+    val _ = context
   }
+  def getContext()(implicit context: A): A = context
 }
 
 @SerialVersionUID(957385465L)
