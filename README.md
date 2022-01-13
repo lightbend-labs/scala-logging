@@ -78,7 +78,7 @@ these traits are mixed:
 
 ```scala
 class LazyLoggingExample extends LazyLogging {
-  logger.debug("This is very convenient ;-)")
+  logger.debug("This is Lazy Logging ;-)")
 
   logger.whenDebugEnabled {
     println("This would only execute when the debug level is enabled.")
