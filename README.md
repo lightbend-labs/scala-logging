@@ -88,6 +88,17 @@ class LazyLoggingExample extends LazyLogging {
 ```
 
 ```scala
+class StrictLoggingExample extends StrictLogging {
+  logger.debug("This is Strict Logging ;-)")
+
+  logger.whenDebugEnabled {
+    println("This would only execute when the debug level is enabled.")
+    (1 to 10).foreach(x => println("Scala logging is great!"))
+  }
+}
+```
+
+```scala
 class AnyLoggingExample extends AnyLogging {
   override protected val logger: Logger = Logger("name")
 
