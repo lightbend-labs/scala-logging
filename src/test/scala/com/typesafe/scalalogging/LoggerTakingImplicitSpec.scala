@@ -376,6 +376,15 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs wi
     }
   }
 
+  "Calling getContext" should {
+    "call getContext on the underlying logger's CanLog" in {
+      val f = fixture(_.isErrorEnabled, isEnabled = true)
+      import f._
+      logger.canLogEv.getContext
+      verify(canLogCorrelationId).getContext
+    }
+  }
+
   private def fixture(p: Underlying => Boolean, isEnabled: Boolean, stubCanLog: Boolean = true) = new LoggerF(p, isEnabled, stubCanLog)
   private class LoggerF(p: Underlying => Boolean, isEnabled: Boolean, stubCanLog: Boolean = true) {
     implicit val correlationId: CorrelationId = CorrelationId("corrId")
