@@ -3,6 +3,7 @@
 name := "scala-logging"
 crossScalaVersions := Seq("3.0.2", "2.11.12", "2.12.15", "2.13.8")
 scalaVersion := crossScalaVersions.value.head
+versionScheme := Some("early-semver")
 scalacOptions ++= Seq(
   "-unchecked",
   "-deprecation",
