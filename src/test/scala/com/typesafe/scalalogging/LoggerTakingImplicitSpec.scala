@@ -380,8 +380,8 @@ class LoggerTakingImplicitSpec extends AnyWordSpec with Matchers with Varargs wi
     "call getContext on the underlying logger's CanLog" in {
       val f = fixture(_.isErrorEnabled, isEnabled = true)
       import f._
-      logger.canLogEv.getContext
-      verify(canLogCorrelationId).getContext
+      logger.canLogEv.getContext()
+      verify(canLogCorrelationId).getContext()
     }
   }
 
