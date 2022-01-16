@@ -129,7 +129,7 @@ logger.info("Test") // takes implicit correlationId and logs "ID Test"
 
 If you want to extract the context object associated with your logger i.e. `correlationId` here, use `getContext`.
 ```scala
-val context = logger.canLogEv.getContext
+val context = logger.canLogEv.getContext()
 ```
 
 It's also possible to use `MDC` through `CanLog` without any troubles with execution context.
