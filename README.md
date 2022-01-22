@@ -54,6 +54,12 @@ Or, you pass in a SLF4J logger instance:
 val logger = Logger(LoggerFactory.getLogger("name"))
 ```
 
+Or, you pass in the name of the class into which it is defined:
+
+```scala
+val logger = Logger(getClass.getName)
+```
+
 Or, you pass in a class:
 
 ```scala
