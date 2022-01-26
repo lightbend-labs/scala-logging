@@ -375,7 +375,9 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs with M
     val arg2: Integer = Integer.valueOf(1)
     val arg3 = "arg3"
     val underlying: Underlying = mock[org.slf4j.Logger]
+
     when(p(underlying)(marker)).thenReturn(isEnabled)
+
     val logger: Logger = Logger(underlying)
   }
 }
