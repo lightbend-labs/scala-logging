@@ -1,6 +1,7 @@
 package com.typesafe.scalalogging
 
-import org.slf4j.{ Logger => Underlying }
+import com.typesafe.scalalogging.tag.@@
+import org.slf4j.{Logger => Underlying}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.mockito.MockitoSugar
@@ -106,11 +107,11 @@ class LoggerWithTaggedArgsSpec extends AnyWordSpec with Matchers with Varargs wi
 
   private def fixture(p: Underlying => Boolean, isEnabled: Boolean = true) = new LoggerF(p, isEnabled)
   private class LoggerF(p: Underlying => Boolean, isEnabled: Boolean = true) {
-    val arg1 = tag.taggedString[Tag]("arg1")
-    val arg2 = tag.taggedInteger[Tag](Integer.valueOf(1))
-    val arg3 = tag.taggedBoolean[Boolean](true)
-    val underlying = mock[org.slf4j.Logger]
+    val arg1: String @@ Tag = tag.taggedString[Tag]("arg1")
+    val arg2: Integer @@ Tag = tag.taggedInteger[Tag](Integer.valueOf(1))
+    val arg3: Boolean @@ Boolean = tag.taggedBoolean[Boolean](true)
+    val underlying: Underlying = mock[org.slf4j.Logger]
     when(p(underlying)).thenReturn(isEnabled)
-    val logger = Logger(underlying)
+    val logger: Logger = Logger(underlying)
   }
 }
