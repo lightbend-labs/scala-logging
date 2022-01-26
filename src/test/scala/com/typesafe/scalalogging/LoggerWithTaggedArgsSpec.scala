@@ -1,7 +1,7 @@
 package com.typesafe.scalalogging
 
 import com.typesafe.scalalogging.tag.@@
-import org.slf4j.{Logger => Underlying}
+import org.slf4j.{ Logger => Underlying }
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.mockito.MockitoSugar
