@@ -368,14 +368,14 @@ class LoggerWithMarkerSpec extends AnyWordSpec with Matchers with Varargs with M
 
   private def fixture(p: Underlying => Marker => Boolean, isEnabled: Boolean) = new LoggerF(p, isEnabled)
   private class LoggerF(p: Underlying => Marker => Boolean, isEnabled: Boolean) {
-    val marker = DummyMarker
+    val marker: DummyMarker.type = DummyMarker
     val msg = "msg"
     val cause = new RuntimeException("cause")
     val arg1 = "arg1"
-    val arg2 = Integer.valueOf(1)
+    val arg2: Integer = Integer.valueOf(1)
     val arg3 = "arg3"
-    val underlying = mock[org.slf4j.Logger]
+    val underlying: Underlying = mock[org.slf4j.Logger]
     when(p(underlying)(marker)).thenReturn(isEnabled)
-    val logger = Logger(underlying)
+    val logger: Logger = Logger(underlying)
   }
 }
