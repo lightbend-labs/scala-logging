@@ -586,18 +586,18 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs with MockitoSuga
     val msg = "msg"
     val cause = new RuntimeException("cause")
     val arg1 = "arg1"
-    val arg2 = Integer.valueOf(1)
+    val arg2: Integer = Integer.valueOf(1)
     val arg3 = "arg3"
     val arg4 = 4
-    val arg4ref = arg4.asInstanceOf[AnyRef]
+    val arg4ref: AnyRef = arg4.asInstanceOf[AnyRef]
     val arg5 = true
-    val arg5ref = arg5.asInstanceOf[AnyRef]
+    val arg5ref: AnyRef = arg5.asInstanceOf[AnyRef]
     val arg6 = 6L
-    val arg6ref = arg6.asInstanceOf[AnyRef]
+    val arg6ref: AnyRef = arg6.asInstanceOf[AnyRef]
     val arg7 = new Throwable
-    val arg7ref = arg7.asInstanceOf[AnyRef]
-    val underlying = mock[org.slf4j.Logger]
+    val arg7ref: AnyRef = arg7.asInstanceOf[AnyRef]
+    val underlying: Underlying = mock[org.slf4j.Logger]
     when(p(underlying)).thenReturn(isEnabled)
-    val logger = Logger(underlying)
+    val logger: Logger = Logger(underlying)
   }
 }
