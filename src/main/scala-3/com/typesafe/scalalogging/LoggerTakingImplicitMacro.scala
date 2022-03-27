@@ -22,7 +22,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def errorMessageArgs[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isErrorEnabled) {
             $underlying.error($canLogEv.logMessage($message, $a), ${formatedArgs.head})
             $canLogEv.afterLog($a)
@@ -48,7 +48,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def errorMessageArgsMarker[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], marker: Expr[Marker], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isErrorEnabled($marker)) {
           $underlying.error($marker, $canLogEv.logMessage($message, $a), ${formatedArgs.head})
           $canLogEv.afterLog($a)
@@ -82,7 +82,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def warnMessageArgs[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isWarnEnabled) {
             $underlying.warn($canLogEv.logMessage($message, $a), ${formatedArgs.head})
             $canLogEv.afterLog($a)
@@ -108,7 +108,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def warnMessageArgsMarker[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], marker: Expr[Marker], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isWarnEnabled($marker)) {
           $underlying.warn($marker, $canLogEv.logMessage($message, $a), ${formatedArgs.head})
           $canLogEv.afterLog($a)
@@ -143,7 +143,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def infoMessageArgs[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isInfoEnabled) {
             $underlying.info($canLogEv.logMessage($message, $a), ${formatedArgs.head})
             $canLogEv.afterLog($a)
@@ -169,7 +169,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def infoMessageArgsMarker[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], marker: Expr[Marker], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isInfoEnabled($marker)) {
           $underlying.info($marker, $canLogEv.logMessage($message, $a), ${formatedArgs.head})
           $canLogEv.afterLog($a)
@@ -204,7 +204,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def debugMessageArgs[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isDebugEnabled) {
             $underlying.debug($canLogEv.logMessage($message, $a), ${formatedArgs.head})
             $canLogEv.afterLog($a)
@@ -230,7 +230,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def debugMessageArgsMarker[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], marker: Expr[Marker], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isDebugEnabled($marker)) {
           $underlying.debug($marker, $canLogEv.logMessage($message, $a), ${formatedArgs.head})
           $canLogEv.afterLog($a)
@@ -265,7 +265,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def traceMessageArgs[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isTraceEnabled) {
             $underlying.trace($canLogEv.logMessage($message, $a), ${formatedArgs.head})
             $canLogEv.afterLog($a)
@@ -291,7 +291,7 @@ private[scalalogging] object LoggerTakingImplicitMacro {
 
   def traceMessageArgsMarker[A: Type](underlying: Expr[Underlying], canLogEv: Expr[CanLog[A]], marker: Expr[Marker], message: Expr[String], args: Expr[Seq[Any]])(a: Expr[A])(using Quotes): Expr[Unit] = {
     val formatedArgs = LoggerMacro.formatArgs(args)
-    if (formatedArgs.length == 1)
+    if (formatedArgs.lengthIs == 1)
       '{if ($underlying.isTraceEnabled($marker)) {
           $underlying.trace($marker, $canLogEv.logMessage($message, $a), ${formatedArgs.head})
           $canLogEv.afterLog($a)
