@@ -20,7 +20,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isErrorEnabled) $underlying.error($message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{ if ($underlying.isErrorEnabled) $underlying.error($message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isErrorEnabled) $underlying.error($message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -38,7 +38,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -64,7 +64,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isWarnEnabled) $underlying.warn($message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{ if ($underlying.isWarnEnabled) $underlying.warn($message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isWarnEnabled) $underlying.warn($message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -82,7 +82,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -108,7 +108,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isInfoEnabled) $underlying.info($message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{ if ($underlying.isInfoEnabled) $underlying.info($message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isInfoEnabled) $underlying.info($message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -126,7 +126,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -153,7 +153,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isDebugEnabled) $underlying.debug($message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{ if ($underlying.isDebugEnabled) $underlying.debug($message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isDebugEnabled) $underlying.debug($message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -171,7 +171,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -197,7 +197,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isTraceEnabled) $underlying.trace($message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{ if ($underlying.isTraceEnabled) $underlying.trace($message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isTraceEnabled) $underlying.trace($message, ${Expr.ofSeq(anyRefArgs)}*) }
@@ -215,7 +215,7 @@ private[scalalogging] object LoggerMacro {
     val anyRefArgs = formatArgs(args)
     if(anyRefArgs.isEmpty)
       '{ if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message) }
-    else if(anyRefArgs.length == 1)
+    else if(anyRefArgs.lengthIs == 1)
       '{if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, ${anyRefArgs.head}) }
     else
       '{ if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, ${Expr.ofSeq(anyRefArgs)}*) }
