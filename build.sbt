@@ -1,55 +1,42 @@
-// basics
+ThisBuild / scalaVersion := "3.0.2"
+val scala213 = "2.13.8"
 
-name := "scala-logging"
-crossScalaVersions := Seq("3.0.2", "2.11.12", "2.12.15", "2.13.8")
-scalaVersion := crossScalaVersions.value.head
-ThisBuild / versionScheme := Some("early-semver")
-scalacOptions ++= Seq(
-  "-unchecked",
-  "-deprecation",
-  "-language:_",
-  "-encoding", "UTF-8",
-  "-Ywarn-unused"
-)
-incOptions := incOptions.value.withLogRecompileOnMacro(false)
-val isScala3 = Def.setting {
-  CrossVersion.partialVersion(scalaVersion.value).exists(_._1 != 2)
-}
-libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, isScala3.value)
-initialCommands := """|import com.typesafe.scalalogging._
-                      |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
-
-// OSGi
-
-import com.typesafe.sbt.osgi.SbtOsgi
-enablePlugins(SbtOsgi)
-osgiSettings
-OsgiKeys.bundleSymbolicName := "com.typesafe.scala-logging"
-OsgiKeys.privatePackage := Seq()
-OsgiKeys.exportPackage := Seq("com.typesafe.scalalogging*")
-
-// publishing
-
-organization := "com.typesafe.scala-logging"
-sonatypeProfileName := "com.typesafe"
-licenses := Seq("Apache 2.0 License" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-homepage := Some(url("https://github.com/lightbend/scala-logging"))
-Test / publishArtifact := false
-pomIncludeRepository := (_ => false)
-scmInfo := Some(
-  ScmInfo(url("https://github.com/lightbend/scala-logging"), "scm:git:git@github.com:lightbend/scala-logging.git")
-)
-developers := List(
-  Developer(
-    id = "hseeberger",
-    name = "Heiko Seeberger",
-    email = "",
-    url = url("http://heikoseeberger.de")
-  ),
-  Developer(
-    id = "analytically",
-    name = "Mathias Bogaert",
-    email = "",
-    url = url("http://twitter.com/analytically")
+lazy val scalalogging2 = project
+  .settings(
+    name := "scala-logging2",
+    scalaVersion := scala213,
+    libraryDependencies ++= Dependencies.scalaLogging(scala213, false)
   )
-)
+
+lazy val scalalogging3 = project
+  .settings(
+    name := "scala-logging3",
+    scalaVersion := "3.0.2",
+    libraryDependencies ++= Dependencies.scalaLogging("3.0.2", true)
+  )
+
+lazy val scalalogging = project
+  .dependsOn(scalalogging2, scalalogging3)
+  .settings(
+    name := "scala-logging",
+    scalaVersion := "3.0.2",
+    libraryDependencies ++= Dependencies.scalaLogging("3.0.2", true),
+  )
+
+lazy val app2 = project
+  .dependsOn(scalalogging)
+  .settings(
+    name := "app2",
+    scalaVersion := scala213,
+    scalacOptions := Seq("-Ytasty-reader"),
+    libraryDependencies ++= Dependencies.scalaLogging(scala213, false),
+    libraryDependencies += Library.logbackClassic
+  )
+
+lazy val app3 = project
+  .dependsOn(scalalogging)
+  .settings(
+    name := "app3",
+    libraryDependencies ++= Dependencies.scalaLogging("3.0.2", true),
+    libraryDependencies += Library.logbackClassic
+  )
