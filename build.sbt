@@ -1,7 +1,7 @@
 // basics
 
 name := "scala-logging"
-crossScalaVersions := Seq("3.1.3", "2.11.12", "2.12.16", "2.13.8")
+crossScalaVersions := Seq("3.2.0", "2.11.12", "2.12.16", "2.13.8")
 scalaVersion := crossScalaVersions.value.head
 ThisBuild / versionScheme := Some("early-semver")
 scalacOptions ++= Seq(
