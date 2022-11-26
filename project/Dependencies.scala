@@ -4,7 +4,7 @@ object Version {
   val logback   = "1.2.11"
   val mockito   = "3.2.10.0"
   val scalaTest = "3.2.14"
-  val slf4j     = "1.7.36"
+  val slf4j     = "2.0.5"
 }
 
 object Library {
