@@ -3,9 +3,9 @@ package com.typesafe.scalalogging
 import org.slf4j.Marker
 import scala.reflect.macros.blackbox
 
-private[scalalogging] object LoggerMacro {
+private[scalalogging] object Scala2LoggerMacro {
 
-  type LoggerContext = blackbox.Context { type PrefixType = Logger }
+  type LoggerContext = blackbox.Context
 
   // Error
 
@@ -258,7 +258,7 @@ private[scalalogging] object LoggerMacro {
   }
 
   /** Checks whether `message` is an interpolated string and transforms it into SLF4J string interpolation. */
-  private def deconstructInterpolatedMessage(c: LoggerContext)(message: c.Expr[String]) = {
+  private def deconstructInterpolatedMessage(c: LoggerContext)(message: c.Expr[String]): (c.Expr[String], Seq[c.Expr[Any]]) = {
     val u: c.universe.type = c.universe
     // Eww; gross! In 2.13, the `s` interpolator on StringContext became a macro, so we have to look at the pre-macro
     // expansion tree to recover what the user wrote...
