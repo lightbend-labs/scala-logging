@@ -1,7 +1,7 @@
 // basics
 
 val scala213 = "2.13.12"
-val scala3 = "3.4.0-RC1-bin-20231016-69e1338-NIGHTLY" //TODO 3.3.2 or 3.4.0
+val scala3 = "3.4.0"
 val scala2 = Seq("2.11.12", "2.12.18", scala213)
 val isScala3 = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value).exists(_._1 != 2)
