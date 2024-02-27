@@ -21,7 +21,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 A compatible logging backend is [Logback](http://logback.qos.ch), add it to your sbt build definition:
 
 ```scala
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.10"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.4.14"
 ```
 
 If you are looking for a version compatible with Scala 2.10, check out Scala Logging 2.x.
@@ -36,7 +36,7 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 sbt users may add this to their `build.sbt`:
 
 ```scala
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.4"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 ```
 
 ## Using Scala Logging
