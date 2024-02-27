@@ -21,7 +21,6 @@ initialCommands := """|import com.typesafe.scalalogging._
 
 // OSGi
 
-import com.typesafe.sbt.osgi.SbtOsgi
 enablePlugins(SbtOsgi)
 osgiSettings
 OsgiKeys.bundleSymbolicName := "com.typesafe.scala-logging"
