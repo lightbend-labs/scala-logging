@@ -264,19 +264,18 @@ private[scalalogging] object LoggerMacro {
   def formatArgs(args: Expr[Seq[Any]])(using q: Quotes): Seq[Expr[AnyRef]] = {
     import quotes.reflect.*
     import util.*
-
-    args.asTerm match {
-      case p@Inlined(_, _, Typed(Repeated(v, _),_)) =>
-        v.map{
+   // we recursively obtain the actual value of inline parameters
+    def rec(tree: Term): Option[Seq[Expr[AnyRef]]] = tree match {
+      case Repeated(elems, _) => Some(
+        elems.map {
           case t if t.tpe <:< TypeRepr.of[AnyRef] => t.asExprOf[AnyRef]
           case t => '{${t.asExpr}.asInstanceOf[AnyRef]}
         }
-      case Repeated(v, _) =>
-        v.map{
-          case t if t.tpe <:< TypeRepr.of[AnyRef] => t.asExprOf[AnyRef]
-          case t => '{${t.asExpr}.asInstanceOf[AnyRef]}
-        }
-      case _ => Seq.empty
+      )
+      case Typed(e, _) => rec(e)
+      case Inlined(_, Nil, e) => rec(e)
+      case _  => None
     }
+    rec(args.asTerm).getOrElse(Seq.empty)
   }
 }

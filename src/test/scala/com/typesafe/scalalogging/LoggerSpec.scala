@@ -207,6 +207,14 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs with MockitoSuga
       logger.info(s"msg $arg1 $arg2")
       verify(underlying).info("msg {} {}", forceVarargs(arg1, arg2): _*)
     }
+
+    "fix Varargs compilation error, issue 191" in {
+      val f = fixture(_.isInfoEnabled, isEnabled = true)
+      import f._
+      val message = "Hello"
+      logger.info(s"Message with id=$message, submittedAt=$message will be dropped.")
+      verify(underlying).info("""Message with id={}, submittedAt={} will be dropped.""", forceVarargs(message, message): _*)
+    }
   }
 
   "Calling info with a message and cause" should {
