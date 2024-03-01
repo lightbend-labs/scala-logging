@@ -272,6 +272,7 @@ private[scalalogging] object LoggerMacro {
           case t => '{${t.asExpr}.asInstanceOf[AnyRef]}
         }
       )
+      case Block(Nil, e) => rec(e)
       case Typed(e, _) => rec(e)
       case Inlined(_, Nil, e) => rec(e)
       case _  => None
