@@ -265,17 +265,22 @@ private[scalalogging] object LoggerMacro {
     import quotes.reflect.*
     import util.*
    // we recursively obtain the actual value of inline parameters
+    def map(term:Term) = {
+      term match {
+        case t if t.tpe <:< TypeRepr.of[AnyRef] => t.asExprOf[AnyRef]
+        case t => '{${t.asExpr}.asInstanceOf[AnyRef]}
+      }
+    }
     def rec(tree: Term): Option[Seq[Expr[AnyRef]]] = tree match {
-      case Repeated(elems, _) => Some(
-        elems.map {
-          case t if t.tpe <:< TypeRepr.of[AnyRef] => t.asExprOf[AnyRef]
-          case t => '{${t.asExpr}.asInstanceOf[AnyRef]}
-        }
-      )
+      case Repeated(elems, _) => Some(elems.map(map))
       case Block(Nil, e) => rec(e)
       case Typed(e, _) => rec(e)
       case Inlined(_, Nil, e) => rec(e)
-      case _  => None
+      // Seq():_*, List():_* e.g., 
+      case Apply(TypeApply(Select(Ident(_), "apply"), _), List(Typed(Repeated(elems, _),_))) => 
+        Some(elems.map(map))
+      case _  =>
+        None
     }
     rec(args.asTerm).getOrElse(Seq.empty)
   }
