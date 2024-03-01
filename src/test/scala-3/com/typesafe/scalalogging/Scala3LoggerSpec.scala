@@ -34,6 +34,14 @@ class Scala3LoggerSpec extends AnyWordSpec with Matchers with Varargs with Mocki
       logger.info("""Hello {}""", forceVarargs(arg5ref):_*)
       verify(underlying).info("""Hello {}""", arg5ref)
     }
+
+    "work when passing a inline value as repeated arguments" in {
+      val f = fixture(_.isInfoEnabled, isEnabled = true)
+      import f._
+      inline def argss = Seq(arg5ref, arg5ref, arg5ref)
+      logger.info("""Hello {} {} {}""", argss:_*)
+      verify(underlying).info("""Hello {} {} {}""", Seq(arg5ref, arg5ref, arg5ref):_*)
+    }
   }
 
   private def fixture(p: Underlying => Boolean, isEnabled: Boolean) = new LoggerF(p, isEnabled)

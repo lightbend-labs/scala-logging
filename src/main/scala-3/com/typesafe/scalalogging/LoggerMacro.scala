@@ -276,11 +276,12 @@ private[scalalogging] object LoggerMacro {
       case Block(Nil, e) => rec(e)
       case Typed(e, _) => rec(e)
       case Inlined(_, Nil, e) => rec(e)
-      // Seq():_*, List():_* e.g., 
-      case Apply(TypeApply(Select(Ident(_), "apply"), _), List(Typed(Repeated(elems, _),_))) => 
+      // Seq():_*, List():_* , forceVarargs(1,2):_*e.g., 
+      case Apply(TypeApply(_, _), List(Typed(Repeated(elems, _),_))) => 
         Some(elems.map(map))
-      // forceVarargs(1,2):_*  
-      case Apply(TypeApply(_, _), List(Typed(Repeated(elems, _),_))) => Some(elems.map(map))  
+      case Ident(name) =>
+        // todo
+        None
       case _  =>
         None
     }
