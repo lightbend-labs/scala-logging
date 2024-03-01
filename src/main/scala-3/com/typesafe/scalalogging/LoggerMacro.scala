@@ -279,6 +279,8 @@ private[scalalogging] object LoggerMacro {
       // Seq():_*, List():_* e.g., 
       case Apply(TypeApply(Select(Ident(_), "apply"), _), List(Typed(Repeated(elems, _),_))) => 
         Some(elems.map(map))
+      // forceVarargs(1,2):_*  
+      case Apply(TypeApply(_, _), List(Typed(Repeated(elems, _),_))) => Some(elems.map(map))  
       case _  =>
         None
     }

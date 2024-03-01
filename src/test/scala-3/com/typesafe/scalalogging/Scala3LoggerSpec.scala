@@ -24,7 +24,14 @@ class Scala3LoggerSpec extends AnyWordSpec with Matchers with Varargs with Mocki
     "work when passing a Seq as repeated arguments" in {
       val f = fixture(_.isInfoEnabled, isEnabled = true)
       import f._
-      logger.info("""Hello {}""", Seq(arg5ref)*)
+      logger.info("""Hello {}""", Seq(arg5ref):_*)
+      verify(underlying).info("""Hello {}""", arg5ref)
+    }
+
+    "work when passing a fun as repeated arguments" in {
+      val f = fixture(_.isInfoEnabled, isEnabled = true)
+      import f._
+      logger.info("""Hello {}""", forceVarargs(arg5ref):_*)
       verify(underlying).info("""Hello {}""", arg5ref)
     }
   }
