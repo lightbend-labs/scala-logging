@@ -262,10 +262,7 @@ private[scalalogging] object LoggerMacro {
     }
   }
 
-  def formatArgs(args: Expr[Seq[Any]])(using q: Quotes
-
-  ):
-  Seq[Expr[AnyRef]] = {
+  def formatArgs(args: Expr[Seq[Any]])(using q: Quotes):Seq[Expr[AnyRef]] = {
     import quotes.reflect.*
     import util.*
     // we recursively obtain the actual value of inline parameters
