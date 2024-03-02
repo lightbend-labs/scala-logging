@@ -261,30 +261,41 @@ private[scalalogging] object LoggerMacro {
       case _ => (message, Seq.empty)
     }
   }
-  def formatArgs(args: Expr[Seq[Any]])(using q: Quotes): Seq[Expr[AnyRef]] = {
+
+  def formatArgs(args: Expr[Seq[Any]])(using q: Quotes
+
+  ):
+  Seq[Expr[AnyRef]] = {
     import quotes.reflect.*
     import util.*
-   // we recursively obtain the actual value of inline parameters
-    def map(term:Term) = {
+    // we recursively obtain the actual value of inline parameters
+    def map(term: Term) = {
       term match {
         case t if t.tpe <:< TypeRepr.of[AnyRef] => t.asExprOf[AnyRef]
-        case t => '{${t.asExpr}.asInstanceOf[AnyRef]}
+        case t => '{
+          ${
+            t.asExpr
+          }.asInstanceOf[AnyRef]
+        }
       }
     }
+
     def rec(tree: Term): Option[Seq[Expr[AnyRef]]] = tree match {
       case Repeated(elems, _) => Some(elems.map(map))
       case Block(Nil, e) => rec(e)
+      case tped@Typed(Ident(_), _) =>
+        tped.symbol.tree match {
+          case ValDef(_, _, Some(rhs)) => rec(rhs)
+          case _ => None
+        }
       case Typed(e, _) => rec(e)
       case Inlined(_, Nil, e) => rec(e)
-      // Seq():_*, List():_* , forceVarargs(1,2):_*e.g., 
-      case Apply(TypeApply(_, _), List(Typed(Repeated(elems, _),_))) => 
+      case Apply(TypeApply(_, _), List(Typed(Repeated(elems, _), _))) =>
         Some(elems.map(map))
-      case Ident(name) =>
-        // todo
-        None
-      case _  =>
+      case _ =>
         None
     }
+
     rec(args.asTerm).getOrElse(Seq.empty)
   }
 }
