@@ -272,11 +272,7 @@ private[scalalogging] object LoggerMacro {
     def map(term: Term) = {
       term match {
         case t if t.tpe <:< TypeRepr.of[AnyRef] => t.asExprOf[AnyRef]
-        case t => '{
-          ${
-            t.asExpr
-          }.asInstanceOf[AnyRef]
-        }
+        case t => '{ ${ t.asExpr }.asInstanceOf[AnyRef] }
       }
     }
 
