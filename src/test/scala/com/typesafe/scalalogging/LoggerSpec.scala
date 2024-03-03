@@ -215,6 +215,14 @@ class LoggerSpec extends AnyWordSpec with Matchers with Varargs with MockitoSuga
       logger.info(s"Message with id=$message, submittedAt=$message will be dropped.")
       verify(underlying).info("""Message with id={}, submittedAt={} will be dropped.""", forceVarargs(message, message): _*)
     }
+
+    "work when passing a val as repeated arguments, issue 436" in {
+      val f = fixture(_.isInfoEnabled, isEnabled = true)
+      import f._
+      val argss = Seq(arg5ref, arg5ref, arg5ref)
+      logger.info("""Hello {} {} {}""", argss: _*)
+      verify(underlying).info("""Hello {} {} {}""", forceVarargs(arg5ref, arg5ref, arg5ref): _*)
+    }
   }
 
   "Calling info with a message and cause" should {
