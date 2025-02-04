@@ -295,7 +295,15 @@ private[scalalogging] object LoggerMacro {
   private def formatArgs(c: LoggerContext)(args: c.Expr[Any]*) = {
     import c.universe._
     args.map { arg =>
-      c.Expr[AnyRef](if (arg.tree.tpe <:< weakTypeOf[AnyRef]) q"$arg: _root_.scala.AnyRef" else q"$arg.asInstanceOf[_root_.scala.AnyRef]")
+      // If arg is a varargs, it is also a AnyRef and we need to check the subtree.
+      val argument = arg.tree.children.map(_.tpe) match {
+        case head :: next :: Nil if head <:< weakTypeOf[scala.collection.Seq[_]] && next <:< weakTypeOf[AnyRef] =>
+          q"$arg"
+        case _ =>
+          if (arg.tree.tpe <:< weakTypeOf[AnyRef]) q"$arg: _root_.scala.AnyRef"
+          else q"$arg.asInstanceOf[_root_.scala.AnyRef]"
+      }
+      c.Expr[AnyRef](argument)
     }
   }
 }
