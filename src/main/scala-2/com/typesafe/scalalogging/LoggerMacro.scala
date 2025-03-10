@@ -9,18 +9,18 @@ private[scalalogging] object LoggerMacro {
 
   // Error
 
-  def errorMessage(c: LoggerContext)(message: c.Expr[String]): c.universe.Tree = {
+  def errorMessage(c: LoggerContext)(message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     errorMessageArgs(c)(messageFormat, args: _*)
   }
 
-  def errorMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def errorMessageCause(c: LoggerContext)(message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isErrorEnabled) $underlying.error($message, $cause)"
   }
 
-  def errorMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def errorMessageArgs(c: LoggerContext)(message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -30,18 +30,18 @@ private[scalalogging] object LoggerMacro {
       q"if ($underlying.isErrorEnabled) $underlying.error($message, ..$anyRefArgs)"
   }
 
-  def errorMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
+  def errorMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     errorMessageArgsMarker(c)(marker, messageFormat, args: _*)
   }
 
-  def errorMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def errorMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $message, $cause)"
   }
 
-  def errorMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def errorMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -59,18 +59,18 @@ private[scalalogging] object LoggerMacro {
 
   // Warn
 
-  def warnMessage(c: LoggerContext)(message: c.Expr[String]): c.universe.Tree = {
+  def warnMessage(c: LoggerContext)(message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     warnMessageArgs(c)(messageFormat, args: _*)
   }
 
-  def warnMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def warnMessageCause(c: LoggerContext)(message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isWarnEnabled) $underlying.warn($message, $cause)"
   }
 
-  def warnMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def warnMessageArgs(c: LoggerContext)(message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -80,18 +80,18 @@ private[scalalogging] object LoggerMacro {
       q"if ($underlying.isWarnEnabled) $underlying.warn($message, ..$anyRefArgs)"
   }
 
-  def warnMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
+  def warnMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     warnMessageArgsMarker(c)(marker, messageFormat, args: _*)
   }
 
-  def warnMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def warnMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $message, $cause)"
   }
 
-  def warnMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def warnMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -109,18 +109,18 @@ private[scalalogging] object LoggerMacro {
 
   // Info
 
-  def infoMessage(c: LoggerContext)(message: c.Expr[String]): c.universe.Tree = {
+  def infoMessage(c: LoggerContext)(message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     infoMessageArgs(c)(messageFormat, args: _*)
   }
 
-  def infoMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def infoMessageCause(c: LoggerContext)(message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isInfoEnabled) $underlying.info($message, $cause)"
   }
 
-  def infoMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def infoMessageArgs(c: LoggerContext)(message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -130,18 +130,18 @@ private[scalalogging] object LoggerMacro {
       q"if ($underlying.isInfoEnabled) $underlying.info($message, ..$anyRefArgs)"
   }
 
-  def infoMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
+  def infoMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     infoMessageArgsMarker(c)(marker, messageFormat, args: _*)
   }
 
-  def infoMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def infoMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $message, $cause)"
   }
 
-  def infoMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def infoMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -159,18 +159,18 @@ private[scalalogging] object LoggerMacro {
 
   // Debug
 
-  def debugMessage(c: LoggerContext)(message: c.Expr[String]): c.universe.Tree = {
+  def debugMessage(c: LoggerContext)(message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     debugMessageArgs(c)(messageFormat, args: _*)
   }
 
-  def debugMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def debugMessageCause(c: LoggerContext)(message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isDebugEnabled) $underlying.debug($message, $cause)"
   }
 
-  def debugMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def debugMessageArgs(c: LoggerContext)(message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -180,18 +180,18 @@ private[scalalogging] object LoggerMacro {
       q"if ($underlying.isDebugEnabled) $underlying.debug($message, ..$anyRefArgs)"
   }
 
-  def debugMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
+  def debugMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     debugMessageArgsMarker(c)(marker, messageFormat, args: _*)
   }
 
-  def debugMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def debugMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $message, $cause)"
   }
 
-  def debugMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def debugMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -209,18 +209,18 @@ private[scalalogging] object LoggerMacro {
 
   // Trace
 
-  def traceMessage(c: LoggerContext)(message: c.Expr[String]): c.universe.Tree = {
+  def traceMessage(c: LoggerContext)(message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     traceMessageArgs(c)(messageFormat, args: _*)
   }
 
-  def traceMessageCause(c: LoggerContext)(message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def traceMessageCause(c: LoggerContext)(message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isTraceEnabled) $underlying.trace($message, $cause)"
   }
 
-  def traceMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def traceMessageArgs(c: LoggerContext)(message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -230,18 +230,18 @@ private[scalalogging] object LoggerMacro {
       q"if ($underlying.isTraceEnabled) $underlying.trace($message, ..$anyRefArgs)"
   }
 
-  def traceMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]): c.universe.Tree = {
+  def traceMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal]): c.universe.Tree = {
     val (messageFormat, args) = deconstructInterpolatedMessage(c)(message)
     traceMessageArgsMarker(c)(marker, messageFormat, args: _*)
   }
 
-  def traceMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]): c.universe.Tree = {
+  def traceMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], cause: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     q"if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $message, $cause)"
   }
 
-  def traceMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[Any]*): c.universe.Tree = {
+  def traceMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[AnyVal], args: c.Expr[Any]*): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
     val anyRefArgs = formatArgs(c)(args: _*)
@@ -258,7 +258,7 @@ private[scalalogging] object LoggerMacro {
   }
 
   /** Checks whether `message` is an interpolated string and transforms it into SLF4J string interpolation. */
-  private def deconstructInterpolatedMessage(c: LoggerContext)(message: c.Expr[String]) = {
+  private def deconstructInterpolatedMessage(c: LoggerContext)(message: c.Expr[AnyVal]) = {
     val u: c.universe.type = c.universe
     // Eww; gross! In 2.13, the `s` interpolator on StringContext became a macro, so we have to look at the pre-macro
     // expansion tree to recover what the user wrote...
