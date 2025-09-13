@@ -30,7 +30,6 @@ OsgiKeys.exportPackage := Seq("com.typesafe.scalalogging*")
 // publishing
 
 organization := "com.typesafe.scala-logging"
-sonatypeProfileName := "com.typesafe"
 licenses := Seq("Apache 2.0 License" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 homepage := Some(url("https://github.com/lightbend/scala-logging"))
 Test / publishArtifact := false
