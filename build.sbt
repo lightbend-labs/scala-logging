@@ -13,7 +13,7 @@ val isScala3 = Def.setting {
 
 lazy val root = (project in file(".")).aggregate(core, scala2macros)
 val scalacOption = Def.setting {
-  if (isScala3.value) Seq.empty else Seq("-language:_")
+  if (isScala3.value) Seq.empty else Seq("-language:_", "-Ywarn-unused")
 }
 
 lazy val core = (project in file("core"))
