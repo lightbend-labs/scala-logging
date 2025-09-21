@@ -32,7 +32,7 @@ jobs:
       fail-fast: false
       matrix:
         java: [ 8, 11, 17, 21 ]
-        scala: [ .13.x, 3.x ]
+        scala: [ 2.13.x, 3.x ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -45,7 +45,6 @@ jobs:
           java-version: ${{matrix.java}}
       - uses: sbt/setup-sbt@v1
       - name: Test
-        working-directory: integration-test        
         run: |
-          sbt ++${{matrix.scala}} test
+          sbt ++${{matrix.scala}} integration-test/test
           git diff --exit-code  # check scalariform
