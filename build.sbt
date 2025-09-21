@@ -1,3 +1,4 @@
+import Library.{logbackClassic, mockitoScala, scalaTest}
 import _root_.com.github.sbt.osgi.SbtOsgi
 import sbt.url
 
@@ -10,11 +11,11 @@ val isScala3 = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value).exists(_._1 != 2)
 }
 
-
-lazy val root = (project in file(".")).aggregate(core, scala2macros)
 val scalacOption = Def.setting {
   if (isScala3.value) Seq.empty else Seq("-language:_", "-Ywarn-unused")
 }
+
+lazy val root = (project in file(".")).aggregate(core, scala2macros, `integration-test`)
 
 lazy val core = (project in file("core"))
   .enablePlugins(SbtOsgi)
@@ -28,6 +29,8 @@ lazy val core = (project in file("core"))
       "-unchecked",
       "-deprecation",
       "-encoding", "UTF-8",
+//      "-rewrite",
+//      "-source:3.7-migration"
     ) ++ scalacOption.value,
     incOptions := incOptions.value.withLogRecompileOnMacro(false),
     libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, isScala3.value),
@@ -73,3 +76,22 @@ lazy val scala2macros = project
     crossScalaVersions := scala2,
     libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, false),
   )
+
+lazy val `integration-test` = project.in(file("integration-test"))
+  .settings(
+    publish / skip := true,
+    scalaVersion := scala3,
+    crossScalaVersions := Seq(scala3, scala213),
+    scalacOptions ++= {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, 13)) => Seq("-Ytasty-reader")
+        case _ => Seq.empty
+      }
+    },
+    libraryDependencies ++= Seq(
+      logbackClassic % "test",
+      mockitoScala % "test",
+      scalaTest % "test"
+    )
+  )
+  .dependsOn(core)
