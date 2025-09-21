@@ -15,7 +15,7 @@ val scalacOption = Def.setting {
   if (isScala3.value) Seq.empty else Seq("-language:_", "-Ywarn-unused")
 }
 
-lazy val root = (project in file(".")).aggregate(core, scala2macros, `integration-test`)
+lazy val root = (project in file(".")).aggregate(core, scala2macros, `integration-test` % "compile->compile")
 
 lazy val core = (project in file("core"))
   .enablePlugins(SbtOsgi)
