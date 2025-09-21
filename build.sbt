@@ -28,9 +28,7 @@ lazy val core = (project in file("core"))
     scalacOptions ++= Seq(
       "-unchecked",
       "-deprecation",
-      "-encoding", "UTF-8",
-//      "-rewrite",
-//      "-source:3.7-migration"
+      "-encoding", "UTF-8"
     ) ++ scalacOption.value,
     incOptions := incOptions.value.withLogRecompileOnMacro(false),
     libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, isScala3.value),

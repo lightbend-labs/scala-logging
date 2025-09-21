@@ -43,13 +43,13 @@ object Logger {
   /**
    * Create a [[Logger]] wrapping the created underlying `org.slf4j.Logger`.
    */
-  def apply(clazz: Class[?]): Logger =
+  def apply(clazz: Class[_]): Logger =
     new Logger(LoggerFactory.getLogger(clazz.getName))
 
   /**
    * Create a [[LoggerTakingImplicit]] wrapping the created underlying `org.slf4j.Logger`.
    */
-  def takingImplicit[A](clazz: Class[?])(implicit ev: CanLog[A]): LoggerTakingImplicit[A] =
+  def takingImplicit[A](clazz: Class[_])(implicit ev: CanLog[A]): LoggerTakingImplicit[A] =
     new LoggerTakingImplicit[A](LoggerFactory.getLogger(clazz.getName))
 
   /**
