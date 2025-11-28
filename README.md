@@ -22,7 +22,7 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 
 * Java 11 or higher
   * Scala Logging 3.x supports Java 8
-* Scala 2.11, 2.12, 2.13 or 3.0
+* Scala 2.12, 2.13 or 3.0
 * Logging backend compatible with SLF4J
 
 A compatible logging backend is [Logback](http://logback.qos.ch), add it to your sbt build definition:
