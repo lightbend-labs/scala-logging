@@ -16,11 +16,11 @@ val scalacOption = Def.setting {
 }
 
 lazy val root = (project in file(".")).aggregate(core, scala2macros)
-.settings(
-    publish / skip := true
-)
+  .settings(
+      publish / skip := true
+  )
 
-lazy val publish = Seq(
+lazy val publishSettings = Seq(
   licenses := Seq("Apache 2.0 License" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
   homepage := Some(url("https://github.com/lightbend/scala-logging")),
   Test / publishArtifact := false,
@@ -65,7 +65,7 @@ lazy val core = (project in file("core"))
   ).settings(
     // OSGi
     osgiSettings,
-    publish
+    publishSettings
   ).settings(
     OsgiKeys.bundleSymbolicName := "com.typesafe.scala-logging",
     OsgiKeys.privatePackage := Seq(),
@@ -79,7 +79,7 @@ lazy val scala2macros = project
     scalaVersion := scala213,
     crossScalaVersions := scala2,
     libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, false),
-  ).settings(publish)
+  ).settings(publishSettings)
 
 lazy val `integration-test` = project.in(file("integration-test"))
   .settings(
