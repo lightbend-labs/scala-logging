@@ -39,7 +39,7 @@ Scala Logging is published to Sonatype OSS and Maven Central:
 sbt users may add this to their `build.sbt`:
 
 ```scala
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.4"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "4.0.0-RC1"
 ```
 
 ## Using Scala Logging
