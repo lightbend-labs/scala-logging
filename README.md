@@ -14,7 +14,8 @@ if (logger.isDebugEnabled) logger.debug(s"Some $expensive message!")
 
 ## Prerequisites
 
-* Java 8 or higher
+* Java 11 or higher
+  * Scala Logging 3.x supports Java 8
 * Scala 2.11, 2.12, 2.13 or 3.0
 * Logging backend compatible with SLF4J
 
@@ -26,7 +27,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.5.21"
 
 If you are looking for a version compatible with Scala 2.10, check out Scala Logging 2.x.
 
-If you are looking for a version compatible with SLF4J 1.x, check out Scala Logging 3.x.
+**If you are looking for a version compatible with SLF4J 1.x, check out Scala Logging 3.x.**
 
 
 ## Getting Scala Logging
