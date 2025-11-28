@@ -16,6 +16,33 @@ val scalacOption = Def.setting {
 }
 
 lazy val root = (project in file(".")).aggregate(core, scala2macros)
+  .settings(
+      publish / skip := true
+  )
+
+lazy val publishSettings = Seq(
+  licenses := Seq("Apache 2.0 License" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
+  homepage := Some(url("https://github.com/lightbend/scala-logging")),
+  Test / publishArtifact := false,
+  pomIncludeRepository := (_ => false),
+  scmInfo := Some(
+    ScmInfo(url("https://github.com/lightbend/scala-logging"), "scm:git:git@github.com:lightbend/scala-logging.git")
+  ),
+  developers := List(
+    Developer(
+      id = "hseeberger",
+      name = "Heiko Seeberger",
+      email = "",
+      url = url("http://heikoseeberger.de")
+    ),
+    Developer(
+      id = "analytically",
+      name = "Mathias Bogaert",
+      email = "",
+      url = url("http://twitter.com/analytically")
+    )
+  )
+)
 
 lazy val core = (project in file("core"))
   .enablePlugins(SbtOsgi)
@@ -37,34 +64,13 @@ lazy val core = (project in file("core"))
          |import org.slf4j.{ Logger => Underlying, _ }""".stripMargin
   ).settings(
     // OSGi
-    osgiSettings
+    osgiSettings,
+    publishSettings
   ).settings(
     OsgiKeys.bundleSymbolicName := "com.typesafe.scala-logging",
     OsgiKeys.privatePackage := Seq(),
-    OsgiKeys.exportPackage := Seq("com.typesafe.scalalogging*"),
-
-    // publishing
-    licenses := Seq("Apache 2.0 License" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-    homepage := Some(url("https://github.com/lightbend/scala-logging")),
-    Test / publishArtifact := false,
-    pomIncludeRepository := (_ => false),
-    scmInfo := Some(
-      ScmInfo(url("https://github.com/lightbend/scala-logging"), "scm:git:git@github.com:lightbend/scala-logging.git")
-    ),
-    developers := List(
-      Developer(
-        id = "hseeberger",
-        name = "Heiko Seeberger",
-        email = "",
-        url = url("http://heikoseeberger.de")
-      ),
-      Developer(
-        id = "analytically",
-        name = "Mathias Bogaert",
-        email = "",
-        url = url("http://twitter.com/analytically")
-      )
-    ))
+    OsgiKeys.exportPackage := Seq("com.typesafe.scalalogging*")
+)
   .dependsOn(scala2macros)
 
 lazy val scala2macros = project
@@ -73,7 +79,7 @@ lazy val scala2macros = project
     scalaVersion := scala213,
     crossScalaVersions := scala2,
     libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, false),
-  )
+  ).settings(publishSettings)
 
 lazy val `integration-test` = project.in(file("integration-test"))
   .settings(
