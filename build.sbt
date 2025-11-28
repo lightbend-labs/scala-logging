@@ -41,7 +41,7 @@ lazy val publish = Seq(
       email = "",
       url = url("http://twitter.com/analytically")
     )
-  ))
+  )
 )
 
 lazy val core = (project in file("core"))
