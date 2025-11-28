@@ -76,6 +76,7 @@ lazy val core = (project in file("core"))
 lazy val scala2macros = project
   .settings(
     name := "scala2-macros",
+    organization := "com.typesafe.scala-logging",    
     scalaVersion := scala213,
     crossScalaVersions := scala2,
     libraryDependencies ++= Dependencies.scalaLogging(scalaVersion.value, false),
