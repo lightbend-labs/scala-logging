@@ -6,7 +6,7 @@ import sbt.url
 
 val scala213 = "2.13.16"
 val scala3 = "3.7.4"
-val scala2 = Seq("2.11.12", "2.12.20", scala213)
+val scala2 = Seq("2.12.20", scala213)
 val isScala3 = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value).exists(_._1 != 2)
 }
